@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="536" height="608">
+    <style>
+        line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
+        <!--separator-->
+        
+    </style>
+    <defs>
+        <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,0 0,4 4,2 0,0"></polygon>
+        </marker>
+        <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+        </marker>
+        <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="2" class="filled"></circle>
+        </marker>
+        <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+        </marker>
+        <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+        </marker>
+    </defs>
+    <rect class="backdrop" x="0" y="0" width="536" height="608"></rect>
+    <line x1="384" y1="56" x2="392" y2="56" class="solid"></line>
+    <line x1="400" y1="56" x2="408" y2="56" class="solid"></line>
+    <line x1="416" y1="56" x2="424" y2="56" class="solid"></line>
+    <line x1="432" y1="56" x2="440" y2="56" class="solid"></line>
+    <line x1="448" y1="56" x2="456" y2="56" class="solid"></line>
+    <line x1="464" y1="56" x2="472" y2="56" class="solid"></line>
+    <line x1="480" y1="56" x2="488" y2="56" class="solid"></line>
+    <line x1="496" y1="56" x2="504" y2="56" class="solid"></line>
+    <text x="426" y="76" >.text</text>
+    <line x1="416" y1="88" x2="424" y2="88" class="solid"></line>
+    <line x1="432" y1="88" x2="440" y2="88" class="solid"></line>
+    <line x1="448" y1="88" x2="456" y2="88" class="solid"></line>
+    <line x1="464" y1="88" x2="472" y2="88" class="solid"></line>
+    <text x="426" y="108" >.data</text>
+    <line x1="416" y1="120" x2="424" y2="120" class="solid"></line>
+    <line x1="432" y1="120" x2="440" y2="120" class="solid"></line>
+    <line x1="448" y1="120" x2="456" y2="120" class="solid"></line>
+    <line x1="464" y1="120" x2="472" y2="120" class="solid"></line>
+    <text x="426" y="140" >.bss</text>
+    <line x1="416" y1="152" x2="424" y2="152" class="solid"></line>
+    <line x1="432" y1="152" x2="440" y2="152" class="solid"></line>
+    <line x1="448" y1="152" x2="456" y2="152" class="solid"></line>
+    <line x1="464" y1="152" x2="472" y2="152" class="solid"></line>
+    <line x1="416" y1="168" x2="424" y2="168" class="solid"></line>
+    <line x1="432" y1="168" x2="440" y2="168" class="solid"></line>
+    <line x1="448" y1="168" x2="456" y2="168" class="solid"></line>
+    <line x1="464" y1="168" x2="472" y2="168" class="solid"></line>
+    <text x="418" y="188" >sterta</text>
+    <line x1="416" y1="200" x2="424" y2="200" class="solid"></line>
+    <line x1="432" y1="200" x2="440" y2="200" class="solid"></line>
+    <line x1="448" y1="200" x2="456" y2="200" class="solid"></line>
+    <line x1="464" y1="200" x2="472" y2="200" class="solid"></line>
+    <text x="178" y="60" >.</text>
+    <line x1="384" y1="88" x2="392" y2="88" class="solid"></line>
+    <line x1="400" y1="88" x2="408" y2="88" class="solid"></line>
+    <line x1="480" y1="88" x2="488" y2="88" class="solid"></line>
+    <line x1="496" y1="88" x2="504" y2="88" class="solid"></line>
+    <line x1="384" y1="120" x2="392" y2="120" class="solid"></line>
+    <line x1="400" y1="120" x2="408" y2="120" class="solid"></line>
+    <line x1="480" y1="120" x2="488" y2="120" class="solid"></line>
+    <line x1="496" y1="120" x2="504" y2="120" class="solid"></line>
+    <line x1="384" y1="152" x2="392" y2="152" class="solid"></line>
+    <line x1="384" y1="168" x2="392" y2="168" class="solid"></line>
+    <line x1="400" y1="152" x2="408" y2="152" class="solid"></line>
+    <line x1="400" y1="168" x2="408" y2="168" class="solid"></line>
+    <line x1="480" y1="152" x2="488" y2="152" class="solid"></line>
+    <line x1="480" y1="168" x2="488" y2="168" class="solid"></line>
+    <line x1="496" y1="152" x2="504" y2="152" class="solid"></line>
+    <line x1="496" y1="168" x2="504" y2="168" class="solid"></line>
+    <line x1="384" y1="200" x2="392" y2="200" class="solid"></line>
+    <line x1="400" y1="200" x2="408" y2="200" class="solid"></line>
+    <line x1="480" y1="200" x2="488" y2="200" class="solid"></line>
+    <line x1="496" y1="200" x2="504" y2="200" class="solid"></line>
+    <text x="186" y="268" >.</text>
+    <line x1="384" y1="264" x2="392" y2="264" class="solid"></line>
+    <line x1="400" y1="264" x2="408" y2="264" class="solid"></line>
+    <line x1="416" y1="264" x2="424" y2="264" class="solid"></line>
+    <line x1="432" y1="264" x2="440" y2="264" class="solid"></line>
+    <line x1="448" y1="264" x2="456" y2="264" class="solid"></line>
+    <line x1="464" y1="264" x2="472" y2="264" class="solid"></line>
+    <line x1="480" y1="264" x2="488" y2="264" class="solid"></line>
+    <text x="402" y="284" >biblioteki</text>
+    <line x1="400" y1="296" x2="408" y2="296" class="solid"></line>
+    <line x1="416" y1="296" x2="424" y2="296" class="solid"></line>
+    <line x1="432" y1="296" x2="440" y2="296" class="solid"></line>
+    <line x1="448" y1="296" x2="456" y2="296" class="solid"></line>
+    <line x1="464" y1="296" x2="472" y2="296" class="solid"></line>
+    <line x1="480" y1="296" x2="488" y2="296" class="solid"></line>
+    <line x1="496" y1="264" x2="504" y2="264" class="solid"></line>
+    <line x1="384" y1="296" x2="392" y2="296" class="solid"></line>
+    <line x1="496" y1="296" x2="504" y2="296" class="solid"></line>
+    <line x1="416" y1="360" x2="424" y2="360" class="solid"></line>
+    <line x1="432" y1="360" x2="440" y2="360" class="solid"></line>
+    <line x1="448" y1="360" x2="456" y2="360" class="solid"></line>
+    <text x="426" y="380" >stos</text>
+    <line x1="416" y1="392" x2="424" y2="392" class="solid"></line>
+    <line x1="432" y1="392" x2="440" y2="392" class="solid"></line>
+    <line x1="448" y1="392" x2="456" y2="392" class="solid"></line>
+    <line x1="400" y1="440" x2="408" y2="440" class="solid"></line>
+    <line x1="416" y1="440" x2="424" y2="440" class="solid"></line>
+    <line x1="432" y1="440" x2="440" y2="440" class="solid"></line>
+    <line x1="448" y1="440" x2="456" y2="440" class="solid"></line>
+    <line x1="464" y1="440" x2="472" y2="440" class="solid"></line>
+    <line x1="480" y1="440" x2="488" y2="440" class="solid"></line>
+    <text x="402" y="460" >stos</text>
+    <line x1="400" y1="472" x2="408" y2="472" class="solid"></line>
+    <line x1="416" y1="472" x2="424" y2="472" class="solid"></line>
+    <line x1="432" y1="472" x2="440" y2="472" class="solid"></line>
+    <line x1="448" y1="472" x2="456" y2="472" class="solid"></line>
+    <line x1="464" y1="472" x2="472" y2="472" class="solid"></line>
+    <line x1="480" y1="472" x2="488" y2="472" class="solid"></line>
+    <line x1="400" y1="488" x2="408" y2="488" class="solid"></line>
+    <line x1="416" y1="488" x2="424" y2="488" class="solid"></line>
+    <line x1="432" y1="488" x2="440" y2="488" class="solid"></line>
+    <line x1="448" y1="488" x2="456" y2="488" class="solid"></line>
+    <line x1="464" y1="488" x2="472" y2="488" class="solid"></line>
+    <line x1="480" y1="488" x2="488" y2="488" class="solid"></line>
+    <line x1="384" y1="360" x2="392" y2="360" class="solid"></line>
+    <line x1="400" y1="360" x2="408" y2="360" class="solid"></line>
+    <line x1="464" y1="360" x2="472" y2="360" class="solid"></line>
+    <line x1="480" y1="360" x2="488" y2="360" class="solid"></line>
+    <line x1="496" y1="360" x2="504" y2="360" class="solid"></line>
+    <line x1="384" y1="392" x2="392" y2="392" class="solid"></line>
+    <line x1="400" y1="392" x2="408" y2="392" class="solid"></line>
+    <line x1="464" y1="392" x2="472" y2="392" class="solid"></line>
+    <line x1="480" y1="392" x2="488" y2="392" class="solid"></line>
+    <line x1="496" y1="392" x2="504" y2="392" class="solid"></line>
+    <line x1="384" y1="440" x2="392" y2="440" class="solid"></line>
+    <line x1="496" y1="440" x2="504" y2="440" class="solid"></line>
+    <line x1="384" y1="472" x2="392" y2="472" class="solid"></line>
+    <line x1="384" y1="488" x2="392" y2="488" class="solid"></line>
+    <line x1="496" y1="472" x2="504" y2="472" class="solid"></line>
+    <line x1="496" y1="488" x2="504" y2="488" class="solid"></line>
+    <text x="2" y="28" >struct task_struct {</text>
+    <text x="34" y="44" >struct mm_struct *mm;</text>
+    <text x="34" y="76" >...</text>
+    <text x="2" y="92" >};</text>
+    <text x="10" y="204" >// Wątek to proces, który </text>
+    <text x="10" y="220" >// współdzieli przestrzeń adresową</text>
+    <text x="10" y="236" >struct task_struct {</text>
+    <text x="42" y="252" >struct mm_struct *mm;</text>
+    <text x="42" y="284" >...</text>
+    <text x="10" y="300" >};</text>
+    <text x="394" y="524" >Pamięć jądra</text>
+    <text x="378" y="540" >(zmapowana do</text>
+    <text x="378" y="556" >pamięci procesu)</text>
+    <g>
+        <line x1="224" y1="40" x2="256" y2="40" class="solid"></line>
+        <path d="M 256,40 A 4,4 0,0,1 260,44" class="nofill"></path>
+        <line x1="260" y1="44" x2="260" y2="116" class="solid"></line>
+        <path d="M 260,116 A 4,4 0,0,0 264,120" class="nofill"></path>
+        <line x1="264" y1="120" x2="280" y2="120" class="solid"></line>
+        <polygon points="280,116 288,120 280,124" class="filled"></polygon>
+    </g>
+    <g>
+        <line x1="364" y1="40" x2="524" y2="40" class="solid"></line>
+        <line x1="364" y1="40" x2="364" y2="584" class="solid"></line>
+        <line x1="524" y1="40" x2="524" y2="584" class="solid"></line>
+        <line x1="364" y1="56" x2="376" y2="56" class="solid"></line>
+        <line x1="512" y1="56" x2="524" y2="56" class="solid"></line>
+        <line x1="364" y1="88" x2="376" y2="88" class="solid"></line>
+        <line x1="512" y1="88" x2="524" y2="88" class="solid"></line>
+        <line x1="364" y1="120" x2="376" y2="120" class="solid"></line>
+        <line x1="512" y1="120" x2="524" y2="120" class="solid"></line>
+        <line x1="364" y1="152" x2="376" y2="152" class="solid"></line>
+        <line x1="512" y1="152" x2="524" y2="152" class="solid"></line>
+        <line x1="364" y1="168" x2="376" y2="168" class="solid"></line>
+        <line x1="512" y1="168" x2="524" y2="168" class="solid"></line>
+        <line x1="364" y1="200" x2="376" y2="200" class="solid"></line>
+        <line x1="512" y1="200" x2="524" y2="200" class="solid"></line>
+        <line x1="364" y1="264" x2="376" y2="264" class="solid"></line>
+        <line x1="512" y1="264" x2="524" y2="264" class="solid"></line>
+        <line x1="364" y1="296" x2="376" y2="296" class="solid"></line>
+        <line x1="512" y1="296" x2="524" y2="296" class="solid"></line>
+        <line x1="364" y1="360" x2="376" y2="360" class="solid"></line>
+        <line x1="512" y1="360" x2="524" y2="360" class="solid"></line>
+        <line x1="364" y1="392" x2="376" y2="392" class="solid"></line>
+        <line x1="512" y1="392" x2="524" y2="392" class="solid"></line>
+        <line x1="364" y1="440" x2="376" y2="440" class="solid"></line>
+        <line x1="512" y1="440" x2="524" y2="440" class="solid"></line>
+        <line x1="364" y1="472" x2="376" y2="472" class="solid"></line>
+        <line x1="512" y1="472" x2="524" y2="472" class="solid"></line>
+        <line x1="364" y1="488" x2="376" y2="488" class="solid"></line>
+        <line x1="512" y1="488" x2="524" y2="488" class="solid"></line>
+        <line x1="364" y1="584" x2="524" y2="584" class="solid"></line>
+    </g>
+    <g>
+        <line x1="444" y1="208" x2="444" y2="228" class="solid"></line>
+        <polygon points="440,228 448,228 444,240" class="filled"></polygon>
+    </g>
+    <g>
+        <line x1="232" y1="248" x2="280" y2="248" class="solid"></line>
+        <polygon points="280,244 288,248 280,252" class="filled"></polygon>
+    </g>
+    <g>
+        <polygon points="440,332 444,320 448,332" class="filled"></polygon>
+        <line x1="444" y1="332" x2="444" y2="352" class="solid"></line>
+    </g>
+    <g>
+        <polygon points="440,412 444,400 448,412" class="filled"></polygon>
+        <line x1="444" y1="412" x2="444" y2="432" class="solid"></line>
+    </g>
+    <g>
+        <text x="442" y="460">wą</text>
+        <text x="458" y="460">tku</text>
+    </g>
+</svg>

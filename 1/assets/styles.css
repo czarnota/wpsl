@@ -1,0 +1,56 @@
+#wstęp-do-programowania-systemowego-w-linux h1 {
+    background-image: url("bg0.jpg");
+    background-size: cover;
+    color: #fff;
+}
+
+#wielozadaniowość h1 {
+    background-image: url("bg1.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#procesy h1 {
+    background-image: url("bg2.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#tworzenie-procesów h1 {
+    background-image: url("bg3.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#planista h1 {
+    background-image: url("bg4.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#wywołania-systemowe h1 {
+    background-image: url("bg5.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#pamięć-procesu h1 {
+    background-image: url("bg6.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#dziękuję-za-uwagę h1 {
+    background-image: url("bg7.jpg");
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    text-shadow: 0px 0px 5px #000;
+}
