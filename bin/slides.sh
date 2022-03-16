@@ -328,7 +328,6 @@ $body$
 
     document.querySelectorAll('p > img').forEach(e => e.parentNode.style.overflow="hidden");
 
-
 </script>
   </body>
 </html>

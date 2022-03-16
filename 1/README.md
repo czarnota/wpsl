@@ -85,6 +85,8 @@ $ ps
 75448 ttys004    0:00.00 sleep 1
 ```
 
+Liczba `PID` to unikalny identyfikator procesu.
+
 ## Podglądanie procesów w systemie - top
 
 Programy `top` oraz `htop` umożliwają podgląd procesów w czasie rzeczywistym
@@ -152,7 +154,6 @@ systemd─┬─ModemManager───2*[{ModemManager}]
         │      └─2*[{gdm3}]
         ├─polkitd───2*[{polkitd}]
         ├─systemd─┬─(sd-pam)
-        │         │
         │         ├─tmux: server─┬─bash───bash───nvim─┬─2*[xclip]
         │         │              │                    └─{nvim}
         │         │              ├─bash───bash───sleep
@@ -218,12 +219,51 @@ systemowe `wait()`, które blokuje program do momentu zakończenia
 dowolnego procesu potomnego.
 
 ```c
+   /* rodzic */                         /* dziecko */
+    int main(void)                       int main(void)
+    {                                    {
+        printf("przed utworzeniem\n");       printf("przed utworzeniem\n")j
+        int pid = fork();                    int pid = fork();
+        if (pid == 0) {                      if (pid == 0) {
+            printf("child\n");                   printf("child\n");   
+        } else {                             } else {
+            printf("parent\n");                  printf("parent\n");  
+ -->        wait(NULL);                          wait(NULL);
+        }                                    }
+        return 0;                     -->    return 0;
+    }                                    }
+```
+
+## `wait()` obsługa błędów
+
+Wywołanie systemowe `wait()` zwraca `pid` zakończonego procesu.
+Jeżeli wartość jest ujemna to wystąpił błąd. Błąd uzyskać można
+odczytująć zmienną `errno`.
+
+```c
 pid = wait(NULL);
 if (pid < 0) {
     fprintf(stderr, "error: wait: %s\n", strerror(errno));
     return -1;
 }
 ```
+
+## `wait()` odczytanie wartości zwracanej
+
+Można odczytać wartość jaką zwrócił proces potomny przekazując
+wskaźnik jako pierwszy argument wywołania `wait()`.
+
+```c
+int status;
+pid = wait(&status);
+if (pid < 0) {
+    fprintf(stderr, "error: wait: %s\n", strerror(errno));
+    return -1;
+}
+if (WIFEXITED(status))
+    printf("dziecko zwróciło: %d\n", WEXITSTATUS(status));
+```
+
 
 ## Oczekiwanie na zakończenie kilku procesów potomnych
 
@@ -243,6 +283,28 @@ while (true) {
         break;
     }
 }
+```
+
+## Wywołanie `waitpid()`
+
+Wywołanie systemowe `waitpid()` pozwala zaczekać na konkretny process potomny
+
+```c
+int status;
+waitpid(pid, &status, 0);
+if (WIFEXITED(status))
+    printf("dziecko zwróciło: %d\n", WEXITSTATUS(status));
+```
+
+Tak naprawde `wait()` działa tak samo jak:
+
+```c
+int pid = waitpid(-1, &status, 0);
+```
+
+Więcej informacji
+```console
+$ man 2 wait
 ```
 
 ## Najistotniejsze efekty `fork()`
@@ -698,10 +760,16 @@ operacyjnemu skopiować stronę
 
 ## Dalsza lektura
 
-- https://lwn.net/Articles/738975/
-- https://en.wikipedia.org/wiki/Kernel_page-table_isolation
-- https://lore.kernel.org/lkml/20171031223148.5334003A@viggo.jf.intel.com/
-- https://samwho.dev/blog/context-switching-on-x86/
-- Love Robert. 2010. Linux Kernel Development. Pearson Education.
-- Love Robert. 2013. Linux System Programming. O'REILLY.
-- Stevens Richard W., Rago Stephen A., Advanced Programming in the UNIX® Environment, Third Edition. Addison-Wesley.
+- **Książki**
+    - Love Robert. 2010. Linux Kernel Development. Pearson Education.
+    - Love Robert. 2013. Linux System Programming. O'REILLY.
+    - Stevens Richard W., Rago Stephen A., Advanced Programming in the UNIX® Environment, Third Edition. Addison-Wesley.
+- **Artykuły**
+    - https://lwn.net/Articles/738975/
+    - https://en.wikipedia.org/wiki/Kernel_page-table_isolation
+    - https://lore.kernel.org/lkml/20171031223148.5334003A@viggo.jf.intel.com/
+    - https://samwho.dev/blog/context-switching-on-x86/
+- **Manual**
+    - `man 2 fork`
+    - `man 2 wait`
+    - `man 3 exec`
