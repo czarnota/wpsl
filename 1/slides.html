@@ -264,7 +264,7 @@ p > code, li > code {
 <ul class="incremental">
 <li><strong>Program</strong> - sekwencja instrukcji wyrażonych w języku programowania, który komputer jest w stanie zinterpretować i wykonać.</li>
 <li><strong>System operacyjny</strong> - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.</li>
-<li><strong>Proces</strong> - kod który się wykonuje, (akt wykonywania kody).</li>
+<li><strong>Proces</strong> - kod który się wykonuje, (akt wykonywania kodu).</li>
 <li><strong>Wątek</strong> - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).</li>
 <li><strong>Procesor</strong> - układ scalony, który wykonuje instrukcje pobierane z pamięci operacyjnej.</li>
 <li><strong>Wywołanie systemowe</strong> - przerwanie procesu i żądanie przez ten proces wykonania przez system operacyjny operacji uprzywilejowanej.</li>
@@ -290,7 +290,7 @@ p > code, li > code {
 </section>
 <section id="afiniczność-procesora" class="level2">
 <h2>Afiniczność procesora</h2>
-<p>W Linux’ie możemy określić na których procesorach będzie wykonywany proces</p>
+<p>W Linuksie możemy określić na których procesorach będzie wykonywany proces</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>$ <span class="ex">taskset</span> -p 0x11 9726</span></code></pre></div>
 <p>Podobne ustawienie istnieje również w menedżerze zadań systemu Windows</p>
 <p><img src="assets/affinity.png" /></p>
@@ -310,7 +310,7 @@ p > code, li > code {
 <li><code>rflags</code> - rejest flag procesora</li>
 <li>rejestry ogólnego przeznaczenia: <code>rax</code>, <code>rcx</code>, <code>rdx</code>, <code>rbx</code>, <code>rsi</code>, <code>rdi</code>, <code>r8</code>-<code>r15</code></li>
 </ul></li>
-<li><strong>Pamięć wirtualna</strong> (Tabela stron) (wskazywana przez <code>CR3</code>)</li>
+<li><strong>Pamięć wirtualna</strong> (Tabela stron) (wskazywana przez rejestr <code>CR3</code>)</li>
 <li><strong>Deskryptory plików</strong>, czyli (najważniejsze):
 <ul class="incremental">
 <li>pliki (otwarte za pomocą <code>open()</code>)</li>
@@ -445,7 +445,7 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 </section>
 <section id="oczekiwanie-na-zakończenie-procesu-potomnego" class="level2">
 <h2>Oczekiwanie na zakończenie procesu potomnego</h2>
-<p>Do oczekiwanie na zakończenie procesu potomnego służy, wywołanie systemowe <code>wait()</code>, które blokuje program do momentu zakończenia dowolnego procesu potomnego.</p>
+<p>Do oczekiwania na zakończenie procesu potomnego służy, wywołanie systemowe <code>wait()</code>, które blokuje program do momentu zakończenia dowolnego procesu potomnego.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>   <span class="co">/* rodzic */</span>                         <span class="co">/* dziecko */</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> main(<span class="dt">void</span>)                       <span class="dt">int</span> main(<span class="dt">void</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    {                                    {</span>
@@ -487,10 +487,10 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 <div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (true) {</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> pid = wait(NULL);</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (pid &lt; <span class="dv">0</span>) {</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* No more children */</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* Nie ma już dzieci */</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (errno == ECHILD)</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span>;</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* We have real error */</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* Wystąpił rzeczywisty błąd */</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        fprintf(stderr, <span class="st">&quot;error: wait: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, strerror(errno));</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span>;</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    }</span>
@@ -535,7 +535,7 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 </section>
 <section id="przykład-wykorzystania-exec" class="level2">
 <h2>Przykład wykorzystania <code>exec()</code></h2>
-<p>Przykładowy program, który utworzy proces potomny i załaduje do niego program <code>ls</code>. Proces rodzicam będzie czekał na zakończenie procesu potomnego.</p>
+<p>Przykładowy program, który utworzy proces potomny i załaduje do niego program <code>ls</code>. Proces rodzica będzie czekał na zakończenie procesu potomnego.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> ret;</span>
@@ -556,7 +556,7 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 </section>
 <section id="procesy-zombie" class="level2">
 <h2>Procesy zombie</h2>
-<p>Jeżeli proces zakończył swoje wykonywanie, a rodzic nie wykonał <code>wait()</code> to będzie on nadal widoczny na liscie procesów, do momentu wykonania <code>wait()</code> przez rodzica.</p>
+<p>Jeżeli proces zakończył swoje wykonywanie, a rodzic nie wykonał <code>wait()</code> to będzie on nadal widoczny na liście procesów, do momentu wykonania <code>wait()</code> przez rodzica.</p>
 <p>Poniższy kod tworzy proces zombie, który będzie istniał około 30 sekund:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -664,7 +664,7 @@ systemd─┬─ModemManager─── ...
 <p>Decydowaniem, który proces zostanie uruchomiony jako następny zajmuje się planista (ang. scheduler).</p>
 <p>Zadaniem planisty jest dbanie o podział czasu procesora według ustalonych celów.</p>
 <p>Planista w systemie Linux to <strong>Całkowicie Sprawiedliwy Planista</strong> (ang. Completely Fair Scheduler, CFS)</p>
-<p>Dba on o to aby każdy process otrzymał sprawiedliwą część czasu procesora.</p>
+<p>Dba on o to aby każdy proces otrzymał sprawiedliwą część czasu procesora.</p>
 <p>Za każdym razem uruchamia ten process który otrzymał do tej pory najmniej czasu, w stosunku do należnej części.</p>
 </section>
 <section id="jak-planista-reprezentuje-procesy" class="level2">
@@ -707,7 +707,7 @@ systemd─┬─ModemManager─── ...
 <ul class="incremental">
 <li>naciśnięcia klawisza, odebrania pakietu sieciowego czy innego zdarzenia sprzętowego;</li>
 <li>przerwania pochodzącego od czasomierza systemowego (Programmable System Timer);</li>
-<li>wywołania systemowego (<code>open()</code>, <code>fork()</code>, <code>sleep()</code>, <code>write()</code>).</li>
+<li>wywołania systemowego (np. <code>open()</code>, <code>fork()</code>, <code>sleep()</code>, <code>write()</code>).</li>
 </ul>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main(<span class="dt">void</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>{</span>
@@ -903,7 +903,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0  [vsyscall]</code></pre>
 </section>
 <section id="kaiser" class="level2">
 <h2>KAISER</h2>
-<p>Mapowana jest tylko niezbędna część jądra. Po przełączeniu się w tryb jądra (przy wywołaniach systemowych) przełączana jest pełna tabela stron z całym jądrem (zmiana rejestru CR3).</p>
+<p>Mapowana jest tylko niezbędna część jądra. Po przełączeniu się w tryb jądra (przy wywołaniach systemowych) tabela stron jest przełączana na pełną wersję (zmiana rejestru CR3).</p>
 <p><img src="assets/5.svg" /></p>
 </section>
 <section id="copy-on-write" class="level2">

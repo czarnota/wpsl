@@ -4,7 +4,7 @@
 
 - **Program** - sekwencja instrukcji wyrażonych w języku programowania, który komputer jest w stanie zinterpretować i wykonać.
 - **System operacyjny** - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.
-- **Proces** - kod który się wykonuje, (akt wykonywania kody).
+- **Proces** - kod który się wykonuje, (akt wykonywania kodu).
 - **Wątek** - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).
 - **Procesor** - układ scalony, który wykonuje instrukcje pobierane z pamięci operacyjnej.
 - **Wywołanie systemowe** - przerwanie procesu i żądanie przez ten proces wykonania przez system operacyjny operacji uprzywilejowanej.
@@ -34,7 +34,7 @@ W praktyce procesy mogą być uruchamiane na różnych rdzeniach procesora.
 
 ## Afiniczność procesora
 
-W Linux'ie możemy określić na których procesorach będzie wykonywany proces
+W Linuksie możemy określić na których procesorach będzie wykonywany proces
 
 ```bash
 $ taskset -p 0x11 9726
@@ -57,7 +57,7 @@ W skład procesu wchodzą:
     - `rip` - wskaźnik aktualnej instrukcji (ang. Program counter)
     - `rflags` - rejest flag procesora
     - rejestry ogólnego przeznaczenia: `rax`, `rcx`, `rdx`, `rbx`, `rsi`, `rdi`, `r8`-`r15`
-- **Pamięć wirtualna** (Tabela stron) (wskazywana przez `CR3`)
+- **Pamięć wirtualna** (Tabela stron) (wskazywana przez rejestr `CR3`)
 - **Deskryptory plików**, czyli (najważniejsze):
     - pliki (otwarte za pomocą `open()`)
     - gniazda sieciowe (otwarte za pomocą `socket()`, `accept()`)
@@ -214,7 +214,7 @@ w procesie potomnym czy w procesie rodzica.
 
 ## Oczekiwanie na zakończenie procesu potomnego
 
-Do oczekiwanie na zakończenie procesu potomnego służy, wywołanie
+Do oczekiwania na zakończenie procesu potomnego służy, wywołanie
 systemowe `wait()`, które blokuje program do momentu zakończenia
 dowolnego procesu potomnego.
 
@@ -275,10 +275,10 @@ potomnych, to należy ponowić oczekiwanie.
 while (true) {
     int pid = wait(NULL);
     if (pid < 0) {
-        /* No more children */
+        /* Nie ma już dzieci */
         if (errno == ECHILD)
             break;
-        /* We have real error */
+        /* Wystąpił rzeczywisty błąd */
         fprintf(stderr, "error: wait: %s\n", strerror(errno));
         break;
     }
@@ -340,7 +340,7 @@ procesu (czyli podmienia sekcje .data, .bss, .text, stos i sterte, biblioteki ws
 ## Przykład wykorzystania `exec()`
 
 Przykładowy program, który utworzy proces potomny i załaduje do niego
-program `ls`. Proces rodzicam będzie czekał na zakończenie procesu potomnego.
+program `ls`. Proces rodzica będzie czekał na zakończenie procesu potomnego.
 
 ```c
 int main(int argc, char **argv)
@@ -365,7 +365,7 @@ int main(int argc, char **argv)
 ## Procesy zombie
 
 Jeżeli proces zakończył swoje wykonywanie, a rodzic nie wykonał `wait()`
-to będzie on nadal widoczny na liscie procesów, do momentu wykonania `wait()`
+to będzie on nadal widoczny na liście procesów, do momentu wykonania `wait()`
 przez rodzica.
 
 Poniższy kod tworzy proces zombie, który będzie istniał około 30 sekund:
@@ -493,7 +493,7 @@ Zadaniem planisty jest dbanie o podział czasu procesora według ustalonych cel�
 
 Planista w systemie Linux to **Całkowicie Sprawiedliwy Planista** (ang. Completely Fair Scheduler, CFS)
 
-Dba on o to aby każdy process otrzymał sprawiedliwą część czasu procesora.
+Dba on o to aby każdy proces otrzymał sprawiedliwą część czasu procesora.
 
 Za każdym razem uruchamia ten process który otrzymał do tej pory najmniej
 czasu, w stosunku do należnej części.
@@ -550,7 +550,7 @@ Czyli na przykład w momencie:
 
 - naciśnięcia klawisza, odebrania pakietu sieciowego czy innego zdarzenia sprzętowego;
 - przerwania pochodzącego od czasomierza systemowego (Programmable System Timer);
-- wywołania systemowego (`open()`, `fork()`, `sleep()`, `write()`).
+- wywołania systemowego (np. `open()`, `fork()`, `sleep()`, `write()`).
 
 ```c
 int main(void)
@@ -744,7 +744,7 @@ Jądro jest mapowane pod losowym adresem
 ## KAISER
 
 Mapowana jest tylko niezbędna część jądra. Po przełączeniu się w tryb jądra (przy wywołaniach systemowych)
-przełączana jest pełna tabela stron z całym jądrem (zmiana rejestru CR3).
+tabela stron jest przełączana na pełną wersję (zmiana rejestru CR3).
 
 ![](assets/5.svg)
 
