@@ -1,4 +1,4 @@
-# Wstęp do programowania systemowego w Linux
+# Zagadnienie 1: Procesy w systemie Linux
 
 ## Podstawowe pojęcia
 
