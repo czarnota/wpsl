@@ -766,8 +766,6 @@ operacyjnemu skopiować stronę
     - Stevens Richard W., Rago Stephen A., Advanced Programming in the UNIX® Environment, Third Edition. Addison-Wesley.
 - **Artykuły**
     - https://lwn.net/Articles/738975/
-    - https://en.wikipedia.org/wiki/Kernel_page-table_isolation
-    - https://lore.kernel.org/lkml/20171031223148.5334003A@viggo.jf.intel.com/
     - https://samwho.dev/blog/context-switching-on-x86/
 - **Manual**
     - `man 2 fork`
