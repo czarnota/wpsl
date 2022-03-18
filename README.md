@@ -1,4 +1,4 @@
-# Materiały do przedmiotu
+# WPSL
 
 Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania systemowego w Linux"
 
