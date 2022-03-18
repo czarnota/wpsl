@@ -475,7 +475,7 @@ int main(void)
 {
     for (int i = 0; i < 10; ++i) {
         fork();
-        execlp("ls", "ls");
+        execlp("ls", "ls", NULL);
     }
 
     return 0;
