@@ -1,0 +1,80 @@
+read -rd '' COLORDEFS <<EOF
+# Legend:
+r = { fill: #F44336; }
+g = { fill: #4CAF50; }
+b = { fill: #2196F3; }
+o = { fill: #FF9800; }
+y = { fill: #FFEB3B; }
+c = { fill: #00BCD4; }
+m = { fill: #9C27B0; }
+k = { fill: #000000; }
+EOF
+
+diagram commonaddress.svg <<'EOF'
+
+"struct task_struct {"
+    "struct mm_struct *mm;" ----.            +-------------------+
+                      .         |            +- - - - - - - - - -+
+    "..."                       |            |       .text       |
+"};"                            |            +- - - - - - - - - -+
+                                |            |       .data       |
+                                '-->         +- - - - - - - - - -+
+                                             |       .bss        |
+                                             +- - - - - - - - - -+
+                                             +- - - - - - - - - -+
+                                             |      sterta       |
+ "// Wątek to proces, który "                +- - - - - - - - - -+
+ "// współdzieli przestrzeń adresową"        |         |         |
+ "struct task_struct {"                      |         v         |
+     "struct mm_struct *mm;" ------>         |                   |
+                       .                     +- - - - - - - - - -+
+     "..."                                   |    biblioteki     |
+ "};"                                        +- - - - - - - - - -+
+                                             |                   |
+                                             |         ^         |
+                                             |         |         |
+                                             +- - - - - - - - - -+
+                                             |       stos        |
+                                             +- - - - - - - - - -+
+                                             |         ^         |
+                                             |         |         |
+                                             +- - - - - - - - - -+
+                                             |    stos wątku     |
+                                             +- - - - - - - - - -+
+                                             +- - - - - - - - - -+
+                                             |                   |
+                                             |   "Pamięć jądra"  |
+                                             | "(zmapowana do"   |
+                                             | "pamięci procesu)"|
+                                             |                   |
+                                             +-------------------+
+EOF
+
+diagram thread.svg <<'EOF'
+
+                                "wątek główny"
+                                   "main()"
+                                      |
+                                      |
+                                      |
+                                      |      "drugi wątek"
+                                      |     "print_numbers()"
+                    "pthread_create()"o- - - - - --o
+                                      |            |
+                                      |            |
+                                      |            |
+                                      |            |
+                      "pthread_join()"o            |  
+                                      !            |
+                                      !            |
+                                      !            |
+                                      !            |
+                                      !            |
+                                      o- - - - - - v "return NULL"
+                                      |
+                                      |
+                                      |
+                                      |
+                                      |
+                            "return 0"v                                                  .
+EOF

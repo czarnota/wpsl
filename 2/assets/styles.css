@@ -1,0 +1,22 @@
+#zagadnienie-1-wątki-i-synchronizacja h1 {
+    background-image: url("threads.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#mutexy h1 {
+    background-image: url("mutex.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#dziękuję-za-uwagę h1 {
+    background-image: url("bg7.jpg");
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    text-shadow: 0px 0px 5px #000;
+}

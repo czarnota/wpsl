@@ -7,7 +7,7 @@ DIAGRAMS=bin/diagrams.sh
 all: $(SLIDE_FILES) $(DIAGRAM_FILES)
 
 $(SLIDE_FILES): %/slides.html : %/README.md $(SLIDES)
-	$(SLIDES) $< > $@
+	$(SLIDES) $< $@
 
 $(DIAGRAM_FILES): %.lock : % $(DIAGRAMS)
 	$(DIAGRAMS) $<
