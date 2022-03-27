@@ -374,7 +374,7 @@ void *sum(void *arg)
     int offset = *thread_nr * 4;
 
     for (int i = offset; i < offset + 4; ++i)
-        result[i] += data[i];
+        result[*thread_nr] += data[i];
 
     return NULL;
 }
