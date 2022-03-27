@@ -422,7 +422,7 @@
 <section id="łączenie-wątku" class="level2">
 <h2>Łączenie wątku</h2>
 <p>Po utworzeniu nowego wątku, rozpocznie się jego wykonywanie. Przed zakończeniem programu powinniśmy poczekać na zakończenie wątku za pomocą funkcji <code>pthread_join()</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>err = pthread_join(&amp;thread);</span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>err = pthread_join(thread, NULL);</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (err)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span>;</span></code></pre></div>
 <p>Funkcja <code>pthread_join()</code> blokuje wątek, w którym została wywołana do momentu zakończenia wątku na który oczekujemy.</p>

@@ -257,7 +257,7 @@ programu powinniśmy poczekać na zakończenie wątku za pomocą funkcji
 `pthread_join()`.
 
 ```c
-err = pthread_join(&thread);
+err = pthread_join(thread, NULL);
 if (err)
     return 1;
 ```
