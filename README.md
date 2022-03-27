@@ -12,7 +12,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task2-solved.md))
     - Termin: do następnych zajęć (27.03.2022)
 
-## Zagadnienie 1: Procesy w systemie Linux
+## Zagadnienie 2: Wątki i synchronizacja
 
 - **Wykład**
     - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/2/slides.html), [html](https://czarnota.github.io/wpsl/2/), [md](https://github.com/czarnota/wpsl/tree/main/2/))

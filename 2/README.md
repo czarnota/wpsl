@@ -1,4 +1,4 @@
-# Zagadnienie 1: Wątki i synchronizacja
+# Zagadnienie 2: Wątki i synchronizacja
 
 ## Informacje wstępne - funkcja
 
