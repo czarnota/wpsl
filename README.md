@@ -20,6 +20,13 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - **Zadanie 1**: ([html](https://czarnota.github.io/wpsl/2/task1), [md](https://github.com/czarnota/wpsl/tree/main/2/task1.md))
     - Termin: do następnych zajęć (02.04.2022)
 
+## Zagadnienie 3: Obsługa plików
+
+- **Wykład**
+    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/3/slides.html), [html](https://czarnota.github.io/wpsl/3/), [md](https://github.com/czarnota/wpsl/tree/main/3/))
+- **Laboratoria**
+    - **Zadanie 1**
+
 ## Dodatkowe Materiały
 
 - [PL] Kurs języka C dla początkujących na wikibooks: [link](https://pl.wikibooks.org/wiki/C)
