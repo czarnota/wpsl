@@ -38,3 +38,39 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - [EN] Książka twórców języka C: Brian W. Kernighan, Dennis M. Ritchie. C Programming Language, 2nd Edition [link](https://github.com/germanoa/compiladores/blob/master/doc/ebook/The%20C%20Programming%20Language%20-%202nd%20Edition%20-%20Ritchie%20Kernighan.pdf)
 - [EN] Strona głównie o C++, ale ma też rozdział poświęcony C: cppreference [link](https://en.cppreference.com/w/c)
 - [EN] Zbiór przykładowych programów w C: [link](https://github.com/randerson112358/C-Programs)
+
+## Zasady zaliczenia
+
+Są 4 zadania:
+
+| Zadanie            | Termin     |
+| ------------------ | ---------- |
+| Sleep sort         | 27.03.2022 |
+| Minutnik           | 02.04.2022 |
+| Kopiowanie plików  | 09.04.2022 |
+| Prosty serwer HTTP | 24.04.2022 |
+
+Zadania należy przysłać, przed momentem prezentacji rozwiązania.
+
+Liczba wysłanych zadań w terminie oraz oceny jakie temu odpowiadają:
+
+| Liczba zadań | Ocena |
+| ------------ | ----- |
+| 1            | 3     |
+| 2            | 4     |
+| 3            | 5     |
+| 4            | 5     |
+
+Otrzymaną ocenę należy obronić zdobywając 50% punktów z testu, który
+odbędzie się na zajęciach **24.04.2022**. Test będzie testem wyboru, a pytania
+będą typu: "Co wypisze ten kod?", "Co się dzieje w tym kodzie?".
+
+Zaliczenie testu skutkuje przepisaniem oceny z laboratoriów na ocenę z wykładu.
+
+Jeżeli ktoś nie zaliczy testu, a oddał przynajmniej jeden program, to otrzyma
+zadanie ratunkowe w postaci programu do napisania, którego oddanie do końca semestru
+ma identyczny efekt jak zaliczenie testu.
+
+Jeżeli ktoś nie oddał żadnego programu - nie musi podchodzić do testu.
+Otrzymuje on zadanie ratunkowe w postaci programu do napisania,
+którego oddanie do końca semestru skutkuje oceną 3 z laboratoriów i wykładu.
