@@ -8,7 +8,7 @@ Metody komunikacji międzyprocesowej:
 - potoki nienazwane
 - potoki nazwane
 - semafory
-- pamięci współdzielone
+- pamięc współdzielona
 - sockety
 - kolejki komunikatów
 
@@ -200,7 +200,6 @@ while (1) {
     if (count != sizeof(chunk))
         break;
 }
-
 fclose(file);
 ```
 
@@ -229,7 +228,6 @@ if (count != 1) {
     fclose(file);
     return 1;
 }
-
 fclose(file);
 ```
 
@@ -254,7 +252,6 @@ if (count != 1) {
     fclose(file);
     return 1;
 }
-
 fclose(file);
 ```
 
@@ -388,7 +385,7 @@ if (ret <= 0) {
 
 ## Wywołanie systemowe - standardowy strumień błędów jest plikiem
 
-Standardowy strumień błędów jest plikiem. Jest on otwarty pod deskryptored `2`.
+Standardowy strumień błędów jest plikiem. Jest on otwarty pod deskryptorem `2`.
 
 ```c
 write(2, "error: successfully failed\n", strlen("error: successfully failed\n") + 1);
@@ -412,7 +409,6 @@ while (1) {
     if (count != sizeof(chunk))
         break;
 }
-
 close(file);
 ```
 
@@ -429,7 +425,6 @@ if (fd < 0) {
     fprintf(stderr, "err: failed to open file 'out.txt'");
     return 1;
 }
-
 int a;
 float b;
 ssize_t count = write(fd, &a, sizeof(a));
@@ -442,11 +437,10 @@ if (count != sizeof(a)) {
     close(fd);
     return 1;
 }
-
 close(fd);
 ```
 
-## Przykład - odczytanie 2 zmiennych do pliku
+## Przykład - odczytanie 2 zmiennych z pliku
 
 ```c
 int fd = open("out.txt", O_RDONLY);
@@ -454,7 +448,6 @@ if (!file) {
     fprintf(stderr, "err: failed to open file 'out.txt'");
     return 1;
 }
-
 int a;
 float b;
 ssize_t count = read(fd, &a, sizeof(a));
@@ -467,7 +460,6 @@ if (count != sizeof(b)) {
     close(fd);
     return 1;
 }
-
 close(fd);
 ```
 
@@ -479,8 +471,8 @@ jeżeli plik jest zapisany i odczytany na maszynie z taką samą endianowością
 Jeżeli zapisujemy plik na maszynie z procesorem pracującym w trybie little endian (x86, ARM, ...)
 i przeniesiemy go na inną maszyne z procesorem pracującym w trybie big endian (MIPS, ARM, ...),
 i tam odczytamy, to kolejność bajtów się nie będzie zgadzać i dostaniemy inne wartości.
-
 Przykład:
+
 ```
 Liczba całkowita czterobajtowa 64048 = 0x0000FA30
 
