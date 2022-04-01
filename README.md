@@ -52,7 +52,9 @@ Są 4 zadania:
 
 Zadania należy przysłać, przed momentem prezentacji rozwiązania.
 
-Liczba wysłanych zadań w terminie oraz oceny jakie temu odpowiadają:
+Zadanie jest uznane jako przyjęte, jeżeli otrzymają Państwo odpowiedź zwrotną.
+
+Liczba wysłanych zadań z otrzymaną odpowiedzią zwrotną w terminie oraz oceny jakie temu odpowiadają:
 
 | Liczba zadań | Ocena |
 | ------------ | ----- |
