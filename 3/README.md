@@ -267,6 +267,12 @@ POSIX definiuje między innymi następujące wywołania systemowe do obsługi pl
 - `read()` - odczytuje porcję danych z pliku
 - `write()` - wpisuje porcję danych do pliku
 
+W celu skorzystania z tych funkcji należy dołączyć następujące nagłówki
+```c
+#include <unistd.h>
+#include <fcntl.h>
+```
+
 ## Wywołania systemowe - otwieranie pliku do odczytu
 
 Do otwierenia pliku służy funkcja `open()`.
