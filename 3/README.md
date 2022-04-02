@@ -21,8 +21,8 @@ Biblioteka standardowa języka dostarcza funkcję do obsługi plików:
 
 - `fopen()` - otwiera plik
 - `fclose()` - zamyka plik
-- `fread()` - odczytuje dane z pliku
-- `fwrite()` - wpisuje dane do pliku
+- `fread()` - odczytuje porcję danych z pliku
+- `fwrite()` - wpisuje porcję danych do pliku
 
 ## Standard C - otwieranie pliku do odczytu
 
@@ -264,8 +264,8 @@ POSIX definiuje między innymi następujące wywołania systemowe do obsługi pl
 
 - `open()` - otwiera plik
 - `close()` - zamyka plik
-- `read()` - odczytuje dane z pliku
-- `write()` - wpisuje dane do pliku
+- `read()` - odczytuje porcję danych z pliku
+- `write()` - wpisuje porcję danych do pliku
 
 ## Wywołania systemowe - otwieranie pliku do odczytu
 
