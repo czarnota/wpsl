@@ -197,8 +197,8 @@ while (1) {
     size_t count = fread(chunk, 1, sizeof(chunk), stdin);
     if (!count)
         break;
-    count = fwrite(chunk, 1, sizeof(chunk), file);
-    if (count != sizeof(chunk))
+    size_t count_wr = fwrite(chunk, 1, count, file);
+    if (count_wr != count)
         break;
 }
 fclose(file);
@@ -406,8 +406,8 @@ while (1) {
     ssize_t count = read(0, chunk, sizeof(chunk));
     if (count <= 0)
         break;
-    count = write(fd, chunk, sizeof(chunk));
-    if (count != sizeof(chunk))
+    ssize_t count_wr = write(fd, chunk, count);
+    if (count_wr != count)
         break;
 }
 close(file);
