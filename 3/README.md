@@ -67,7 +67,7 @@ Do zamykania pliku służy funkcja `fclose()`
 /**
  * @file: wskaźnik do pliku
  */
-FILE *fclose(FILE *file);
+int fclose(FILE *file);
 ```
 
 Przykład:
