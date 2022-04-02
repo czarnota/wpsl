@@ -11,6 +11,7 @@ Metody komunikacji międzyprocesowej:
 - pamięc współdzielona
 - sockety
 - kolejki komunikatów
+- sygnały
 
 # Obsługa plików - standard C
 
