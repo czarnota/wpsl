@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560">
+    <style>
+        line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
+        <!--separator-->
+        
+    </style>
+    <defs>
+        <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,0 0,4 4,2 0,0"></polygon>
+        </marker>
+        <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+        </marker>
+        <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="2" class="filled"></circle>
+        </marker>
+        <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+        </marker>
+        <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+        </marker>
+    </defs>
+    <rect class="backdrop" x="0" y="0" width="1120" height="560"></rect>
+    <circle cx="100" cy="24" r="8" class="nofill"></circle>
+    <rect x="252" y="424" width="32" height="112" class="solid nofill" rx="0"></rect>
+    <text x="266" y="444" >s</text>
+    <text x="266" y="460" >w</text>
+    <text x="266" y="476" >i</text>
+    <text x="266" y="492" >t</text>
+    <text x="266" y="508" >c</text>
+    <text x="266" y="524" >h</text>
+    <rect x="836" y="424" width="32" height="112" class="solid nofill" rx="0"></rect>
+    <text x="850" y="444" >s</text>
+    <text x="850" y="460" >w</text>
+    <text x="850" y="476" >i</text>
+    <text x="850" y="492" >t</text>
+    <text x="850" y="508" >c</text>
+    <text x="850" y="524" >h</text>
+    <circle cx="212" cy="456" r="8" class="nofill"></circle>
+    <circle cx="308" cy="456" r="8" class="nofill"></circle>
+    <circle cx="452" cy="456" r="8" class="nofill"></circle>
+    <circle cx="644" cy="456" r="8" class="nofill"></circle>
+    <circle cx="796" cy="456" r="8" class="nofill"></circle>
+    <circle cx="892" cy="456" r="8" class="nofill"></circle>
+    <circle cx="228" cy="488" r="8" class="nofill"></circle>
+    <circle cx="324" cy="488" r="8" class="nofill"></circle>
+    <circle cx="468" cy="488" r="8" class="nofill"></circle>
+    <circle cx="660" cy="488" r="8" class="nofill"></circle>
+    <circle cx="812" cy="488" r="8" class="nofill"></circle>
+    <circle cx="908" cy="488" r="8" class="nofill"></circle>
+    <text x="938" y="284" >23.02.32.32:80</text>
+    <text x="354" y="348" >router</text>
+    <text x="354" y="364" >10.0.0.1</text>
+    <text x="354" y="444" >L2</text>
+    <text x="354" y="476" >AF:21:..</text>
+    <text x="690" y="348" >router</text>
+    <text x="690" y="364" >23.02.32.1</text>
+    <text x="690" y="444" >L2</text>
+    <text x="690" y="476" >D3:AE:...</text>
+    <text x="106" y="380" >10.0.0.32</text>
+    <text x="506" y="444" >s</text>
+    <text x="602" y="444" >s</text>
+    <text x="506" y="460" >w</text>
+    <text x="602" y="460" >w</text>
+    <text x="506" y="476" >i</text>
+    <text x="546" y="476" >...</text>
+    <text x="602" y="476" >i</text>
+    <text x="506" y="492" >t</text>
+    <text x="602" y="492" >t</text>
+    <text x="506" y="508" >c</text>
+    <text x="602" y="508" >c</text>
+    <text x="506" y="524" >h</text>
+    <text x="602" y="524" >h</text>
+    <text x="122" y="108" >wpisuje w pasek adresu: onet.pl</text>
+    <text x="26" y="156" >przeglądarka</text>
+    <text x="938" y="156" >serwer HTTP onet.pl</text>
+    <text x="490" y="236" >GET /</text>
+    <text x="26" y="252" >socket TCP</text>
+    <text x="490" y="252" >Host: onet.pl</text>
+    <text x="938" y="252" >socket TCP</text>
+    <text x="50" y="284" >10.0.0.32:43425</text>
+    <text x="490" y="316" >HTTP/1.1 200 OK</text>
+    <text x="26" y="348" >Warstwa IP</text>
+    <text x="938" y="348" >Warstwa IP</text>
+    <text x="26" y="444" >Warstwa</text>
+    <text x="938" y="444" >Warstwa</text>
+    <text x="26" y="460" >lącza danych</text>
+    <text x="938" y="460" >łącza danych</text>
+    <text x="34" y="476" >DE:AD:B3:EF:22:37</text>
+    <text x="938" y="476" >AF:32:21:37:33</text>
+    <g>
+        <line x1="88" y1="40" x2="112" y2="40" class="solid"></line>
+        <line x1="100" y1="40" x2="100" y2="56" class="solid"></line>
+        <line x1="100" y1="56" x2="88" y2="80" class="solid"></line>
+        <line x1="100" y1="56" x2="112" y2="80" class="solid"></line>
+    </g>
+    <g>
+        <line x1="100" y1="96" x2="100" y2="116" class="solid"></line>
+        <polygon points="96,116 104,116 100,128" class="filled"></polygon>
+    </g>
+    <g>
+        <line x1="20" y1="136" x2="188" y2="136" class="solid"></line>
+        <line x1="20" y1="136" x2="20" y2="536" class="solid"></line>
+        <line x1="188" y1="136" x2="188" y2="536" class="solid"></line>
+        <line x1="20" y1="232" x2="188" y2="232" class="solid"></line>
+        <line x1="20" y1="328" x2="188" y2="328" class="solid"></line>
+        <line x1="20" y1="424" x2="188" y2="424" class="solid"></line>
+        <line x1="20" y1="536" x2="188" y2="536" class="solid"></line>
+    </g>
+    <g>
+        <polygon points="200,484 192,488 200,492" class="filled"></polygon>
+        <line x1="200" y1="488" x2="208" y2="488" class="solid"></line>
+    </g>
+    <g>
+        <line x1="932" y1="136" x2="1108" y2="136" class="solid"></line>
+        <line x1="932" y1="136" x2="932" y2="536" class="solid"></line>
+        <line x1="1108" y1="136" x2="1108" y2="536" class="solid"></line>
+        <line x1="932" y1="232" x2="1108" y2="232" class="solid"></line>
+        <line x1="932" y1="328" x2="1108" y2="328" class="solid"></line>
+        <line x1="932" y1="424" x2="1108" y2="424" class="solid"></line>
+        <line x1="932" y1="536" x2="1108" y2="536" class="solid"></line>
+    </g>
+    <g>
+        <line x1="912" y1="456" x2="920" y2="456" class="solid"></line>
+        <polygon points="920,452 928,456 920,460" class="filled"></polygon>
+    </g>
+    <g>
+        <line x1="348" y1="328" x2="428" y2="328" class="solid"></line>
+        <line x1="348" y1="328" x2="348" y2="536" class="solid"></line>
+        <line x1="428" y1="328" x2="428" y2="536" class="solid"></line>
+        <line x1="348" y1="424" x2="428" y2="424" class="solid"></line>
+        <line x1="348" y1="536" x2="428" y2="536" class="solid"></line>
+    </g>
+    <g>
+        <line x1="328" y1="456" x2="336" y2="456" class="solid"></line>
+        <polygon points="336,452 344,456 336,460" class="filled"></polygon>
+    </g>
+    <g>
+        <polygon points="440,484 432,488 440,492" class="filled"></polygon>
+        <line x1="440" y1="488" x2="448" y2="488" class="solid"></line>
+    </g>
+    <g>
+        <line x1="684" y1="328" x2="772" y2="328" class="solid"></line>
+        <line x1="684" y1="328" x2="684" y2="536" class="solid"></line>
+        <line x1="772" y1="328" x2="772" y2="536" class="solid"></line>
+        <line x1="684" y1="424" x2="772" y2="424" class="solid"></line>
+        <line x1="684" y1="536" x2="772" y2="536" class="solid"></line>
+    </g>
+    <g>
+        <line x1="664" y1="456" x2="672" y2="456" class="solid"></line>
+        <polygon points="672,452 680,456 672,460" class="filled"></polygon>
+    </g>
+    <g>
+        <polygon points="784,484 776,488 784,492" class="filled"></polygon>
+        <line x1="784" y1="488" x2="792" y2="488" class="solid"></line>
+    </g>
+    <g>
+        <line x1="232" y1="456" x2="240" y2="456" class="solid"></line>
+        <polygon points="240,452 248,456 240,460" class="filled"></polygon>
+    </g>
+    <g>
+        <polygon points="296,484 288,488 296,492" class="filled"></polygon>
+        <line x1="296" y1="488" x2="304" y2="488" class="solid"></line>
+    </g>
+    <g>
+        <line x1="492" y1="424" x2="524" y2="424" class="solid"></line>
+        <line x1="492" y1="424" x2="492" y2="536" class="solid"></line>
+        <line x1="524" y1="424" x2="524" y2="536" class="solid"></line>
+        <line x1="524" y1="456" x2="536" y2="456" class="solid"></line>
+        <polygon points="536,452 544,456 536,460" class="filled"></polygon>
+        <line x1="524" y1="488" x2="544" y2="488" class="solid"></line>
+        <line x1="492" y1="536" x2="524" y2="536" class="solid"></line>
+    </g>
+    <g>
+        <line x1="588" y1="424" x2="620" y2="424" class="solid"></line>
+        <line x1="588" y1="424" x2="588" y2="536" class="solid"></line>
+        <line x1="620" y1="424" x2="620" y2="536" class="solid"></line>
+        <line x1="568" y1="456" x2="588" y2="456" class="solid"></line>
+        <line x1="588" y1="536" x2="620" y2="536" class="solid"></line>
+        <polygon points="576,484 568,488 576,492" class="filled"></polygon>
+        <line x1="576" y1="488" x2="588" y2="488" class="solid"></line>
+    </g>
+    <g>
+        <line x1="472" y1="456" x2="480" y2="456" class="solid"></line>
+        <polygon points="480,452 488,456 480,460" class="filled"></polygon>
+    </g>
+    <g>
+        <polygon points="632,484 624,488 632,492" class="filled"></polygon>
+        <line x1="632" y1="488" x2="640" y2="488" class="solid"></line>
+    </g>
+    <g>
+        <line x1="816" y1="456" x2="824" y2="456" class="solid"></line>
+        <polygon points="824,452 832,456 824,460" class="filled"></polygon>
+    </g>
+    <g>
+        <polygon points="880,484 872,488 880,492" class="filled"></polygon>
+        <line x1="880" y1="488" x2="888" y2="488" class="solid"></line>
+    </g>
+</svg>
