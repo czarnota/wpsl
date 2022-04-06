@@ -29,6 +29,14 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - **Zadanie 1**: ([html](https://czarnota.github.io/wpsl/3/task1), [md](https://github.com/czarnota/wpsl/tree/main/3/task1.md))
     - Termin: do następnych zajęć (09.04.2022)
 
+## Zagadnienie 4: Komunikacja sieciowa
+
+- **Wykład**
+    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/4/slides.html), [html](https://czarnota.github.io/wpsl/4/), [md](https://github.com/czarnota/wpsl/tree/main/4/))
+- **Laboratoria**
+    - **Zadanie 1**: ([html](https://czarnota.github.io/wpsl/4/task1), [md](https://github.com/czarnota/wpsl/tree/main/4/task1.md))
+    - Termin: do następnych zajęć (24.04.2022)
+
 ## Dodatkowe Materiały
 
 - [PL] Kurs języka C dla początkujących na wikibooks: [link](https://pl.wikibooks.org/wiki/C)

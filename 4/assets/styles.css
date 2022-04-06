@@ -1,0 +1,58 @@
+#zagadnienie-4-komunikacja-sieciowa h1 {
+    background-image: url("network-communication.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#obsługa-plików---standard-c h1 {
+    background-image: url("cstandard.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#obsługa-plików---wywołania-systemowe h1 {
+    background-image: url("posix.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#dziękuję-za-uwagę h1 {
+    background-image: url("bg7.jpg");
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#protokół-http h1 {
+    background-image: url("http.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#gniazda-sieciowe-posix h1 {
+    background-image: url("sockets.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#droga-pakietu-w-sieci h1 {
+    background-image: url("way.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#prosty-klient-http pre {
+    font-size: 0.5em;
+}
+
+#prosty-klient-http---żądanie-i-odpowiedź pre {
+    font-size: 0.5em;
+}
