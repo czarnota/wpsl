@@ -306,7 +306,7 @@ odpowiedź.
 
 ## Żądanie HTTP
 Żądanie HTTP ma format tekstowy. Składa się z nagłówków zapytania oraz
-opcjonalnego ciała
+opcjonalnego ciała.
 ```
 METODA ZASÓB WERSJA_HTTP
 Nagłówek1: Wartość1
