@@ -5,24 +5,24 @@ serwował jedną stronę HTML.
 
 W implementacji można zastosować następujące uproszczenia
 
-- Wspieramy tylko metodę `GET`
+- Wspieramy tylko metodę `GET`.
 - Nie trzeba analizować żądania `HTTP`, bo zawsze udzielamy identycznej odpowiedzi.
-  wystarczy tylko ją odczytać z gniazda
-- Zawsze udzielamy tej samej odpowiedzi
+  Wystarczy tylko ją odczytać z gniazda.
+- Zawsze udzielamy tej samej odpowiedzi.
 
 # Przykład działania
 
-Uruchomienie serwera HTTP
+Uruchomienie serwera HTTP:
 ```
 $ ./http-server
 ```
 
-Po uruchomieniu, serwer powinien nasłuchiwać połączeń przychodzących i odsyłać
-odpowiedź na żądania HTTP.
+Po uruchomieniu, serwer powinien nasłuchiwać połączeń przychodzących na porcie
+`8080` i odsyłać odpowiedź na żądania HTTP.
 
 Przykład - odpytanie serwera tekstową przeglądarką `curl`:
 ```
-$ curl -si http://localhost:8081
+$ curl -si http://localhost:8080
 HTTP/1.1 200 OK
 Content-Type: text/html
 Connection: close
@@ -51,21 +51,22 @@ Przykład - odpytanie serwera przeglądarką Firefox
 
 Do implementacji serwera przydadzą się następujące funkcje:
 
-- `getaddrinfo()` - odpytanie systemu o możliwe adresy do nasłuchiwania
-- `socket()` - utworzenie gniazda sieciowego
-- `bind()` - przypisanie gniazdu sieciowemu adresu do nasłuchiwania
-- `listen()` - ustawienie gniazda sieciowego w tryb nasłuchiwania
-- `accept()` - oczekiwanie na połączenie klienta
-- `read()` - odebranie żądania od klienta
-- `write()` - wysłanie odpowiedzi do klienta
-- `close()` - zamknięcie połączenia
+- `getaddrinfo()` - odpytanie systemu o możliwe adresy do nasłuchiwania;
+- `socket()` - utworzenie gniazda sieciowego;
+- `bind()` - przypisanie gniazdu sieciowemu adresu do nasłuchiwania;
+- `listen()` - ustawienie gniazda sieciowego w tryb nasłuchiwania;
+- `accept()` - oczekiwanie na połączenie klienta;
+- `read()` - odebranie żądania od klienta;
+- `write()` - wysłanie odpowiedzi do klienta;
+- `close()` - zamknięcie połączenia.
 
 ## Tworzenie gniazda w trybie nasłuchiwania
 
 Do utworzenia gniazda w trybie nasłuchiwania można użyć poniższej funkcji.
 Zwraca ona deskryptor pliku gniazda, które nasłuchuje na połączenia przychodzące
 lub wartość ujemną, jeżeli wystąpił błąd.
-```
+
+```c
 int listening_socket(const char *port)
 {
 	struct addrinfo hints = {
@@ -110,11 +111,12 @@ int listening_socket(const char *port)
 
 W celu poprawnego sformułowania odpowiedzi HTTP, którą będziemy wysyłać, musimy
 wstawić właściwą wartość w nagłówku `Content-Length`. Musi być ona równa długości
-odsyłanego ciała zapytania. 
+odsyłanego ciała odpowiedzi. 
 
 Możemy to zrobić w poniższy sposób. Tablica `response` zawiera odpowiedź którą,
 należy odesłać za pomocą `write()`.
 ```c
+/* Szablon odpowiedzi */
 char http_response_template[] =
 	"HTTP/1.1 200 OK\r\n"
 	"Content-Type: text/html\r\n"
@@ -123,6 +125,8 @@ char http_response_template[] =
 	"\r\n"
 	"%s"
 ;
+
+/* Ciało odpowiedzi */
 char html[] =
 	"<!doctype html>\n"
 	"<html lang=\"pl\">\n"
@@ -139,6 +143,7 @@ char html[] =
 	"</html>\n"
 ;
 
+/* Uzupełniamy szablon i tworzymy odpowiedź */
 char response[4096];
 snprintf(response, sizeof(response), http_response_template,
 	 strlen(html), html);
@@ -161,20 +166,21 @@ int main(void)
 {
 	int socket_fd = listening_socket("8080");
 	if (socket_fd < 0) {
-		perror("server: error: \n");
+		perror("server: error: ");
 		return 1;
 	}
 
 	while (1) {
-		// Akceptacja połączenia
+		/* Akceptacja połączenia */
 
-		// Odczytanie żądania
+		/* Odczytanie żądania */
 
-		// Odesłanie odpowiedzi
+		/* Odesłanie odpowiedzi */
 
-		// Zamknięcie połączenie klientowi
+		/* Zamknięcie połączenia klientowi */
 	}
 
 	close(socket_fd);
+	return 0;
 }
 ```
