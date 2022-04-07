@@ -237,27 +237,424 @@
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-<section id="zagadnienie-3-obsługa-plików" class="level1">
-<h1>Zagadnienie 3: Obsługa plików</h1>
-<section id="komunikacja-międzyprocesowa" class="level2">
-<h2>Komunikacja międzyprocesowa</h2>
-<p><img src="assets/1.anim.svg" /></p>
+<section id="zagadnienie-4-komunikacja-sieciowa" class="level1">
+<h1>Zagadnienie 4: Komunikacja sieciowa</h1>
+<section id="informacje-wstępne---tablice" class="level2">
+<h2>Informacje wstępne - tablice</h2>
+<p>Tablicą nazwywamy ciąg elementów takiego samego typu.</p>
+<p>Przykłady tablic:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" title="1"><span class="dt">float</span> numbers[<span class="dv">4</span>] = {<span class="fl">1.0</span><span class="bu">f</span>, -<span class="fl">1.0</span><span class="bu">f</span>, -<span class="fl">2.0</span><span class="bu">f</span>, -<span class="fl">3.0</span><span class="bu">f</span>};</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="dt">int</span> a[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>};</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="dt">char</span> name[] = { <span class="ch">&#39;S&#39;</span>, <span class="ch">&#39;t&#39;</span>, <span class="ch">&#39;e&#39;</span>, <span class="ch">&#39;f&#39;</span>, <span class="ch">&#39;a&#39;</span>, <span class="ch">&#39;n&#39;</span>, <span class="dv">0</span> };</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="dt">char</span> name2[] = <span class="st">&quot;Stefan&quot;</span>;</a></code></pre></div>
+<p>Elementy tablicy są ułożone pod kolejnymi adresami w pamięci:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" title="1"><span class="dt">int</span> values[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>};</a></code></pre></div>
+<pre><code>0x4 0x8 0xb
+  +---+---+---+
+  | 1 | 2 | 3 |
+  +---+---+---+</code></pre>
 </section>
-<section id="komunikacja-międzyprocesowa-1" class="level2">
-<h2>Komunikacja międzyprocesowa</h2>
-<p><img src="assets/2.anim.svg" /></p>
+<section id="informacje-wstępne---nazwa-tablicy-jest-wskaźnikiem-do-pierwszego-elementu" class="level2">
+<h2>Informacje wstępne - nazwa tablicy jest wskaźnikiem do pierwszego elementu</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb4-1" title="1"><span class="dt">int</span> values[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>};</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="dt">int</span> *p = values;</a></code></pre></div>
+<pre><code>0x4 0x8 0xb             p
+  +---+---+---+          +---+
+  | 1 | 2 | 3 |          |0x4|
+  +---+---+---+          +---+
+  ^------------------------&#39;</code></pre>
 </section>
-<section id="komunikacja-międzyprocesowa-2" class="level2">
-<h2>Komunikacja międzyprocesowa</h2>
-<p><img src="assets/3.anim.svg" /></p>
+<section id="informacje-wstępne---struktury" class="level2">
+<h2>Informacje wstępne - struktury</h2>
+<p>O ile tablice reprezentowały ciąg elementów takiego samego typu, to struktury reprezentują zbiór elementów o możliwie różnych typach.</p>
+<p>Definicja struktury:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">struct</span> person {</a>
+<a class="sourceLine" id="cb6-2" title="2">    <span class="dt">int</span> age;</a>
+<a class="sourceLine" id="cb6-3" title="3">    <span class="dt">float</span> salary;</a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="dt">char</span> name[<span class="dv">16</span>];</a>
+<a class="sourceLine" id="cb6-5" title="5">};</a></code></pre></div>
+<p>Utworzenie obiektu struktury i wypełnienie pól:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">struct</span> person p;</a>
+<a class="sourceLine" id="cb7-2" title="2">p.age = <span class="dv">46</span>;</a>
+<a class="sourceLine" id="cb7-3" title="3">p.salary = <span class="fl">1029384732.0</span><span class="bu">f</span>;</a>
+<a class="sourceLine" id="cb7-4" title="4">snprintf(p.name, <span class="kw">sizeof</span>(name), <span class="st">&quot;%s&quot;</span>, <span class="st">&quot;Daniel&quot;</span>);</a></code></pre></div>
 </section>
-<section id="komunikacja-międzyprocesowa-3" class="level2">
-<h2>Komunikacja międzyprocesowa</h2>
-<p><img src="assets/4.anim.svg" /></p>
+<section id="informacje-wstępne---struktury---inicjalizacja" class="level2">
+<h2>Informacje wstępne - struktury - inicjalizacja</h2>
+<p>Strukturę można zainicjalizować podając kolejno jej elementy.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">struct</span> person p = { <span class="dv">46</span>, <span class="fl">1029384732.0</span><span class="bu">f</span>, <span class="st">&quot;Daniel&quot;</span> };</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">/* Rekomendowaną praktyką jest stosowanie &quot;designated initializers&quot; z C99 */</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="kw">struct</span> person p2 = {</a>
+<a class="sourceLine" id="cb8-5" title="5">    .age = <span class="dv">46</span>,</a>
+<a class="sourceLine" id="cb8-6" title="6">    .salary = <span class="fl">1029384732.0</span><span class="bu">f</span>,</a>
+<a class="sourceLine" id="cb8-7" title="7">    .name = <span class="st">&quot;Daniel&quot;</span>,</a>
+<a class="sourceLine" id="cb8-8" title="8">    <span class="co">/* Pola pominięte bedą zainicjalizowane zerami */</span></a>
+<a class="sourceLine" id="cb8-9" title="9">};</a></code></pre></div>
+<p>Inicjalizacja struktury samymi zerami:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">struct</span> person p = {<span class="dv">0</span>}</a></code></pre></div>
 </section>
-<section id="komunikacja-międzyprocesowa-4" class="level2">
-<h2>Komunikacja międzyprocesowa</h2>
+<section id="informacje-wstępne---struktury-układ-w-pamięci" class="level2">
+<h2>Informacje wstępne - struktury układ w pamięci</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">struct</span> foo {</a>
+<a class="sourceLine" id="cb10-2" title="2">    <span class="dt">char</span> a;</a>
+<a class="sourceLine" id="cb10-3" title="3">    <span class="dt">int</span> b;</a>
+<a class="sourceLine" id="cb10-4" title="4">    <span class="dt">int</span> c;</a>
+<a class="sourceLine" id="cb10-5" title="5">};</a></code></pre></div>
+<p>Jeżeli kompilujemy program na architekturę, gdzie <code>sizeof(int) == 4</code>, to wtedy struktura może wyglądać w pamięci następujący sposób:</p>
+<pre><code>+---+---+---+---+---+---+---+---+---+
+| a |       b       |       c       |
++---+---+---+---+---+---+---+---+---+</code></pre>
+<p><strong>Czy aby na pewno?</strong></p>
+</section>
+<section id="informacje-wstępne---padding" class="level2">
+<h2>Informacje wstępne - padding</h2>
+<p>Niestety, w praktyce najprawdopodobniej kompilator wyrówna pola struktury tak aby adresy były podzielne np. przez 4, ponieważ w ten sposób procesor może je szybciej zaadresować:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">struct</span> foo {</a>
+<a class="sourceLine" id="cb12-2" title="2">    <span class="dt">char</span> a;</a>
+<a class="sourceLine" id="cb12-3" title="3">    <span class="dt">int</span> b;</a>
+<a class="sourceLine" id="cb12-4" title="4">    <span class="dt">int</span> c;</a>
+<a class="sourceLine" id="cb12-5" title="5">};</a></code></pre></div>
+<pre><code>+---+---+---+---+---+---+---+---+---+---+---+---+
+| a |  padding  |       b       |       c       |
++---+---+---+---+---+---+---+---+---+---+---+---+</code></pre>
+<p>Wartość <code>sizeof(struct foo)</code> najprawdopodobniej wyniesie <code>12</code>, a nie <code>9</code>.</p>
+<p><strong>Jak pozbyć się/ograniczyć padding?</strong></p>
+</section>
+<section id="informacje-wstępne---ograniczenie-paddingu" class="level2">
+<h2>Informacje wstępne - ograniczenie paddingu</h2>
+<p>Padding można ograniczyć zamieniając kolejność pól. Optymalizując struktury w ten sposób, można zaoszczędzić pamięć.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">struct</span> foo {</a>
+<a class="sourceLine" id="cb14-2" title="2">    <span class="dt">int</span> b;</a>
+<a class="sourceLine" id="cb14-3" title="3">    <span class="dt">int</span> c;</a>
+<a class="sourceLine" id="cb14-4" title="4">    <span class="dt">char</span> a;</a>
+<a class="sourceLine" id="cb14-5" title="5">};</a></code></pre></div>
+<pre><code>+---+---+---+---+---+---+---+---+---+
+|       b       |       c       | a |
++---+---+---+---+---+---+---+---+---+</code></pre>
+<p>Alternatywnie, kompilatory oferują <strong>niestandardowe</strong> rozszerzenia umożliwiające wyłączenie paddingu: <code>#pragma pack</code> w MSVC i <code>__attribute__((packed))</code> w <code>gcc</code>.</p>
+</section>
+<section id="informacje-wstępne---operacje-na-strukturach" class="level2">
+<h2>Informacje wstępne - operacje na strukturach</h2>
+<p>Struktury obsługują operator przypisania <code>=</code>, który powoduje przekopiowanie wartości każdego pola.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">struct</span> vec2 {</a>
+<a class="sourceLine" id="cb16-2" title="2">    <span class="dt">float</span> x;</a>
+<a class="sourceLine" id="cb16-3" title="3">    <span class="dt">float</span> y;</a>
+<a class="sourceLine" id="cb16-4" title="4">};</a>
+<a class="sourceLine" id="cb16-5" title="5"></a>
+<a class="sourceLine" id="cb16-6" title="6"><span class="kw">struct</span> vec2 position_a = { <span class="fl">2.0</span><span class="bu">f</span>, <span class="fl">10.0</span><span class="bu">f</span> };</a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="kw">struct</span> vec2 position_b = position_a;</a>
+<a class="sourceLine" id="cb16-8" title="8"></a>
+<a class="sourceLine" id="cb16-9" title="9">printf(<span class="st">&quot;%f %f&quot;</span>, position_b.x, position_b.y);</a></code></pre></div>
+</section>
+<section id="informacje-wstępne---definicja-i-utworzenie-obiektu-w-jednym" class="level2">
+<h2>Informacje wstępne - definicja i utworzenie obiektu w jednym</h2>
+<p>Strukturę możemy zdefiniować i od razu utworzyć zmienną jej typu:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">struct</span> player_config {</a>
+<a class="sourceLine" id="cb17-2" title="2">    <span class="kw">struct</span> vec2 velocity;</a>
+<a class="sourceLine" id="cb17-3" title="3">    <span class="dt">char</span> name[<span class="dv">32</span>];</a>
+<a class="sourceLine" id="cb17-4" title="4">    <span class="dt">int</span> max_hp;</a>
+<a class="sourceLine" id="cb17-5" title="5">} configuration = {</a>
+<a class="sourceLine" id="cb17-6" title="6">    .velocity = { <span class="fl">0.0</span><span class="bu">f</span>, <span class="fl">1.0</span><span class="bu">f</span> },</a>
+<a class="sourceLine" id="cb17-7" title="7">    .name = <span class="st">&quot;Marian&quot;</span>,</a>
+<a class="sourceLine" id="cb17-8" title="8">    .max_hp = <span class="dv">200</span>,</a>
+<a class="sourceLine" id="cb17-9" title="9">};</a>
+<a class="sourceLine" id="cb17-10" title="10"></a>
+<a class="sourceLine" id="cb17-11" title="11">printf(<span class="st">&quot;%s&quot;</span>, configuration.name);</a></code></pre></div>
+</section>
+<section id="informacje-wstępne---anonimowe-struktury" class="level2">
+<h2>Informacje wstępne - anonimowe struktury</h2>
+<p>Gdy od razu tworzymy zmienną możemy pominąć nazwę typu:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">struct</span> {</a>
+<a class="sourceLine" id="cb18-2" title="2">    <span class="kw">struct</span> vec2 velocity;</a>
+<a class="sourceLine" id="cb18-3" title="3">    <span class="dt">char</span> name[<span class="dv">32</span>];</a>
+<a class="sourceLine" id="cb18-4" title="4">    <span class="dt">int</span> max_hp;</a>
+<a class="sourceLine" id="cb18-5" title="5">} configuration = {</a>
+<a class="sourceLine" id="cb18-6" title="6">    .velocity = { <span class="fl">0.0</span><span class="bu">f</span>, <span class="fl">1.0</span><span class="bu">f</span> },</a>
+<a class="sourceLine" id="cb18-7" title="7">    .name = <span class="st">&quot;Marian&quot;</span>,</a>
+<a class="sourceLine" id="cb18-8" title="8">    .max_hp = <span class="dv">200</span>,</a>
+<a class="sourceLine" id="cb18-9" title="9">};</a>
+<a class="sourceLine" id="cb18-10" title="10"></a>
+<a class="sourceLine" id="cb18-11" title="11">printf(<span class="st">&quot;%s&quot;</span>, configuration.name);</a></code></pre></div>
+</section>
+<section id="informacje-wstępne---tablice-struktur" class="level2">
+<h2>Informacje wstępne - tablice struktur</h2>
+<p>Nic nie stoi na przeszkodzie aby łączyć tablice i struktury:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">struct</span> month_info {</a>
+<a class="sourceLine" id="cb19-2" title="2">    <span class="dt">int</span> number;</a>
+<a class="sourceLine" id="cb19-3" title="3">    <span class="dt">int</span> days;</a>
+<a class="sourceLine" id="cb19-4" title="4">    <span class="dt">char</span> name[<span class="dv">32</span>];</a>
+<a class="sourceLine" id="cb19-5" title="5">};</a>
+<a class="sourceLine" id="cb19-6" title="6"><span class="kw">struct</span> month_info months[] = {</a>
+<a class="sourceLine" id="cb19-7" title="7">    { .number = <span class="dv">1</span>, .days = <span class="dv">31</span>, .name = <span class="st">&quot;January&quot;</span> },</a>
+<a class="sourceLine" id="cb19-8" title="8">    { .number = <span class="dv">2</span>, .days = <span class="dv">28</span>, .name = <span class="st">&quot;February&quot;</span> },</a>
+<a class="sourceLine" id="cb19-9" title="9">    { .number = <span class="dv">3</span>, .days = <span class="dv">31</span>, .name = <span class="st">&quot;March&quot;</span> },</a>
+<a class="sourceLine" id="cb19-10" title="10">    { .number = <span class="dv">4</span>, .days = <span class="dv">30</span>, .name = <span class="st">&quot;April&quot;</span> },</a>
+<a class="sourceLine" id="cb19-11" title="11">    { .number = <span class="dv">5</span>, .days = <span class="dv">31</span>, .name = <span class="st">&quot;May&quot;</span> },</a>
+<a class="sourceLine" id="cb19-12" title="12">    { .number = <span class="dv">6</span>, .days = <span class="dv">30</span>, .name = <span class="st">&quot;June&quot;</span> },</a>
+<a class="sourceLine" id="cb19-13" title="13">    { .number = <span class="dv">7</span>, .days = <span class="dv">31</span>, .name = <span class="st">&quot;July&quot;</span> },</a>
+<a class="sourceLine" id="cb19-14" title="14">    { .number = <span class="dv">8</span>, .days = <span class="dv">31</span>, .name = <span class="st">&quot;August&quot;</span> },</a>
+<a class="sourceLine" id="cb19-15" title="15">    { .number = <span class="dv">9</span>, .days = <span class="dv">30</span>, .name = <span class="st">&quot;September&quot;</span> },</a>
+<a class="sourceLine" id="cb19-16" title="16">    { .number = <span class="dv">10</span>, .days = <span class="dv">31</span>, .name = <span class="st">&quot;October&quot;</span> },</a>
+<a class="sourceLine" id="cb19-17" title="17">    { .number = <span class="dv">11</span>, .days = <span class="dv">30</span>, .name = <span class="st">&quot;November&quot;</span> },</a>
+<a class="sourceLine" id="cb19-18" title="18">    { .number = <span class="dv">12</span>, .days = <span class="dv">31</span>, .name = <span class="st">&quot;December&quot;</span> },</a>
+<a class="sourceLine" id="cb19-19" title="19">};</a></code></pre></div>
+</section>
+<section id="informacje-wstępne---wskaźniki-na-struktury" class="level2">
+<h2>Informacje wstępne - wskaźniki na struktury</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">struct</span> foo { <span class="dt">int</span> a; };</a></code></pre></div>
+<p>Do pól struktury odnosimy się używając operatora <code>.</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">struct</span> foo foo = {<span class="dv">0</span>, <span class="dv">1</span>}:</a>
+<a class="sourceLine" id="cb21-2" title="2"></a>
+<a class="sourceLine" id="cb21-3" title="3">printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, foo.a);</a></code></pre></div>
+<p>Do pól struktury poprzez wskaźnik odnosimy się używając operatora <code>-&gt;</code>:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">struct</span> foo foo = {<span class="dv">0</span>, <span class="dv">1</span>}:</a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="kw">struct</span> foo *bar = &amp;foo;</a>
+<a class="sourceLine" id="cb22-3" title="3"></a>
+<a class="sourceLine" id="cb22-4" title="4">printf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, bar-&gt;a);</a></code></pre></div>
+</section>
+<section id="informacje-wstępne---lista-jednokierunkowa" class="level2">
+<h2>Informacje wstępne - lista jednokierunkowa</h2>
+<p>Lista jednokierunkowa, podobnie jak tablica pozwala na utworzenie kolekcji elementów takiego samego typu - z tą różnicą że elementy nie będą ułożone kolejno w pamięci.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">struct</span> book {</a>
+<a class="sourceLine" id="cb23-2" title="2">    <span class="co">/* Wskaźnik do następnego elementu */</span></a>
+<a class="sourceLine" id="cb23-3" title="3">    <span class="kw">struct</span> book *next;</a>
+<a class="sourceLine" id="cb23-4" title="4">    <span class="dt">char</span> title[<span class="dv">128</span>];</a>
+<a class="sourceLine" id="cb23-5" title="5">};</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">struct</span> book book1 = { .next = NULL, .title = <span class="st">&quot;Harry Potter i Tablica Charów&quot; };</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="kw">struct</span> book book2 = { .next = &amp;book1, .title = <span class="st">&quot;Harry Router i Maska Podsieci&quot;</span> };</a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="kw">struct</span> book book3 = { .next = &amp;book2, .title = <span class="st">&quot;Alicja na Wydziale Informatyki&quot;</span> };</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb25-1" title="1"><span class="cf">for</span> (<span class="kw">struct</span> book *book = &amp;book3; book != NULL; book = book-&gt;next)</a>
+<a class="sourceLine" id="cb25-2" title="2">    printf(<span class="st">&quot;tytul: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, book-&gt;title);</a></code></pre></div>
+</section>
+</section>
+<section id="protokół-http" class="level1">
+<h1>Protokół HTTP</h1>
+<section id="każda-strona-internetowa-to-dokument-hipertekstowy" class="level2">
+<h2>Każda strona internetowa to dokument hipertekstowy</h2>
+<p><img src="assets/onet.png" /></p>
+</section>
+<section id="hipertekstowy-język-znaczników-html" class="level2">
+<h2>Hipertekstowy język znaczników (HTML)</h2>
+<p>Język HTML, służy do formułowania dokumentów hipertekstowych, które następnie są prezentowane przez przeglądarke jako strona internetowa.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb26-1" title="1"><span class="dt">&lt;!doctype </span>html<span class="dt">&gt;</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;pl&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb26-3" title="3">    <span class="kw">&lt;head&gt;</span></a>
+<a class="sourceLine" id="cb26-4" title="4">        <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb26-5" title="5">        <span class="kw">&lt;meta</span><span class="ot"> http-equiv=</span><span class="st">&quot;X-UA-Compatible&quot;</span><span class="ot"> content=</span><span class="st">&quot;IE=edge&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb26-6" title="6">        <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;viewport&quot;</span><span class="ot"> content=</span><span class="st">&quot;width=device-width, initial-scale=1&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb26-7" title="7">        <span class="kw">&lt;title&gt;</span>Title<span class="kw">&lt;/title&gt;</span></a>
+<a class="sourceLine" id="cb26-8" title="8">    <span class="kw">&lt;/head&gt;</span></a>
+<a class="sourceLine" id="cb26-9" title="9">    <span class="kw">&lt;body&gt;</span></a>
+<a class="sourceLine" id="cb26-10" title="10">        <span class="kw">&lt;h1&gt;</span>Witaj świecie<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb26-11" title="11">        <span class="kw">&lt;p&gt;</span>Oto pierwszy akapit<span class="kw">&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb26-12" title="12">    <span class="kw">&lt;/body&gt;</span></a>
+<a class="sourceLine" id="cb26-13" title="13"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
+</section>
+<section id="hipertekstowy-język-znaczników---efekt" class="level2">
+<h2>Hipertekstowy język znaczników - efekt</h2>
+<p>Po wyrenderowaniu HTML, przez przeglądarke otrzymujemy następujący efekt:</p>
+<p><img src="assets/htmlhello.png" /></p>
+</section>
+<section id="protokół-przesyłania-dokumentów-hipertekstowych-http" class="level2">
+<h2>Protokół przesyłania dokumentów hipertekstowych (HTTP)</h2>
+<p>Do przesyłania dokumentów HTML poprzez sieć służy protokół HTTP. Gdy użytkownik chce wejśc na daną stronę internetową, to przeglądarka wysyła żądanie HTTP do serwera HTTP. Następnie serwer odsyła przeglądarce odpowiedź.</p>
+<p><img src="assets/http.svg" /></p>
+</section>
+<section id="żądanie-http" class="level2">
+<h2>Żądanie HTTP</h2>
+<p>Żądanie HTTP ma również format tekstowy. Składa się z nagłówków zapytania oraz opcjonalnego ciała</p>
+<pre><code>METODA WERSJA_HTTP
+Nagłówek1: Wartość1
+Nagłówek2: Wartość2
+
+&lt;opcjonalne ciało&gt;</code></pre>
+<p>Przykład:</p>
+<pre><code>GET /index.html HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: */*
+
+</code></pre>
+<p>W <code>HTTP/1.1</code> wymaganym nagłówkiem jest <code>Host</code>, reszta jest opcjonalna.</p>
+</section>
+<section id="odpowiedź-http" class="level2">
+<h2>Odpowiedź HTTP</h2>
+<p>Odpowiedź HTTP również format tekstowy. Składa się z linii statusu, nagłówków zapytania oraz opcjonalnego ciała:</p>
+<pre><code>HTTP/1.1 KOD_ODPOWIEDZI NAZWA_KODU
+Nagłówek1: Wartość1
+Nagłówek2: Wartość2
+
+&lt;opcjonalne ciało&gt;</code></pre>
+</section>
+<section id="odpowiedź-http---przykład" class="level2">
+<h2>Odpowiedź HTTP - przykład</h2>
+<p>Przykładowa odpowiedź HTTP</p>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Date: Thu, 07 Apr 2022 15:32:42 GMT
+Content-Length: 353
+
+&lt;!doctype html&gt;
+&lt;html lang=&quot;pl&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;Title&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Witaj świecie&lt;/h1&gt;
+        &lt;p&gt;Oto pierwszy akapit&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</section>
+<section id="droga-pakietu---wysłanie-pakietu" class="level2">
+<h2>Droga pakietu - wysłanie pakietu</h2>
 <p><img src="assets/5.anim.svg" /></p>
+</section>
+<section id="droga-pakietu---switch" class="level2">
+<h2>Droga pakietu - switch</h2>
+<p><img src="assets/6.anim.svg" /></p>
+</section>
+<section id="droga-pakietu---router" class="level2">
+<h2>Droga pakietu - router</h2>
+<p><img src="assets/7.anim.svg" /></p>
+</section>
+<section id="droga-pakietu---serwer" class="level2">
+<h2>Droga pakietu - serwer</h2>
+<p><img src="assets/8.anim.svg" /></p>
+</section>
+<section id="droga-pakietu---odebranie-pakietu" class="level2">
+<h2>Droga pakietu - odebranie pakietu</h2>
+<p><img src="assets/9.anim.svg" /></p>
+</section>
+</section>
+<section id="gniazda-sieciowe-posix" class="level1">
+<h1>Gniazda sieciowe POSIX</h1>
+<section id="funkcjewywołania-systemowe-po-stronie-klienta" class="level2">
+<h2>Funkcje/wywołania systemowe po stronie klienta</h2>
+<p>Po stronie klienta:</p>
+<ul class="incremental">
+<li><code>socket()</code></li>
+<li><code>bind()</code></li>
+<li><code>connect()</code></li>
+<li><code>read()</code></li>
+<li><code>write()</code></li>
+<li><code>close()</code></li>
+<li><code>getaddrinfo()</code></li>
+</ul>
+</section>
+<section id="funkcja-getaddrinfo" class="level2">
+<h2>Funkcja <code>getaddrinfo()</code></h2>
+<p>Funkcja <code>getaddrinfo()</code> służy do odpytywania usługi DNS.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb31-1" title="1"><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="pp">#include </span><span class="im">&lt;sys/socket.h&gt;</span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="pp">#include </span><span class="im">&lt;netdb.h&gt;</span></a>
+<a class="sourceLine" id="cb31-4" title="4"></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb31-6" title="6"><span class="co"> * </span><span class="an">@node:</span><span class="co"> nazwa docelowa np. &quot;onet.pl&quot;</span></a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="co"> * </span><span class="an">@service:</span><span class="co"> nazwa ułsugi np &quot;http&quot; lub &quot;80&quot;</span></a>
+<a class="sourceLine" id="cb31-8" title="8"><span class="co"> * </span><span class="an">@hints:</span><span class="co"> podpowiedzi</span></a>
+<a class="sourceLine" id="cb31-9" title="9"><span class="co"> * </span><span class="an">@res:</span><span class="co"> wynik odpytania usługi DNS</span></a>
+<a class="sourceLine" id="cb31-10" title="10"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb31-11" title="11"><span class="dt">int</span> getaddrinfo(<span class="dt">const</span> <span class="dt">char</span> *node, <span class="dt">const</span> <span class="dt">char</span> *service,</a>
+<a class="sourceLine" id="cb31-12" title="12">               <span class="dt">const</span> <span class="kw">struct</span> addrinfo *hints,</a>
+<a class="sourceLine" id="cb31-13" title="13">               <span class="kw">struct</span> addrinfo **res);</a></code></pre></div>
+<p>Otrzymany wynik należy “zwolnić” za pomocą <code>freeaddrinfo()</code></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb32-1" title="1"><span class="dt">void</span> freeaddrinfo(<span class="kw">struct</span> addrinfo *res);</a></code></pre></div>
+</section>
+<section id="funkcja-getaddrinfo-przykład" class="level2">
+<h2>Funkcja <code>getaddrinfo()</code> przykład</h2>
+<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">struct</span> addrinfo hints = {</a>
+<a class="sourceLine" id="cb33-2" title="2">    .ai_family = AF_INET,</a>
+<a class="sourceLine" id="cb33-3" title="3">    .ai_socktype = SOCK_STREAM,</a>
+<a class="sourceLine" id="cb33-4" title="4">    .ai_protocol = IPPROTO_TCP,</a>
+<a class="sourceLine" id="cb33-5" title="5">};</a>
+<a class="sourceLine" id="cb33-6" title="6"></a>
+<a class="sourceLine" id="cb33-7" title="7"><span class="kw">struct</span> addrinfo *result = NULL;</a>
+<a class="sourceLine" id="cb33-8" title="8"><span class="dt">int</span> ret = getaddrinfo(<span class="st">&quot;onet.pl&quot;</span>, <span class="st">&quot;80&quot;</span>, &amp;hints, &amp;result);</a>
+<a class="sourceLine" id="cb33-9" title="9"><span class="cf">if</span> (ret) {</a>
+<a class="sourceLine" id="cb33-10" title="10">    <span class="co">/* Nie udało się przetłumaczyć nazwy */</span></a>
+<a class="sourceLine" id="cb33-11" title="11">}</a>
+<a class="sourceLine" id="cb33-12" title="12"></a>
+<a class="sourceLine" id="cb33-13" title="13"><span class="co">/* Iterujemy się po każdyn znalezionym adresie */</span></a>
+<a class="sourceLine" id="cb33-14" title="14"><span class="cf">for</span> (<span class="kw">struct</span> addrinfo *i = result; i != NULL; i = i-&gt;ai_next) {</a>
+<a class="sourceLine" id="cb33-15" title="15">    <span class="dt">char</span> ip[NI_MAXHOST] = {<span class="dv">0</span>};</a>
+<a class="sourceLine" id="cb33-16" title="16">    <span class="co">/* i-&gt;ai_addr i i-&gt;ai_addrlen zawierają adres ip */</span></a>
+<a class="sourceLine" id="cb33-17" title="17">    getnameinfo(i-&gt;ai_addr, i-&gt;ai_addrlen, ip, <span class="kw">sizeof</span>(ip), NULL, <span class="dv">0</span>, NI_NUMERICHOST);</a>
+<a class="sourceLine" id="cb33-18" title="18">    printf(<span class="st">&quot;IP serwisu onet.pl: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, ip);</a>
+<a class="sourceLine" id="cb33-19" title="19">}</a>
+<a class="sourceLine" id="cb33-20" title="20"></a>
+<a class="sourceLine" id="cb33-21" title="21">freeaddrinfo(result);</a></code></pre></div>
+</section>
+<section id="wywołanie-systemowe-socket" class="level2">
+<h2>Wywołanie systemowe <code>socket()</code></h2>
+<p>Wywołanie systemowe <code>socket()</code> otwiera gniazdo sieciowe, za pomocą którego możemy komunikować się poprzez sieć.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb34-1" title="1"><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="pp">#include </span><span class="im">&lt;sys/socket.h&gt;</span></a>
+<a class="sourceLine" id="cb34-3" title="3"></a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb34-5" title="5"><span class="co"> * </span><span class="an">@domain:</span><span class="co"> Rodzina socketu np. AF_INET, AF_INET6</span></a>
+<a class="sourceLine" id="cb34-6" title="6"><span class="co"> * </span><span class="an">@type:</span><span class="co"> Typ socketu np. SOCK_STREAM, SOCK_DGRAM</span></a>
+<a class="sourceLine" id="cb34-7" title="7"><span class="co"> * </span><span class="an">@protocol:</span><span class="co"> Protokół np. IPPROTO_TCP, IPPROTO_UDP</span></a>
+<a class="sourceLine" id="cb34-8" title="8"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb34-9" title="9"><span class="dt">int</span> socket(<span class="dt">int</span> domain, <span class="dt">int</span> type, <span class="dt">int</span> protocol);</a></code></pre></div>
+<p>Na przykład możemy utrzowyć gniazdo TCP:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb35-1" title="1"><span class="dt">int</span> fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</a>
+<a class="sourceLine" id="cb35-2" title="2"><span class="cf">if</span> (fd &lt; <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb35-3" title="3">    <span class="co">/* Wystąpił błąd */</span></a>
+<a class="sourceLine" id="cb35-4" title="4">}</a></code></pre></div>
+</section>
+<section id="wywołanie-systemowe-close" class="level2">
+<h2>Wywołanie systemowe <code>close()</code></h2>
+<p>Wywołanie systemowe <code>close()</code> zamyka gniazdo sieciowe.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb36-1" title="1"><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></a>
+<a class="sourceLine" id="cb36-2" title="2"></a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="dt">int</span> close(<span class="dt">int</span> fd);</a></code></pre></div>
+<p>Przykład:</p>
+<pre><code>close(fd);</code></pre>
+</section>
+<section id="wywołanie-systemowe-bind" class="level2">
+<h2>Wywołanie systemowe <code>bind()</code></h2>
+</section>
+<section id="wywołanie-systemowe-connect" class="level2">
+<h2>Wywołanie systemowe <code>connect()</code></h2>
+</section>
+<section id="wywołanie-systemowe-read" class="level2">
+<h2>Wywołanie systemowe <code>read()</code></h2>
+</section>
+<section id="wywołanie-systemowe-write" class="level2">
+<h2>Wywołanie systemowe <code>write()</code></h2>
+</section>
+<section id="wywołanie-systemowe-close-1" class="level2">
+<h2>Wywołanie systemowe <code>close()</code></h2>
+</section>
+<section id="prosty-klient-http" class="level2">
+<h2>Prosty klient HTTP</h2>
+</section>
+<section id="funkcjewywołania-systemowe-po-stronie-serwera" class="level2">
+<h2>Funkcje/wywołania systemowe po stronie serwera</h2>
+<p>Po stronie serwera, oprócz:</p>
+<ul class="incremental">
+<li><code>socket()</code></li>
+<li><code>bind()</code></li>
+<li><code>read()</code></li>
+<li><code>write()</code></li>
+<li><code>close()</code></li>
+<li><code>getaddrinfo()</code></li>
+</ul>
+<p>Wykorzystywane są 2 dodatkowe:</p>
+<ul class="incremental">
+<li><code>listen()</code></li>
+<li><code>accept()</code></li>
+</ul>
+</section>
+<section id="wywołanie-systemowe-listen" class="level2">
+<h2>Wywołanie systemowe <code>listen()</code></h2>
+</section>
+<section id="wywołanie-systemowe-accept" class="level2">
+<h2>Wywołanie systemowe <code>accept()</code></h2>
 </section>
 </section>
 <section id="dziękuję-za-uwagę" class="level1">
