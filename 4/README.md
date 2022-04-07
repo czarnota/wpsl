@@ -305,10 +305,10 @@ odpowiedź.
 ![](assets/http.svg)
 
 ## Żądanie HTTP
-Żądanie HTTP ma również format tekstowy. Składa się z nagłówków zapytania oraz
+Żądanie HTTP ma format tekstowy. Składa się z nagłówków zapytania oraz
 opcjonalnego ciała
 ```
-METODA WERSJA_HTTP
+METODA ZASÓB WERSJA_HTTP
 Nagłówek1: Wartość1
 Nagłówek2: Wartość2
 
@@ -328,7 +328,7 @@ W `HTTP/1.1` wymaganym nagłówkiem jest `Host`, reszta jest opcjonalna.
 
 ## Odpowiedź HTTP
 
-Odpowiedź HTTP również format tekstowy. Składa się z linii statusu, nagłówków 
+Odpowiedź HTTP ma format tekstowy. Składa się z linii statusu, nagłówków 
 zapytania oraz opcjonalnego ciała:
 
 ```
@@ -363,6 +363,8 @@ Content-Length: 353
 </html>
 ```
 
+# Droga pakietu w sieci
+
 ## Droga pakietu - wysłanie pakietu
 
 ![](assets/5.anim.svg)
@@ -385,17 +387,20 @@ Content-Length: 353
 
 # Gniazda sieciowe POSIX
 
+## Komunikacja klienta z serwerem
+
+![](assets/communication.png)
+
 ## Funkcje/wywołania systemowe po stronie klienta
 
 Po stronie klienta:
 
+- `getaddrinfo()`
 - `socket()`
-- `bind()`
 - `connect()`
 - `read()`
 - `write()`
 - `close()`
-- `getaddrinfo()`
 
 ## Funkcja `getaddrinfo()`
 
@@ -486,37 +491,214 @@ Przykład:
 close(fd);
 ```
 
-## Wywołanie systemowe `bind()`
-
 ## Wywołanie systemowe `connect()`
+
+Wywołanie systemowe `connect()` nawiązuje połączenie
+
+```c
+#include <sys/socket.h>
+
+/**
+ * @socket: gniazdo sieciowe, które chcemy połączyć
+ * @address: adres, z którym chcemy się połączyć
+ * @address_len: długość adresu
+ */
+int connect(int socket, const struct sockaddr *address, socklen_t address_len);
+```
+
+Można wykorzystać pola `ai_addr` i `ai_addrlen` ze struktury `struct addrinfo`,
+otrzymanej z `getaddrinfo()`.
+
+Przykład:
+
+```c
+int ret = connect(fd, i->ai_addr, i->ai_addrlen);
+if (ret) {
+    /* Nie udało się przypisać adresu */
+}
+```
 
 ## Wywołanie systemowe `read()`
 
+Dane z gniazda sieciowego odczytujemy podobnie jak dane z pliku:
+```c
+/**
+ * @fd: gniazdo siecowe
+ * @buf: miejsce w pamięci gdzie zostaną zapisane odebrane dane z gniazda sieciowego
+ * @count: liczba bajtów do odczytania
+ */
+ssize_t read(int fd, void *buf, size_t count);
+```
+
+Przykład - odczytanie z gniazda do 32 bajtów:
+```c
+char bytes[32];
+ssize_t count = read(fd, bytes, sizeof(bytes));
+if (count == 0) {
+    /* Zakończenie połączenia */
+}
+if (count < 0) {
+    /* Bląd */
+}
+```
+
 ## Wywołanie systemowe `write()`
 
-## Wywołanie systemowe `close()`
+Wysyłanie danych przez gniazdo sieciowe odbywa się podobnie jak zapisywanie
+danych do pliku.
 
+```c
+/**
+ * @fd: gniazdo sieciowe
+ * @buf: miejsce w pamięci z którego zostaną wysłane dane przez gniazdo
+ * @count: liczba bajtów do wysłania
+ */
+ssize_t write(int fd, const void *buf, size_t count);
+```
+
+Przykład - wysłanie ciągu znaków `"Hello world"` przez sieć:
+```c
+char text[] = "Hello world";
+
+ssize_t count = write(fd, text, sizeof(text));
+if (count != sizeof(text)) {
+    /* Nie wszystko się udało wysłać - błąd */
+}
+```
 
 ## Prosty klient HTTP
 
 ## Funkcje/wywołania systemowe po stronie serwera
 
-Po stronie serwera, oprócz:
+Po stronie serwera, używany jest następujący zestaw funkcji:
 
+- `getaddrinfo()`
 - `socket()`
 - `bind()`
+- `listen()`
+- `accept()`
 - `read()`
 - `write()`
 - `close()`
-- `getaddrinfo()`
 
-Wykorzystywane są 2 dodatkowe:
+## Wywołanie systemowe `bind()`
 
-- `listen()`
-- `accept()`
+Wywołanie systemowe `bind()` przypisuje adres do gniazda sieciowego.
+
+```c
+#include <sys/socket.h>
+
+/**
+ * @socket: gniazdo sieciowe do którego chcemy przypisać adres
+ * @address: adres, który chcemy przypisać
+ * @address_len: długość adresu
+ */
+int bind(int socket, const struct sockaddr *address, socklen_t address_len);
+```
+
+Można wykorzystać pola `ai_addr` i `ai_addrlen` ze struktury `struct addrinfo`,
+otrzymanej z `getaddrinfo()`.
+
+Przykład:
+
+```c
+int ret = bind(fd, i->ai_addr, i->ai_addrlen);
+if (ret) {
+    /* Nie udało się przypisać adresu */
+}
+```
+
+## Funkcja `getaddrinfo()` - adres do nasłuchiwania
+
+Żeby funkcja `getaddrinfo()` zwróciła nam adres na którym możemy
+nasłuchiwać połączeń przychodzących, musimy użyc flagi `AI_PASSIVE`:
+
+```c
+struct addrinfo hints = {
+    .ai_family = AF_INET,
+    .ai_socktype = SOCK_STREAM,
+    .ai_protocol = IPPROTO_TCP,
+    .ai_flags = AI_PASSIVE,
+};
+
+struct addrinfo *result = NULL;
+int ret = getaddrinfo(NULL, "8080", &hints, &result);
+if (ret)
+    return 1;
+```
+
+## Funkcja `getaddrinfo()` - adres do nasłuchiwania - przykład
+
+
+```c
+int fd;
+for (struct addrinfo *i = result; i != NULL; i = i->ai_next) {
+    fd = socket(i->ai_family, i->ai_socktype, i->ai_protocol);
+    if (fd < 0)
+        continue;
+    int err = listen(fd, 16);
+    if (err) {
+        close(fd);
+        continue;
+    }
+
+    err = bind(fd, i->ai_addr, i->ai_addrlen);
+    if (err) {
+        close(fd);
+        continue;
+    }
+}
+
+/* W tym momencie socket nasłuchuje połaczeń przychodzących */
+
+freeaddrinfo(result);
+```
 
 ## Wywołanie systemowe `listen()`
 
+Wywołanie systemowe `listen()` przełącza socket w tryb nasłuchiwania.
+
+```c
+#include <sys/socket.h>
+
+/**
+ * @socket: gniazdo sieciowe
+ * @backlog: maksymalny rozmiar kolejki oczekujących połączeń
+ */
+int listen(int socket, int backlog);
+```
+
+Przykładowe wywołanie
+```c
+int error = listen(fd, 16);
+if (error) {
+    /* Wystąpił błąd */
+}
+```
+
 ## Wywołanie systemowe `accept()`
+
+Wywołanie systemowe `accept()` blokuje program do momentu połączenia się klienta.
+Po nawiązaniu połączenia z klientem, `accept()` odblokowywuje program i zwraca
+gniazdo sieciowe służące do komunikacji z klientem.
+
+```c
+#include <sys/socket.h>
+/**
+ * @socket: gniazdo sieciowe nasłuchujące na połączenia
+ * @address: wskaźnik do struktury w której zostanie zapisany adres klienta, NULL jeśli nas to nie interesuje
+ * @address_len: wskaźnik do zmiennej, w której zostanie zapisana długość adresu, NULL jeśli nas to nie intersuje
+ */
+int accept(int socket, struct sockaddr *restrict address, socklen_t *restrict address_len);
+```
+
+Przykład:
+```c
+int client_socket = accept(server_socket, NULL, NULL);
+if (client_socket < 0) {
+    /* Wystąpił błąd */
+}
+write(client_socket, "Czesc!", strlen("Czesc") + 1);
+```
 
 # Dziękuję za uwagę

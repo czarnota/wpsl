@@ -41,3 +41,10 @@
     color: #fff;
     text-shadow: 0px 0px 5px #000;
 }
+
+#droga-pakietu-w-sieci h1 {
+    background-image: url("way.jpg");
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}

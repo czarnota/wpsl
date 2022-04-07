@@ -7,7 +7,6 @@ DIAGRAMS=bin/diagrams.sh
 all: $(SLIDE_FILES) $(DIAGRAM_FILES) reload.lock
 
 reload.lock: $(SLIDE_FILES) $(DIAGRAM_FILES)
-	browserrefresh firefox
 	touch $@
 
 $(SLIDE_FILES): %/slides.html : %/README.md $(SLIDES)
