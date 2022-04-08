@@ -78,7 +78,7 @@ struct person p2 = {
 
 Inicjalizacja struktury samymi zerami:
 ```c
-struct person p = {0}
+struct person p = {0};
 ```
 
 ## Informacje wstępne - struktury układ w pamięci
@@ -227,17 +227,18 @@ struct foo { int a; };
 ```
 Do pól struktury odnosimy się używając operatora `.`:
 ```c
-struct foo foo = {0, 1}:
+struct foo foo = { 1 }:
 
 printf("%d\n", foo.a);
 ```
 
 Do pól struktury poprzez wskaźnik odnosimy się używając operatora `->`:
 ```c
-struct foo foo = {0, 1}:
+struct foo foo = { 1 };
 struct foo *bar = &foo;
 
 printf("%d\n", bar->a);
+printf("%d\n", (*bar).a);
 ```
 
 ## Informacje wstępne - lista jednokierunkowa
@@ -341,7 +342,7 @@ Nagłówek2: Wartość2
 
 ## Odpowiedź HTTP - przykład
 
-Przykładowa odpowiedź HTTP
+Przykładowa odpowiedź HTTP:
 ```
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=UTF-8
@@ -413,7 +414,7 @@ Funkcja `getaddrinfo()` służy do odpytywania usługi DNS.
 
 /**
  * @node: nazwa docelowa np. "onet.pl"
- * @service: nazwa ułsugi np "http" lub "80"
+ * @service: nazwa usługi np "http" lub "80"
  * @hints: podpowiedzi
  * @res: wynik odpytania usługi DNS
  */
