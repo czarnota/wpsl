@@ -27,6 +27,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/3/slides.html), [html](https://czarnota.github.io/wpsl/3/), [md](https://github.com/czarnota/wpsl/tree/main/3/))
 - **Laboratoria**
     - **Zadanie 1**: ([html](https://czarnota.github.io/wpsl/3/task1), [md](https://github.com/czarnota/wpsl/tree/main/3/task1.md))
+        - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task1-solved.md))
     - Termin: do następnych zajęć (09.04.2022)
 
 ## Zagadnienie 4: Komunikacja sieciowa
