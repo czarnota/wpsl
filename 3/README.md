@@ -115,7 +115,7 @@ Przykład - zapisanie ciągu znaków `"Hello world"` w pliku:
 ```c
 char text[] = "Hello world";
 
-size_t count = fwrite(text, 1, sizeof(text), file);
+size_t count = fwrite(text, 1, sizeof(text) - 1, file);
 ```
 
 Plik `file` musi być otwarty do zapisu.
@@ -147,7 +147,7 @@ o nazwie `stdout`.
 
 ```c
 char text[] = "Hello world";
-fwrite(text, 1, sizeof(text), stdout);
+fwrite(text, 1, sizeof(text) - 1, stdout);
 ```
 
 ```c
@@ -374,7 +374,7 @@ Standardowe wyjście jest plikiem. Jest ono otwarte pod deskryptorem `1`.
 
 ```c
 char text[] = "Hello world";
-write(1, text, sizeof(text));
+write(1, text, sizeof(text) - 1);
 ```
 
 ## Wywołanie systemowe - standardowe wejście jest plikiem
@@ -395,7 +395,7 @@ if (ret <= 0) {
 Standardowy strumień błędów jest plikiem. Jest on otwarty pod deskryptorem `2`.
 
 ```c
-write(2, "error: successfully failed\n", strlen("error: successfully failed\n") + 1);
+write(2, "error: successfully failed\n", strlen("error: successfully failed\n"));
 ```
 
 ## Przykład - zapisanie standardowego wejscia do pliku

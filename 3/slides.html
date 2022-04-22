@@ -330,7 +330,7 @@
 <p>Przykład - zapisanie ciągu znaków <code>"Hello world"</code> w pliku:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> text[] = <span class="st">&quot;Hello world&quot;</span>;</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> count = fwrite(text, <span class="dv">1</span>, <span class="kw">sizeof</span>(text), file);</span></code></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> count = fwrite(text, <span class="dv">1</span>, <span class="kw">sizeof</span>(text) - <span class="dv">1</span>, file);</span></code></pre></div>
 <p>Plik <code>file</code> musi być otwarty do zapisu.</p>
 </section>
 <section id="standard-c---sformatowany-zapis-i-odczyt" class="level2">
@@ -350,7 +350,7 @@
 <h2>Standard C - standardowe wyjście jest plikiem</h2>
 <p>Standardowe wyjście jest plikiem. Jest on otwarty pod zmienną globalną o nazwie <code>stdout</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> text[] = <span class="st">&quot;Hello world&quot;</span>;</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fwrite(text, <span class="dv">1</span>, <span class="kw">sizeof</span>(text), stdout);</span></code></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fwrite(text, <span class="dv">1</span>, <span class="kw">sizeof</span>(text) - <span class="dv">1</span>, stdout);</span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> <span class="dt">char</span> *name = <span class="st">&quot;Antoni&quot;</span>;</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fprintf(stdout, <span class="st">&quot;Witaj %s</span><span class="sc">\n</span><span class="st">&quot;</span>, name);</span></code></pre></div>
 </section>
@@ -524,7 +524,7 @@
 <h2>Wywołanie systemowe - standardowe wyjście jest plikiem</h2>
 <p>Standardowe wyjście jest plikiem. Jest ono otwarte pod deskryptorem <code>1</code>.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> text[] = <span class="st">&quot;Hello world&quot;</span>;</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>write(<span class="dv">1</span>, text, <span class="kw">sizeof</span>(text));</span></code></pre></div>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>write(<span class="dv">1</span>, text, <span class="kw">sizeof</span>(text) - <span class="dv">1</span>);</span></code></pre></div>
 </section>
 <section id="wywołanie-systemowe---standardowe-wejście-jest-plikiem" class="level2">
 <h2>Wywołanie systemowe - standardowe wejście jest plikiem</h2>
@@ -538,7 +538,7 @@
 <section id="wywołanie-systemowe---standardowy-strumień-błędów-jest-plikiem" class="level2">
 <h2>Wywołanie systemowe - standardowy strumień błędów jest plikiem</h2>
 <p>Standardowy strumień błędów jest plikiem. Jest on otwarty pod deskryptorem <code>2</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>write(<span class="dv">2</span>, <span class="st">&quot;error: successfully failed</span><span class="sc">\n</span><span class="st">&quot;</span>, strlen(<span class="st">&quot;error: successfully failed</span><span class="sc">\n</span><span class="st">&quot;</span>) + <span class="dv">1</span>);</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>write(<span class="dv">2</span>, <span class="st">&quot;error: successfully failed</span><span class="sc">\n</span><span class="st">&quot;</span>, strlen(<span class="st">&quot;error: successfully failed</span><span class="sc">\n</span><span class="st">&quot;</span>));</span></code></pre></div>
 </section>
 <section id="przykład---zapisanie-standardowego-wejscia-do-pliku-1" class="level2">
 <h2>Przykład - zapisanie standardowego wejscia do pliku</h2>
