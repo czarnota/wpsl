@@ -65,7 +65,7 @@ void *fn(void *arg)
 	/* Argument będzie zawierał argv[1] */
 	const char *argument = arg;
 	int value;
-	if (sscanf(argument, "%s", &value) != 1)
+	if (sscanf(argument, "%d", &value) != 1)
 		return NULL;
 
 	/* ... */

@@ -97,3 +97,6 @@ ma identyczny efekt jak zaliczenie testu.
 Jeżeli ktoś nie oddał żadnego programu - nie musi podchodzić do testu.
 Otrzymuje on zadanie ratunkowe w postaci programu do napisania,
 którego oddanie do końca semestru skutkuje oceną 3 z laboratoriów i wykładu.
+
+**Bezpieczny termin wysłania zadania ratunkowego:** `06.06.2022`
+
