@@ -39,16 +39,6 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md))
     - Termin: do następnych zajęć (24.04.2022)
 
-## Zadania ratunkowe:
-
-- **Proszę o rozwiązanie dowolnego z poniższych zadań:**
-    - **Procesy w systemie Linux**:
-	    - Zadanie ratunkowe 1: ([html](https://czarnota.github.io/wpsl/1/task1), [md](https://github.com/czarnota/wpsl/tree/main/1/task1.md))
-    - **Wątki i synchronizacja**:
-	    - Zadanie ratunkowe 2: ([html](https://czarnota.github.io/wpsl/2/task2), [md](https://github.com/czarnota/wpsl/tree/main/2/task2.md))
-    - **Obsługa plików**:
-	    - Zadanie ratunkowe 3: ([html](https://czarnota.github.io/wpsl/3/task2), [md](https://github.com/czarnota/wpsl/tree/main/3/task2.md))
-
 ## Dodatkowe Materiały
 
 - [PL] Kurs języka C dla początkujących na wikibooks: [link](https://pl.wikibooks.org/wiki/C)
