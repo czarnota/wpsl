@@ -39,6 +39,31 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md))
     - Termin: do następnych zajęć (24.04.2022)
 
+## Wysyłanie zadań
+
+Zadania należy wysyłać na adres email: `przemyslaw.czarnota@hotmail.com`.
+Temat wiadomości email musi być następujący:
+
+```
+WPCSW Zad N Imię Nazwisko
+```
+
+Gdzie:
+- `WPSL` - przedmiot
+- `N` - numer zadania, zgodny z numerem na stronie głównej
+- `Imię Nazwisko` - Imię Nazwisko wysyłającego zadanie
+
+Przykłady:
+
+```
+WPSL Zad 1.1 Jan Kowalski
+```
+```
+WPSL Zad 2.1 Adam Nowak
+```
+
+W wiadomości email należy załączyć plik lub pliki z kodem źródłowym w pliku tekstowym z rozszerzeniem `.c`.
+
 ## Dodatkowe Materiały
 
 - [PL] Kurs języka C dla początkujących na wikibooks: [link](https://pl.wikibooks.org/wiki/C)
