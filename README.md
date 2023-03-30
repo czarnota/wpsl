@@ -81,10 +81,10 @@ Są 4 zadania:
 
 | Zadanie            | Termin     |
 | ------------------ | ---------- |
-| Sleep sort         | 27.03.2022 |
-| Minutnik           | 02.04.2022 |
-| Kopiowanie plików  | 09.04.2022 |
-| Prosty serwer HTTP | 24.04.2022 |
+| Powłoka systemowa  | -          |
+|                    |            |
+|                    |            |
+|                    |            |
 
 Zadania należy przysłać, przed momentem prezentacji rozwiązania.
 
@@ -100,7 +100,7 @@ Liczba wysłanych zadań z otrzymaną odpowiedzią zwrotną w terminie oraz ocen
 | 4            | 5     |
 
 Otrzymaną ocenę należy obronić zdobywając 50% punktów z testu, który
-odbędzie się na zajęciach **24.04.2022**. Test będzie testem wyboru, a pytania
+odbędzie się na ostatnich zajęciach. Test będzie testem wyboru, a pytania
 będą typu: "Co wypisze ten kod?", "Co się dzieje w tym kodzie?".
 
 Zaliczenie testu skutkuje przepisaniem oceny z laboratoriów na ocenę z wykładu.
@@ -112,6 +112,3 @@ ma identyczny efekt jak zaliczenie testu.
 Jeżeli ktoś nie oddał żadnego programu - nie musi podchodzić do testu.
 Otrzymuje on zadanie ratunkowe w postaci programu do napisania,
 którego oddanie do końca semestru skutkuje oceną 3 z laboratoriów i wykładu.
-
-**Bezpieczny termin wysłania zadania ratunkowego:** `06.06.2022`
-
