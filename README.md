@@ -7,8 +7,8 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - **Wykład**
     - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/1/slides.html), [html](https://czarnota.github.io/wpsl/1/), [md](https://github.com/czarnota/wpsl/tree/main/1/))
 - **Laboratoria**
-    - Zadanie 1.1: ([html](https://czarnota.github.io/wpsl/1/task1), [md](https://github.com/czarnota/wpsl/tree/main/1/task1.md))
-    - **Zadanie 1.2**: ([html](https://czarnota.github.io/wpsl/1/task2), [md](https://github.com/czarnota/wpsl/tree/main/1/task2.md))
+    - **Zadanie 1.1**: ([html](https://czarnota.github.io/wpsl/1/task1), [md](https://github.com/czarnota/wpsl/tree/main/1/task1.md))
+    - Zadanie 1.2: ([html](https://czarnota.github.io/wpsl/1/task2), [md](https://github.com/czarnota/wpsl/tree/main/1/task2.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task2-solved.md))
     - Termin: do następnych zajęć (27.03.2022)
 
@@ -17,7 +17,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - **Wykład**
     - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/2/slides.html), [html](https://czarnota.github.io/wpsl/2/), [md](https://github.com/czarnota/wpsl/tree/main/2/))
 - **Laboratoria**
-    - **Zadanie 2.1**: ([html](https://czarnota.github.io/wpsl/2/task1), [md](https://github.com/czarnota/wpsl/tree/main/2/task1.md))
+    - Zadanie 2.1: ([html](https://czarnota.github.io/wpsl/2/task1), [md](https://github.com/czarnota/wpsl/tree/main/2/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task1-solved.md))
     - Termin: do następnych zajęć (02.04.2022)
 
@@ -26,7 +26,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - **Wykład**
     - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/3/slides.html), [html](https://czarnota.github.io/wpsl/3/), [md](https://github.com/czarnota/wpsl/tree/main/3/))
 - **Laboratoria**
-    - **Zadanie 3.1**: ([html](https://czarnota.github.io/wpsl/3/task1), [md](https://github.com/czarnota/wpsl/tree/main/3/task1.md))
+    - Zadanie 3.1: ([html](https://czarnota.github.io/wpsl/3/task1), [md](https://github.com/czarnota/wpsl/tree/main/3/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task1-solved.md))
     - Termin: do następnych zajęć (09.04.2022)
 
@@ -35,7 +35,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - **Wykład**
     - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/4/slides.html), [html](https://czarnota.github.io/wpsl/4/), [md](https://github.com/czarnota/wpsl/tree/main/4/))
 - **Laboratoria**
-    - **Zadanie 4.1**: ([html](https://czarnota.github.io/wpsl/4/task1), [md](https://github.com/czarnota/wpsl/tree/main/4/task1.md))
+    - Zadanie 4.1: ([html](https://czarnota.github.io/wpsl/4/task1), [md](https://github.com/czarnota/wpsl/tree/main/4/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md))
     - Termin: do następnych zajęć (24.04.2022)
 
