@@ -10,7 +10,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - **Zadanie 1.1**: ([html](https://czarnota.github.io/wpsl/1/task1), [md](https://github.com/czarnota/wpsl/tree/main/1/task1.md))
     - Zadanie 1.2: ([html](https://czarnota.github.io/wpsl/1/task2), [md](https://github.com/czarnota/wpsl/tree/main/1/task2.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task2-solved.md))
-    - Termin: do następnych zajęć (27.03.2022)
+    - Termin: do następnych zajęć (15.04.2022)
 
 ## Zagadnienie 2: Wątki i synchronizacja
 
@@ -19,7 +19,9 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - **Laboratoria**
     - Zadanie 2.1: ([html](https://czarnota.github.io/wpsl/2/task1), [md](https://github.com/czarnota/wpsl/tree/main/2/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task1-solved.md))
-    - Termin: do następnych zajęć (02.04.2022)
+    - Zadanie 2.2: ([html](https://czarnota.github.io/wpsl/2/task2), [md](https://github.com/czarnota/wpsl/tree/main/2/task2.md))
+    - **Zadanie 2.3**: ([html](https://czarnota.github.io/wpsl/2/task3), [md](https://github.com/czarnota/wpsl/tree/main/2/task3.md))
+    - Termin: do następnych zajęć (15.04.2022)
 
 ## Zagadnienie 3: Obsługa plików
 
@@ -83,10 +85,10 @@ Są 4 zadania:
 
 | Zadanie            | Termin     |
 | ------------------ | ---------- |
-| Powłoka systemowa  | -          |
-|                    |            |
-|                    |            |
-|                    |            |
+| Powłoka systemowa  | 15.04.2023 |
+| Budzik             | 15.04.2023 |
+| ????????           | ??.??.???? |
+| ????????           | ??.??.???? |
 
 Zadania należy przysłać, przed momentem prezentacji rozwiązania.
 
