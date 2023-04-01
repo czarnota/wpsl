@@ -83,12 +83,12 @@ W wiadomości email należy załączyć plik lub pliki z kodem źródłowym w pl
 
 Są 4 zadania:
 
-| Zadanie            | Termin     |
-| ------------------ | ---------- |
-| Powłoka systemowa  | 15.04.2023 |
-| Budzik             | 15.04.2023 |
-| ????????           | ??.??.???? |
-| ????????           | ??.??.???? |
+| Zadanie               | Termin     |
+| --------------------- | ---------- |
+| 1.1 Powłoka systemowa | 15.04.2023 |
+| 2.3 Budzik            | 15.04.2023 |
+| ????????              | ??.??.???? |
+| ????????              | ??.??.???? |
 
 Zadania należy przysłać, przed momentem prezentacji rozwiązania.
 
