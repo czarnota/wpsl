@@ -47,7 +47,7 @@ Zadania należy wysyłać na adres email: `przemyslaw.czarnota@hotmail.com`.
 Temat wiadomości email musi być następujący:
 
 ```
-WPCSW Zad N Imię Nazwisko
+WPSL Zad N Imię Nazwisko
 ```
 
 Gdzie:
@@ -65,6 +65,7 @@ WPSL Zad 2.1 Adam Nowak
 ```
 
 W wiadomości email należy załączyć plik lub pliki z kodem źródłowym w pliku tekstowym z rozszerzeniem `.c`.
+
 
 ## Dodatkowe Materiały
 
