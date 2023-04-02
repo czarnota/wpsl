@@ -80,15 +80,8 @@ while (1) {
 	if (!fgets(line, sizeof(line), stdin))
 		break;
 
-	/* Jeżeli odczytaliśmy liczbę ustawiamy sekundy */
-	int seconds;
-	if (sscanf(line, "%d", &seconds) == 1) {
-		/* Ustaw czas */
-		...
-		continue;
-	}
 	int h, m;
-	if (sscanf(str, "set %d:%d", &h, &m) == 2) {
+	if (sscanf(line, "set %d:%d", &h, &m) == 2) {
 		/* Ustaw czas */
 	}
 
