@@ -92,15 +92,15 @@ while (1) {
 		/* Ustaw czas */
 	}
 
-	if (strcmp("clear", str) == 0) {
+	if (strcmp("clear\n", str) == 0) {
 		/* Wyczyść czas */
 	}
 
-	if (strcmp("get", str) == 0) {
+	if (strcmp("get\n", str) == 0) {
 		/* Wyświetl ustawiony czas */
 	}
 
-	if (strcmp("exit", str) == 0) {
+	if (strcmp("exit\n", str) == 0) {
 		break;
 	}
 }
