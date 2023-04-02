@@ -93,7 +93,7 @@ while (1) {
 		/* Wyświetl ustawiony czas */
 	}
 
-	if (strcmp("exit\n", str) == 0) {
+	if (strcmp("exit\n", line) == 0) {
 		break;
 	}
 }
