@@ -85,11 +85,11 @@ while (1) {
 		/* Ustaw czas */
 	}
 
-	if (strcmp("clear\n", str) == 0) {
+	if (strcmp("clear\n", line) == 0) {
 		/* Wyczyść czas */
 	}
 
-	if (strcmp("get\n", str) == 0) {
+	if (strcmp("get\n", line) == 0) {
 		/* Wyświetl ustawiony czas */
 	}
 
