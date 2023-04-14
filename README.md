@@ -31,6 +31,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - Zadanie 3.1: ([html](https://czarnota.github.io/wpsl/3/task1), [md](https://github.com/czarnota/wpsl/tree/main/3/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task1-solved.md))
     - Zadanie 3.2: ([html](https://czarnota.github.io/wpsl/3/task2), [md](https://github.com/czarnota/wpsl/tree/main/3/task2.md))
+    - *Zadanie 3.3*: ([html](https://czarnota.github.io/wpsl/3/task3), [md](https://github.com/czarnota/wpsl/tree/main/3/task3.md))
     - Termin: do następnych zajęć (22.04.2023)
 
 ## Zagadnienie 4: Komunikacja sieciowa
@@ -84,12 +85,12 @@ W wiadomości email należy załączyć plik lub pliki z kodem źródłowym w pl
 
 Są 4 zadania:
 
-| Zadanie               | Termin     |
-| --------------------- | ---------- |
-| 1.1 Powłoka systemowa | 15.04.2023 |
-| 2.3 Budzik            | 15.04.2023 |
-| ????????              | ??.??.???? |
-| ????????              | ??.??.???? |
+| Zadanie                    | Termin     |
+| -------------------------- | ---------- |
+| 1.1 Powłoka systemowa      | 15.04.2023 |
+| 2.3 Budzik                 | 15.04.2023 |
+| 3.3 Budzik zapisujący stan | 22.04.2023 |
+| ????????                   | ??.??.???? |
 
 Zadania należy przysłać, przed momentem prezentacji rozwiązania.
 
