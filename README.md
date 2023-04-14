@@ -31,7 +31,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - Zadanie 3.1: ([html](https://czarnota.github.io/wpsl/3/task1), [md](https://github.com/czarnota/wpsl/tree/main/3/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task1-solved.md))
     - Zadanie 3.2: ([html](https://czarnota.github.io/wpsl/3/task2), [md](https://github.com/czarnota/wpsl/tree/main/3/task2.md))
-    - *Zadanie 3.3*: ([html](https://czarnota.github.io/wpsl/3/task3), [md](https://github.com/czarnota/wpsl/tree/main/3/task3.md))
+    - **Zadanie 3.3**: ([html](https://czarnota.github.io/wpsl/3/task3), [md](https://github.com/czarnota/wpsl/tree/main/3/task3.md))
     - Termin: do następnych zajęć (22.04.2023)
 
 ## Zagadnienie 4: Komunikacja sieciowa
