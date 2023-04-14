@@ -8,6 +8,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/1/slides.html), [html](https://czarnota.github.io/wpsl/1/), [md](https://github.com/czarnota/wpsl/tree/main/1/))
 - **Laboratoria**
     - **Zadanie 1.1**: ([html](https://czarnota.github.io/wpsl/1/task1), [md](https://github.com/czarnota/wpsl/tree/main/1/task1.md))
+        - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task1-solved.md))
     - Zadanie 1.2: ([html](https://czarnota.github.io/wpsl/1/task2), [md](https://github.com/czarnota/wpsl/tree/main/1/task2.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task2-solved.md))
     - Termin: do następnych zajęć (15.04.2023)
@@ -21,6 +22,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task1-solved.md))
     - Zadanie 2.2: ([html](https://czarnota.github.io/wpsl/2/task2), [md](https://github.com/czarnota/wpsl/tree/main/2/task2.md))
     - **Zadanie 2.3**: ([html](https://czarnota.github.io/wpsl/2/task3), [md](https://github.com/czarnota/wpsl/tree/main/2/task3.md))
+        - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task3-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task3-solved.md))
     - Termin: do następnych zajęć (15.04.2023)
 
 ## Zagadnienie 3: Obsługa plików
