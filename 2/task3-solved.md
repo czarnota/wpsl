@@ -1,4 +1,4 @@
-# Minutnik - rozwiązanie
+# Budzik - rozwiązanie
 
 ## Krok 1
 
