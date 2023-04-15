@@ -58,7 +58,7 @@ Utworzenie obiektu struktury i wypełnienie pól:
 struct person p;
 p.age = 46;
 p.salary = 1029384732.0f;
-snprintf(p.name, sizeof(name), "%s", "Daniel");
+snprintf(p.name, sizeof(p.name), "%s", "Daniel");
 ```
 
 ## Informacje wstępne - struktury - inicjalizacja
