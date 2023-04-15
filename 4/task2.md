@@ -144,12 +144,12 @@ if (sscanf(buf, "GET %254s", page) != 1) {
 
 /* Usunięcie początkowych / */
 while (page[0] == '/')
-    memmove(page, &page[1], strlen(page) - 1);
+    memmove(page, &page[1], strlen(page));
 ```
 
 Następnie należy otworzyć plik wskazywany przez odczytaną scieżkę.
 ```c
-FILE *f = fopen(file_path, "r");
+FILE *f = fopen(page, "r");
 if (!f) {
     write_404(fd);
     close(fd);
