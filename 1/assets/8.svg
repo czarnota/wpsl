@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="464" height="400">
-    <style>
-        line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
-        <!--separator-->
-        .r{  fill: #F44336;  }
+  <style>
+    line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
+    <!--separator-->
+    .r{  fill: #F44336;  }
 .g{  fill: #4CAF50;  }
 .b{  fill: #2196F3;  }
 .o{  fill: #FF9800;  }
@@ -10,40 +10,40 @@
 .c{  fill: #00BCD4;  }
 .m{  fill: #9C27B0;  }
 .k{  fill: #000000;  }
-    </style>
-    <defs>
-        <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <polygon points="0,0 0,4 4,2 0,0"></polygon>
-        </marker>
-        <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
-        </marker>
-        <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <circle cx="4" cy="4" r="2" class="filled"></circle>
-        </marker>
-        <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
-        </marker>
-        <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
-        </marker>
-    </defs>
-    <rect class="backdrop" x="0" y="0" width="464" height="400"></rect>
-    <rect x="164" y="24" width="136" height="256" class="solid nofill" rx="0"></rect>
-    <rect x="180" y="40" width="104" height="32" class="solid nofill r" rx="4"></rect>
-    <rect x="180" y="88" width="104" height="32" class="solid nofill g" rx="4"></rect>
-    <rect x="180" y="136" width="104" height="32" class="solid nofill b" rx="4"></rect>
-    <rect x="180" y="184" width="104" height="32" class="solid nofill r" rx="4"></rect>
-    <rect x="180" y="232" width="104" height="32" class="solid nofill o" rx="4"></rect>
-    <rect x="228" y="296" width="104" height="32" class="solid nofill g" rx="4"></rect>
-    <rect x="228" y="344" width="104" height="32" class="solid nofill o" rx="4"></rect>
-    <rect x="4" y="296" width="104" height="32" class="solid nofill r" rx="4"></rect>
-    <rect x="4" y="344" width="104" height="32" class="solid nofill b" rx="4"></rect>
-    <text x="194" y="12" >procesor</text>
-    <text x="266" y="12" >0</text>
-    <text x="450" y="380" >.</text>
-    <text x="122" y="316" >Zadanie 1</text>
-    <text x="346" y="316" >Zadanie 3</text>
-    <text x="122" y="364" >Zadanie 2</text>
-    <text x="346" y="364" >Zadanie 4</text>
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,0 0,4 4,2 0,0"></polygon>
+    </marker>
+    <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+    </marker>
+    <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="filled"></circle>
+    </marker>
+    <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+    </marker>
+    <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+    </marker>
+  </defs>
+  <rect class="backdrop" x="0" y="0" width="464" height="400"></rect>
+  <rect x="164" y="24" width="136" height="256" class="solid nofill" rx="0"></rect>
+  <rect x="180" y="40" width="104" height="32" class="solid nofill r" rx="4"></rect>
+  <rect x="180" y="88" width="104" height="32" class="solid nofill g" rx="4"></rect>
+  <rect x="180" y="136" width="104" height="32" class="solid nofill b" rx="4"></rect>
+  <rect x="180" y="184" width="104" height="32" class="solid nofill r" rx="4"></rect>
+  <rect x="180" y="232" width="104" height="32" class="solid nofill o" rx="4"></rect>
+  <rect x="228" y="296" width="104" height="32" class="solid nofill g" rx="4"></rect>
+  <rect x="228" y="344" width="104" height="32" class="solid nofill o" rx="4"></rect>
+  <rect x="4" y="296" width="104" height="32" class="solid nofill r" rx="4"></rect>
+  <rect x="4" y="344" width="104" height="32" class="solid nofill b" rx="4"></rect>
+  <text x="194" y="12" >procesor</text>
+  <text x="266" y="12" >0</text>
+  <text x="450" y="380" >.</text>
+  <text x="122" y="316" >Zadanie 1</text>
+  <text x="346" y="316" >Zadanie 3</text>
+  <text x="122" y="364" >Zadanie 2</text>
+  <text x="346" y="364" >Zadanie 4</text>
 </svg>
