@@ -1,6 +1,6 @@
 # Serwer HTTP z podstronami
 
-Celem zadania jest rozszerzenie rozwiązania Zadania 4.1 [html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md))
+Celem zadania jest rozszerzenie rozwiązania Zadania 4.1 [[html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md)]
 o możliwość serwowania podstron.
 
 Jeżeli użytkownik wejdzie na stronę `http://localhost/foo.html`, to serwer powinien
@@ -199,7 +199,13 @@ if (send_header(fd, filesize(f))) {
 
 Ostatecznym krokiem jest wysłanie zawartości pliku za pomocą `write()`. W tym
 celu można odczytywać plik `f` w pętli za pomocą funkcji `fread()` i zapisywać
-do gniazda sieciowego za pomocą `write()`, tak długo dopóki `fread()` zwraca
+do gniazda sieciowego za pomocą `write()`, tak długo, dopóki `fread()` zwraca
 wartość większą od `0`.
 
-Prosze pamiętać o zamknięciu połączenie za pomocą `close()`.
+Prosze pamiętać o zamknięciu połączenia za pomocą `close()` oraz pliku za pomocą `fclose(f)`.
+
+# Sugestie
+
+- Jeżeli użytkownik nie wskaże pliku to można załadować plik o nazwie `index.html`
+- Można odrzucać ciągi znaków zawierające `..`, żeby uniemożliwić wyjście użytkownikowi poza katalog serwera.
+- Można odrzucać inne pliki, niż te kończące się rozszerzeniem `.html`, tak żeby nagłówek `Content-Type: text/html` rzeczywiście opisywał zwracaną zawartość.
