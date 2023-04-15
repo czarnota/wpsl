@@ -143,9 +143,8 @@ if (sscanf(buf, "GET %254s", page) != 1) {
 }
 
 /* Usunięcie początkowych / */
-char file_path[255];
 while (page[0] == '/')
-    snprintf(file_path, sizeof(result), "%s", &page[1]);
+    memmove(page, &page[1], strlen(page) - 1);
 ```
 
 Następnie należy otworzyć plik wskazywany przez odczytaną scieżkę.
@@ -183,15 +182,16 @@ int send_header(int fd, int content_length)
                 "Content-Length: %d\r\n"
                 "\r\n", content_length);
 
-    ssize_t len = strlen(header);
+    size_t len = strlen(header);
 
-    if (write(fd, header, sizeof(header)) != len)
+    if (write(fd, header, len) != (ssize_t)len)
         return -1;
     return 0;
 }
 ```
 ```c
 if (send_header(fd, filesize(f))) {
+    fclose(f);
     close(fd);
     continue;
 }
