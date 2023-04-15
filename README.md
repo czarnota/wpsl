@@ -43,7 +43,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - **Laboratoria**
     - Zadanie 4.1: ([html](https://czarnota.github.io/wpsl/4/task1), [md](https://github.com/czarnota/wpsl/tree/main/4/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md))
-    - Zadanie 4.2: ([html](https://czarnota.github.io/wpsl/4/task2), [md](https://github.com/czarnota/wpsl/tree/main/4/task2.md))
+    - **Zadanie 4.2**: ([html](https://czarnota.github.io/wpsl/4/task2), [md](https://github.com/czarnota/wpsl/tree/main/4/task2.md))
     - Termin: do następnych zajęć (22.04.2023)
 
 ## Wysyłanie zadań
