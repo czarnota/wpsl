@@ -3,7 +3,7 @@
 Celem zadania jest rozszerzenie rozwiązania Zadania 4.1 [[html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md)]
 o możliwość serwowania podstron.
 
-Jeżeli użytkownik wejdzie na stronę `http://localhost/foo.html`, to serwer powinien
+Jeżeli użytkownik wejdzie na stronę `http://localhost:8080/foo.html`, to serwer powinien
 otworzyć plik o nazwie `foo.html` i wysłać jego zawartość do użytkownika.
 
 # Podpowiedź
