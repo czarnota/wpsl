@@ -20,43 +20,43 @@ Można rozpocząć wykorzystując poniższy kod:
 /* Zwraca gniazdo sieciowe nasłuchujące na zadanym porcie */
 int listening_socket(const char *port)
 {
-	struct addrinfo hints = {
-		.ai_family = AF_INET,
-		.ai_socktype = SOCK_STREAM,
-		.ai_protocol = IPPROTO_TCP,
-		.ai_flags = AI_PASSIVE,
-	};
+    struct addrinfo hints = {
+        .ai_family = AF_INET,
+        .ai_socktype = SOCK_STREAM,
+        .ai_protocol = IPPROTO_TCP,
+        .ai_flags = AI_PASSIVE,
+    };
 
-	struct addrinfo *result;
-	int ret = getaddrinfo(NULL, port, &hints, &result);
-	if (ret)
-		return -1;
+    struct addrinfo *result;
+    int ret = getaddrinfo(NULL, port, &hints, &result);
+    if (ret)
+        return -1;
 
-	int fd = -1;
-	for (struct addrinfo *i = result; i != NULL; i = i->ai_next) {
-		fd = socket(i->ai_family, i->ai_socktype, i->ai_protocol);
-		if (fd < 0)
-			continue;
+    int fd = -1;
+    for (struct addrinfo *i = result; i != NULL; i = i->ai_next) {
+        fd = socket(i->ai_family, i->ai_socktype, i->ai_protocol);
+        if (fd < 0)
+            continue;
 
-		ret = bind(fd, i->ai_addr, i->ai_addrlen);
-		if (ret) {
-			close(fd);
-			fd = -1;
-			continue;
-		}
+        ret = bind(fd, i->ai_addr, i->ai_addrlen);
+        if (ret) {
+            close(fd);
+            fd = -1;
+            continue;
+        }
 
-		ret = listen(fd, 16);
-		if (ret) {
-			close(fd);
-			fd = -1;
-			continue;
-		}
+        ret = listen(fd, 16);
+        if (ret) {
+            close(fd);
+            fd = -1;
+            continue;
+        }
 
 
-		break;
-	}
+        break;
+    }
 
-	return fd;
+    return fd;
 }
 
 /* Wysyła odpowiedź 404 Not Found poprzez gniazdo sieciowe
@@ -70,7 +70,7 @@ int write_404(int fd)
         "Content-Length: %d\r\n"
         "\r\n"
         "%s"
-    ;
+        ;
 
     char html[] =
         "<!doctype html>\n"
@@ -85,7 +85,7 @@ int write_404(int fd)
         "        <h1>Error 404</h1>\n"
         "    </body>\n"
         "</html>\n"
-    ;
+        ;
 
     char response[4096];
     snprintf(response, sizeof(response), http_response_template, strlen(html), html);
@@ -99,26 +99,26 @@ int write_404(int fd)
 
 int main(int argc, char **argv)
 {
-	int server_fd = listening_socket("8080");
-	if (server_fd < 0)
-		return 1;
+    int server_fd = listening_socket("8080");
+    if (server_fd < 0)
+        return 1;
 
-	while (1) {
-		int fd = accept(server_fd, NULL, NULL);
-		if (fd < 0)
-			continue;
+    while (1) {
+        int fd = accept(server_fd, NULL, NULL);
+        if (fd < 0)
+            continue;
 
-		char buf[9000] = {0};
-		int count = read(fd, buf, sizeof(buf) - 1);
-		if (count <= 0)
-			break;
+        char buf[9000] = {0};
+        int count = read(fd, buf, sizeof(buf) - 1);
+        if (count <= 0)
+            break;
 
         write_404(fd);
 
-		close(fd);
-	}
+        close(fd);
+    }
 
-	close(server_fd);
+    close(server_fd);
 
     return 1;
 }
