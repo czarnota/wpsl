@@ -124,3 +124,10 @@ ma identyczny efekt jak zaliczenie testu.
 Jeżeli ktoś nie oddał żadnego programu - nie musi podchodzić do testu.
 Otrzymuje on zadanie ratunkowe w postaci programu do napisania,
 którego oddanie do końca semestru skutkuje oceną 3 z laboratoriów i wykładu.
+
+## Zadania ratunkowe
+
+- Zadanie 3.2: ([html](https://czarnota.github.io/wpsl/3/task2), [md](https://github.com/czarnota/wpsl/tree/main/3/task2.md))
+- Zadanie 2.2: ([html](https://czarnota.github.io/wpsl/2/task2), [md](https://github.com/czarnota/wpsl/tree/main/2/task2.md))
+
+Bezpieczny termin wysłania zadania ratunkowego 06.06.2023
