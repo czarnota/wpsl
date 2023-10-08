@@ -7,12 +7,12 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - **Wykład**
     - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/1/slides.html), [html](https://czarnota.github.io/wpsl/1/), [md](https://github.com/czarnota/wpsl/tree/main/1/))
 - **Laboratoria**
-    - **Zadanie 1.1**: ([html](https://czarnota.github.io/wpsl/1/task1), [md](https://github.com/czarnota/wpsl/tree/main/1/task1.md))
+    - Zadanie 1.1: ([html](https://czarnota.github.io/wpsl/1/task1), [md](https://github.com/czarnota/wpsl/tree/main/1/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task1-solved.md))
     - Zadanie 1.2: ([html](https://czarnota.github.io/wpsl/1/task2), [md](https://github.com/czarnota/wpsl/tree/main/1/task2.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task2-solved.md))
-    - Zadanie 1.3: ([html](https://czarnota.github.io/wpsl/1/task3), [md](https://github.com/czarnota/wpsl/tree/main/1/task3.md))
-    - Termin: do następnych zajęć (15.04.2023)
+    - **Zadanie 1.3**: ([html](https://czarnota.github.io/wpsl/1/task3), [md](https://github.com/czarnota/wpsl/tree/main/1/task3.md))
+    - Termin: do następnych zajęć (04.12.2023)
 
 ## Zagadnienie 2: Wątki i synchronizacja
 
