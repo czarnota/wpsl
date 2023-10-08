@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1136" height="464">
-  <style>
-    line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
-    <!--separator-->
-    .r{  fill: #F44336;  }
+<style>
+line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
+<!--separator-->
+.r{  fill: #F44336;  }
 .g{  fill: #4CAF50;  }
 .b{  fill: #2196F3;  }
 .o{  fill: #FF9800;  }
@@ -10,112 +10,112 @@
 .c{  fill: #00BCD4;  }
 .m{  fill: #9C27B0;  }
 .k{  fill: #000000;  }
-  </style>
-  <defs>
-    <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <polygon points="0,0 0,4 4,2 0,0"></polygon>
-    </marker>
-    <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
-    </marker>
-    <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <circle cx="4" cy="4" r="2" class="filled"></circle>
-    </marker>
-    <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
-    </marker>
-    <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
-    </marker>
-  </defs>
-  <rect class="backdrop" x="0" y="0" width="1136" height="464"></rect>
-  <rect x="76" y="88" width="136" height="336" class="solid nofill" rx="0"></rect>
-  <rect x="92" y="104" width="104" height="304" class="solid nofill r" rx="4"></rect>
-  <rect x="228" y="88" width="136" height="336" class="solid nofill" rx="0"></rect>
-  <rect x="244" y="104" width="104" height="144" class="solid nofill r" rx="4"></rect>
-  <rect x="244" y="264" width="104" height="144" class="solid nofill g" rx="4"></rect>
-  <rect x="380" y="88" width="136" height="336" class="solid nofill" rx="0"></rect>
-  <rect x="396" y="104" width="104" height="64" class="solid nofill r" rx="4"></rect>
-  <rect x="396" y="184" width="104" height="64" class="solid nofill g" rx="4"></rect>
-  <rect x="396" y="264" width="104" height="64" class="solid nofill b" rx="4"></rect>
-  <rect x="396" y="344" width="104" height="64" class="solid nofill o" rx="4"></rect>
-  <rect x="532" y="88" width="136" height="336" class="solid nofill" rx="0"></rect>
-  <rect x="548" y="104" width="104" height="64" class="solid nofill r" rx="4"></rect>
-  <rect x="548" y="184" width="104" height="144" class="solid nofill g" rx="4"></rect>
-  <rect x="548" y="344" width="104" height="64" class="solid nofill b" rx="4"></rect>
-  <rect x="700" y="104" width="104" height="32" class="solid nofill r" rx="4"></rect>
-  <rect x="700" y="152" width="104" height="32" class="solid nofill g" rx="4"></rect>
-  <rect x="700" y="200" width="104" height="32" class="solid nofill b" rx="4"></rect>
-  <rect x="700" y="248" width="104" height="32" class="solid nofill o" rx="4"></rect>
-  <rect x="700" y="296" width="104" height="32" class="solid nofill y" rx="4"></rect>
-  <rect x="700" y="344" width="104" height="32" class="solid nofill c" rx="4"></rect>
-  <rect x="700" y="392" width="104" height="32" class="solid nofill m" rx="4"></rect>
-  <line x1="8" y1="88" x2="16" y2="88" class="solid"></line>
-  <line x1="24" y1="88" x2="32" y2="88" class="solid"></line>
-  <line x1="56" y1="88" x2="64" y2="88" class="solid"></line>
-  <line x1="832" y1="88" x2="840" y2="88" class="solid"></line>
-  <line x1="832" y1="104" x2="840" y2="104" class="solid"></line>
-  <line x1="848" y1="88" x2="856" y2="88" class="solid"></line>
-  <line x1="864" y1="88" x2="872" y2="88" class="solid"></line>
-  <line x1="880" y1="88" x2="888" y2="88" class="solid"></line>
-  <line x1="856" y1="104" x2="864" y2="104" class="solid"></line>
-  <line x1="880" y1="104" x2="888" y2="104" class="solid"></line>
-  <line x1="864" y1="424" x2="872" y2="424" class="solid"></line>
-  <line x1="880" y1="424" x2="888" y2="424" class="solid"></line>
-  <line x1="896" y1="88" x2="904" y2="88" class="solid"></line>
-  <line x1="912" y1="88" x2="920" y2="88" class="solid"></line>
-  <line x1="928" y1="88" x2="936" y2="88" class="solid"></line>
-  <line x1="944" y1="88" x2="952" y2="88" class="solid"></line>
-  <line x1="960" y1="88" x2="968" y2="88" class="solid"></line>
-  <line x1="976" y1="88" x2="984" y2="88" class="solid"></line>
-  <line x1="832" y1="136" x2="840" y2="136" class="solid"></line>
-  <line x1="856" y1="136" x2="864" y2="136" class="solid"></line>
-  <text x="2" y="396" >czas</text>
-  <line x1="8" y1="424" x2="16" y2="424" class="solid"></line>
-  <line x1="24" y1="424" x2="32" y2="424" class="solid"></line>
-  <line x1="56" y1="424" x2="64" y2="424" class="solid"></line>
-  <line x1="832" y1="424" x2="840" y2="424" class="solid"></line>
-  <line x1="848" y1="424" x2="856" y2="424" class="solid"></line>
-  <line x1="896" y1="424" x2="904" y2="424" class="solid"></line>
-  <line x1="912" y1="424" x2="920" y2="424" class="solid"></line>
-  <line x1="928" y1="424" x2="936" y2="424" class="solid"></line>
-  <line x1="944" y1="424" x2="952" y2="424" class="solid"></line>
-  <line x1="960" y1="424" x2="968" y2="424" class="solid"></line>
-  <line x1="976" y1="424" x2="984" y2="424" class="solid"></line>
-  <text x="1122" y="428" >.</text>
-  <text x="98" y="28" >1 zadanie</text>
-  <text x="266" y="28" >2 zadania</text>
-  <text x="402" y="28" >4 zadania</text>
-  <text x="554" y="28" >3 zadania</text>
-  <text x="714" y="28" >7 zadań</text>
-  <text x="538" y="44" >różny priorytet</text>
-  <text x="690" y="44" >odcinki czasu</text>
-  <text x="658" y="60" >ograniczone minimalną</text>
-  <text x="690" y="76" >granularnością</text>
-  <text x="914" y="124" >minimalna granularność</text>
-  <text x="890" y="268" >opóżnienie docelowe</text>
-  <text x="890" y="284" >(ang. target latency)</text>
-  <g>
-    <line x1="44" y1="64" x2="44" y2="436" class="solid"></line>
-    <polygon points="40,436 48,436 44,448" class="filled"></polygon>
-  </g>
-  <g>
-    <line x1="684" y1="88" x2="820" y2="88" class="solid"></line>
-    <line x1="684" y1="88" x2="684" y2="436" class="solid"></line>
-    <line x1="820" y1="88" x2="820" y2="436" class="solid"></line>
-    <path d="M 684,436 A 4,4 0,0,0 688,440" class="nofill"></path>
-    <line x1="688" y1="440" x2="816" y2="440" class="solid"></line>
-    <path d="M 820,436 A 4,4 0,0,1 816,440" class="nofill"></path>
-  </g>
-  <g>
-    <polygon points="872,108 876,96 880,108" class="filled"></polygon>
-    <line x1="876" y1="108" x2="876" y2="404" class="solid"></line>
-    <line x1="876" y1="136" x2="888" y2="136" class="solid"></line>
-    <polygon points="872,404 880,404 876,416" class="filled"></polygon>
-  </g>
-  <g>
-    <polygon points="896,108 900,96 904,108" class="filled"></polygon>
-    <line x1="900" y1="108" x2="900" y2="132" class="solid"></line>
-    <polygon points="896,132 904,132 900,144" class="filled"></polygon>
-  </g>
+</style>
+<defs>
+<marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<polygon points="0,0 0,4 4,2 0,0"></polygon>
+</marker>
+<marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+</marker>
+<marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="2" class="filled"></circle>
+</marker>
+<marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+</marker>
+<marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+</marker>
+</defs>
+<rect class="backdrop" x="0" y="0" width="1136" height="464"></rect>
+<rect x="76" y="88" width="136" height="336" class="solid nofill" rx="0"></rect>
+<rect x="92" y="104" width="104" height="304" class="solid nofill r" rx="4"></rect>
+<rect x="228" y="88" width="136" height="336" class="solid nofill" rx="0"></rect>
+<rect x="244" y="104" width="104" height="144" class="solid nofill r" rx="4"></rect>
+<rect x="244" y="264" width="104" height="144" class="solid nofill g" rx="4"></rect>
+<rect x="380" y="88" width="136" height="336" class="solid nofill" rx="0"></rect>
+<rect x="396" y="104" width="104" height="64" class="solid nofill r" rx="4"></rect>
+<rect x="396" y="184" width="104" height="64" class="solid nofill g" rx="4"></rect>
+<rect x="396" y="264" width="104" height="64" class="solid nofill b" rx="4"></rect>
+<rect x="396" y="344" width="104" height="64" class="solid nofill o" rx="4"></rect>
+<rect x="532" y="88" width="136" height="336" class="solid nofill" rx="0"></rect>
+<rect x="548" y="104" width="104" height="64" class="solid nofill r" rx="4"></rect>
+<rect x="548" y="184" width="104" height="144" class="solid nofill g" rx="4"></rect>
+<rect x="548" y="344" width="104" height="64" class="solid nofill b" rx="4"></rect>
+<rect x="700" y="104" width="104" height="32" class="solid nofill r" rx="4"></rect>
+<rect x="700" y="152" width="104" height="32" class="solid nofill g" rx="4"></rect>
+<rect x="700" y="200" width="104" height="32" class="solid nofill b" rx="4"></rect>
+<rect x="700" y="248" width="104" height="32" class="solid nofill o" rx="4"></rect>
+<rect x="700" y="296" width="104" height="32" class="solid nofill y" rx="4"></rect>
+<rect x="700" y="344" width="104" height="32" class="solid nofill c" rx="4"></rect>
+<rect x="700" y="392" width="104" height="32" class="solid nofill m" rx="4"></rect>
+<line x1="8" y1="88" x2="16" y2="88" class="solid"></line>
+<line x1="24" y1="88" x2="32" y2="88" class="solid"></line>
+<line x1="56" y1="88" x2="64" y2="88" class="solid"></line>
+<line x1="832" y1="88" x2="840" y2="88" class="solid"></line>
+<line x1="832" y1="104" x2="840" y2="104" class="solid"></line>
+<line x1="848" y1="88" x2="856" y2="88" class="solid"></line>
+<line x1="864" y1="88" x2="872" y2="88" class="solid"></line>
+<line x1="880" y1="88" x2="888" y2="88" class="solid"></line>
+<line x1="856" y1="104" x2="864" y2="104" class="solid"></line>
+<line x1="880" y1="104" x2="888" y2="104" class="solid"></line>
+<line x1="864" y1="424" x2="872" y2="424" class="solid"></line>
+<line x1="880" y1="424" x2="888" y2="424" class="solid"></line>
+<line x1="896" y1="88" x2="904" y2="88" class="solid"></line>
+<line x1="912" y1="88" x2="920" y2="88" class="solid"></line>
+<line x1="928" y1="88" x2="936" y2="88" class="solid"></line>
+<line x1="944" y1="88" x2="952" y2="88" class="solid"></line>
+<line x1="960" y1="88" x2="968" y2="88" class="solid"></line>
+<line x1="976" y1="88" x2="984" y2="88" class="solid"></line>
+<line x1="832" y1="136" x2="840" y2="136" class="solid"></line>
+<line x1="856" y1="136" x2="864" y2="136" class="solid"></line>
+<text x="2" y="396" >czas</text>
+<line x1="8" y1="424" x2="16" y2="424" class="solid"></line>
+<line x1="24" y1="424" x2="32" y2="424" class="solid"></line>
+<line x1="56" y1="424" x2="64" y2="424" class="solid"></line>
+<line x1="832" y1="424" x2="840" y2="424" class="solid"></line>
+<line x1="848" y1="424" x2="856" y2="424" class="solid"></line>
+<line x1="896" y1="424" x2="904" y2="424" class="solid"></line>
+<line x1="912" y1="424" x2="920" y2="424" class="solid"></line>
+<line x1="928" y1="424" x2="936" y2="424" class="solid"></line>
+<line x1="944" y1="424" x2="952" y2="424" class="solid"></line>
+<line x1="960" y1="424" x2="968" y2="424" class="solid"></line>
+<line x1="976" y1="424" x2="984" y2="424" class="solid"></line>
+<text x="1122" y="428" >.</text>
+<text x="98" y="28" >1 zadanie</text>
+<text x="266" y="28" >2 zadania</text>
+<text x="402" y="28" >4 zadania</text>
+<text x="554" y="28" >3 zadania</text>
+<text x="714" y="28" >7 zadań</text>
+<text x="538" y="44" >różny priorytet</text>
+<text x="690" y="44" >odcinki czasu</text>
+<text x="658" y="60" >ograniczone minimalną</text>
+<text x="690" y="76" >granularnością</text>
+<text x="914" y="124" >minimalna granularność</text>
+<text x="890" y="268" >opóżnienie docelowe</text>
+<text x="890" y="284" >(ang. target latency)</text>
+<g>
+<line x1="44" y1="64" x2="44" y2="436" class="solid"></line>
+<polygon points="40,436 48,436 44,448" class="filled"></polygon>
+</g>
+<g>
+<line x1="684" y1="88" x2="820" y2="88" class="solid"></line>
+<line x1="684" y1="88" x2="684" y2="436" class="solid"></line>
+<line x1="820" y1="88" x2="820" y2="436" class="solid"></line>
+<path d="M 684,436 A 4,4 0,0,0 688,440" class="nofill"></path>
+<line x1="688" y1="440" x2="816" y2="440" class="solid"></line>
+<path d="M 820,436 A 4,4 0,0,1 816,440" class="nofill"></path>
+</g>
+<g>
+<polygon points="872,108 876,96 880,108" class="filled"></polygon>
+<line x1="876" y1="108" x2="876" y2="404" class="solid"></line>
+<line x1="876" y1="136" x2="888" y2="136" class="solid"></line>
+<polygon points="872,404 880,404 876,416" class="filled"></polygon>
+</g>
+<g>
+<polygon points="896,108 900,96 904,108" class="filled"></polygon>
+<line x1="900" y1="108" x2="900" y2="132" class="solid"></line>
+<polygon points="896,132 904,132 900,144" class="filled"></polygon>
+</g>
 </svg>
