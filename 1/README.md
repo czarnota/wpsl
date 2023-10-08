@@ -8,7 +8,7 @@ title: Procesy w systemie Linux
 
 - **Program** - sekwencja instrukcji wyrażonych w języku programowania, który komputer jest w stanie zinterpretować i wykonać.
 - **System operacyjny** - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.
-- **Proces** - kod który się wykonuje, (akt wykonywania kodu).
+- **Proces** - kod który się wykonuje oraz ma przypisane zasoby
 - **Wątek** - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).
 - **Procesor** - układ scalony, który wykonuje instrukcje pobierane z pamięci operacyjnej.
 - **Wywołanie systemowe** - przerwanie procesu i żądanie przez ten proces wykonania przez system operacyjny operacji uprzywilejowanej.
@@ -166,6 +166,98 @@ systemd─┬─ModemManager───2*[{ModemManager}]
         │         │                     └─pstree
        ...       ...
 ```
+
+# Wywołania systemowe
+
+## Wywołania systemowe
+
+Procesy prowadzą interakcję z systemem operacyjnym za pomocą wywołań systemowych.
+
+Wywołanie systemowe to przerwanie wywołane przez proces, w celu 
+zarządania od systemu operacyjnego wykonania określonej czynności.
+
+Tą czynnością może być, na przykład:
+
+- otwarcie pliku - `open()`
+- odczyt danych z deskryptora pliku - `read()`
+- sklonowanie obecnego procesu - `fork()`
+- utworzenie gniazda sieciowego - `socket()`
+
+Wywołania systemowe są potrzebne, żeby zapewnić odpowiednią warstwę abstrakcji
+pomiędzy procesem a zasobami zarządzanymi przez system operacyjny.
+
+## Co jest efektem kompilacji?
+
+Kod w języku C jest kompilowany do instrukcji maszynowych
+
+```c
+int foo(int a, int b)  foo: 
+{                      pushq %rbp            // Zapisz podstawe stosu
+	int c = a + b;     movq  %rsp, %rbp      // Weź szczyt stosu jako podstawę
+	return c;          movl  %edi, %eax      // Przenieś pierwszy argument do %eax
+}                      addl  %esi, %eax      // Dodaj drugi argument do %eax
+                       movl  %eax, -4(%rbp)  // Wynik umieść na stosie
+                       movl  -4(%rbp), %eax  // Przekaż wartość zwracaną przez %eax
+                       popq  %rbp            // Załaduj zapisaną podstawę stosu podstawę stosu
+                       retq                  // Wróć z powrotem w miejsce wywołania  
+```
+
+## Instrukcje uprzywilejowane
+
+Nie wszystkie instrukcje procesora są dostępne dla procesów użytkownika.
+Procesy użytkownika nie mogą między innymi odczytywać pamięci chronionej, ani wykonywać niektórych instrukcji. Na przykład:
+
+- `LGDT` - nadpisywanie tablicy przerwań;
+- `IN`, `OUT` - obługa urządzeń wejścia/wyjścia;
+- `MOV %eax, %cr3` - modyfikacja tablicy stron.
+
+Procesy mogą jedynie "prosić" system operacyjny, żeby on w ich imieniu
+wykonywał te instrukcje. Tą prośbą są **wywołania systemowe**.
+
+## Wywołania systemowe
+
+Wywołania systemowe, są przerwaniem programowym (ang. software interrupt)
+
+1. Program wykonuje przerwanie (`syscall` lub `int 0x80`), w rejestrach ustawia
+   odpowieni numer przerwania oraz przekazuje odpowiednie argumenty
+2. System operacyjny zaczyna wykonywać procedurę obsługi tego przerwania:
+   zapisuje stan procesora, przełącza stos programu na stos jądra (zmienia rejestr `%esp` - wskaźnik stosu), i wykonuje
+   odpowiednią operację wskazaną numerem wywołania systemowego.
+3. Po wykonaniu wywołania systemowego system operacyjny przywraca stan procesora (w tym stos procesu)
+   i wznawiane jest wykonywanie programu.
+
+```asm
+message:
+    .asciz "Hello world\n"
+.set message_size, . - message
+...
+movl $1, %edi
+leaq message(%rip), %rsi
+movq $message_size, %rdx
+movq $1, %rax             ;1 is sys_write syscall number
+syscall
+```
+
+## Wywołania systemowe a funkcje
+
+Biblioteka standardowa języka C (np. `glibc`, `musl` lub `uClibc`), implementuje
+funkcje, które uruchamiają wywołania systemowe o podobnych nazwach.
+Oprócz tego implementuje jeszcze dodatkową funkcjonalność oraz funkcje, które
+nie są wywołaniami systemowymi.
+
+Przykłady:
+
+|  funkcja   | typ                                            |
+|------------|------------------------------------------------|
+| `open()`   | `syscall(SYS_open, ...)`                       |
+| `fork()`   | `syscall(SYS_fork, ...)`                       |
+| `write()`  | `syscall(SYS_write, ...)`                      |
+| `read()`   | `syscall(SYS_read, ...)`                       |
+| `printf()` | `syscall(SYS_write)` + dodatkowa funkcjonalność|
+| `malloc()` | `syscall(SYS_brk)` + dodatkowa funkcjonalność  |
+| `fopen()`  | `syscall(SYS_open)` + dodatkowa funkcjonalność |
+| `strlen()` | funkcja biblioteczna                           |
+| `memcpy()` | funkcja biblioteczna                           |
 
 # Tworzenie procesów
 
@@ -569,81 +661,6 @@ int main(void)
                                                czyli możliwa zmiana procesu
 }
 ```
-
-# Wywołania systemowe
-
-## Co jest efektem kompilacji?
-
-Kod w języku C jest kompilowany do instrukcji maszynowych
-
-```c
-int foo(int a, int b)  _foo: 
-{                      pushq %rbp            // Zapisz podstawe stosu
-	int c = a + b;     movq  %rsp, %rbp      // Weź szczyt stosu jako podstawę
-	return c;          movl  %edi, %eax      // Wrzuć pierwszy argument do %eax
-}                      addl  %esi, %eax      // Dodaj drugi argument do %eax
-                       movl  %eax, -4(%rbp)  // Wynik wrzuć na stos
-                       movl  -4(%rbp), %eax  // Przekaż wartość zwracaną przez %eax
-                       popq  %rbp            // Załaduj zapisaną podstawę stosu podstawę stosu
-                       retq                  // Wróć z powrotem w miejsce wywołania  
-```
-
-## Instrukcje uprzywilejowane
-
-Nie wszystkie instrukcje procesora są dostępne dla procesów użytkownika.
-Procesy użytkownika nie mogą między innymi odczytywać pamięci chronionej, ani wykonywać niektórych instrukcji. Na przykład:
-
-- `LGDT` - nadpisywanie tablicy przerwań;
-- `IN`, `OUT` - obługa urządzeń wejścia/wyjścia;
-- `MOV %eax, %cr3` - modyfikacja tablicy stron.
-
-Procesy mogą jedynie "prosić" system operacyjny, żeby on w ich imieniu
-wykonywał te instrukcje. Tą prośbą są **wywołania systemowe**.
-
-## Wywołania systemowe
-
-Wywołania systemowe, są przerwaniem programowym (ang. software interrupt)
-
-1. Program wykonuje przerwanie (`syscall` lub `int 0x80`), w rejestrach ustawia
-   odpowieni numer przerwania oraz przekazuje odpowiednie argumenty
-2. System operacyjny zaczyna wykonywać procedurę obsługi tego przerwania:
-   zapisuje stan procesora, przełącza stos programu na stos jądra (zmienia rejestr `%esp` - wskaźnik stosu), i wykonuje
-   odpowiednią operację wskazaną numerem wywołania systemowego.
-3. Po wykonaniu wywołania systemowego system operacyjny przywraca stan procesora (w tym stos procesu)
-   i wznawiane jest wykonywanie programu.
-
-```asm
-message:
-    .asciz "Hello world\n"
-.set message_size, . - message
-...
-movl $1, %edi
-leaq message(%rip), %rsi
-movq $message_size, %rdx
-movq $1, %rax             ;1 is sys_write syscall number
-syscall
-```
-
-## Wywołania systemowe a funkcje
-
-Biblioteka standardowa języka C (np. `glibc`, `musl` lub `uClibc`), implementuje
-funkcje, które uruchamiają wywołania systemowe o podobnych nazwach.
-Oprócz tego implementuje jeszcze dodatkową funkcjonalność oraz funkcje, które
-nie są wywołaniami systemowymi.
-
-Przykłady:
-
-|  funkcja   | typ                                            |
-|------------|------------------------------------------------|
-| `open()`   | `syscall(SYS_open, ...)`                       |
-| `fork()`   | `syscall(SYS_fork, ...)`                       |
-| `write()`  | `syscall(SYS_write, ...)`                      |
-| `read()`   | `syscall(SYS_read, ...)`                       |
-| `printf()` | `syscall(SYS_write)` + dodatkowa funkcjonalność|
-| `malloc()` | `syscall(SYS_brk)` + dodatkowa funkcjonalność  |
-| `fopen()`  | `syscall(SYS_open)` + dodatkowa funkcjonalność |
-| `strlen()` | funkcja biblioteczna                           |
-| `memcpy()` | funkcja biblioteczna                           |
 
 # Pamięć procesu
 
