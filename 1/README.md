@@ -261,6 +261,30 @@ Przykłady:
 
 # Tworzenie procesów
 
+## PID procesu
+
+Każdy proces posiada swój unikalny identyfikator zwany numerem PID (ang. Process Identifier).
+
+Do przechowywanie identyfikatora procesu służy typ danych `pid_t`.
+
+Standard POSIX nie określa jaki konkretnie typ języka C ma zostać wykorzystany do
+zdefiniowania `pid_t`, określa jedynie, że ma to być typ będący liczbą całkowitą
+ze znakiem.
+
+Wywołania systemowe `getpid()` i `getppid()` służą odpowiednio:
+do pobierania identyfikatorów obecnego procesu i procesu rodzica.
+
+```c
+#include <unistd.h>
+
+int main(void)
+{
+    pid_t pid = getpid();
+    pid_t parent = getppid();
+    return 0;
+}
+```
+
 ## Wywołanie systemowe - `fork()`
 
 Do tworzenia procesów, służy wywołanie systemowe `fork()`.
@@ -271,7 +295,7 @@ procesu rodzica.
    int main(void)
    {
        printf("przed utworzeniem\n");
--->    int pid = fork();
+-->    pid_t pid = fork();
        ...
    }
 ```
@@ -281,7 +305,7 @@ Po wywołaniu `fork()`:
    int main(void)                       int main(void)
    {                                    {
        printf("przed utworzeniem\n");       printf("przed utworzeniem\n");
--->    int pid = fork();             -->    int pid = fork();
+-->    pid_t pid = fork();           -->    pid_t pid = fork();
        ...                                  ...
    }                                    }
 ```
@@ -296,7 +320,7 @@ rodzica wartością zwróconą będzie PID procesu potomnego.
     int main(void)                       int main(void)
     {                                    {
         printf("przed utworzeniem\n");       printf("przed utworzeniem\n")j
-        int pid = fork();                    int pid = fork();
+        pid_t pid = fork();                  pid_t pid = fork();
         if (pid == 0)                        if (pid == 0)
             printf("child\n");        -->        printf("child\n");   
         else                                 else
@@ -319,7 +343,7 @@ dowolnego procesu potomnego.
     int main(void)                       int main(void)
     {                                    {
         printf("przed utworzeniem\n");       printf("przed utworzeniem\n")j
-        int pid = fork();                    int pid = fork();
+        pid_t pid = fork();                  pid_t pid = fork();
         if (pid == 0) {                      if (pid == 0) {
             printf("child\n");                   printf("child\n");   
         } else {                             } else {
@@ -369,7 +393,7 @@ potomnych, to należy ponowić oczekiwanie.
 
 ```c
 while (true) {
-    int pid = wait(NULL);
+    pid_t pid = wait(NULL);
     if (pid < 0) {
         /* Nie ma już dzieci */
         if (errno == ECHILD)
@@ -395,7 +419,7 @@ if (WIFEXITED(status))
 Tak naprawde `wait()` działa tak samo jak:
 
 ```c
-int pid = waitpid(-1, &status, 0);
+pid_t pid = waitpid(-1, &status, 0);
 ```
 
 Więcej informacji
@@ -496,7 +520,7 @@ Poniższy kod tworzy proces zombie, który będzie istniał około 30 sekund:
 int main(void)
 {
     /* Klonujemy proces */
-    int pid = fork();
+    pid_t pid = fork();
     /* Jeżeli jesteśmy dzieckiem */
     if (pid == 0)
         return 0; /* Kończymy - proces jest zombie do wykonania wait() */
@@ -517,7 +541,7 @@ Jeżeli nie wywołamy `wait()`, to dlaczego dziecko znika po zakończeniu rodzic
 
 int main(void)
 {
-    int pid = fork();
+    pid_t pid = fork();
     if (pid == 0)
         return 0;
 
