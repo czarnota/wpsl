@@ -1,3 +1,7 @@
+---
+title: Obsługa plików
+---
+
 # Zagadnienie 3: Obsługa plików
 
 ## Komunikacja międzyprocesowa

@@ -1,3 +1,7 @@
+---
+title: Procesy w systemie Linux
+---
+
 # Zagadnienie 1: Procesy w systemie Linux
 
 ## Podstawowe pojęcia

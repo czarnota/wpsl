@@ -1,3 +1,7 @@
+---
+title: Komunikacja sieciowa
+---
+
 # Zagadnienie 4: Komunikacja sieciowa
 
 ## Informacje wstępne - tablice
