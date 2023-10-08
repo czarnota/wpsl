@@ -3,10 +3,12 @@ DIAGRAM_FILES=$(addsuffix .lock, $(shell find . -name diagrams))
 
 SLIDES=bin/slides.sh
 DIAGRAMS=bin/diagrams.sh
+BROWSERREFRESH=bin/browserrefresh
 
 all: $(SLIDE_FILES) $(DIAGRAM_FILES) reload.lock
 
 reload.lock: $(SLIDE_FILES) $(DIAGRAM_FILES)
+	$(BROWSERREFRESH)
 	touch $@
 
 $(SLIDE_FILES): %/slides.html : %/README.md $(SLIDES)
