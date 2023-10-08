@@ -403,6 +403,31 @@ Więcej informacji
 $ man 2 wait
 ```
 
+## Wywołanie `waitpid()` w trybie nieblokującym
+
+Opcja `WNOHANG` umożliwia oczekiwanie na zakończenie procesu potomnego, nie
+blokując przy tym procesu rodzica.
+
+```c
+pid_t pid = fork();
+if (pid == 0) {
+    sleep(3);
+    return 0;
+}
+
+while (1) {
+    pid_t pid = waitpid(-1, NULL, WNOHANG);
+    if (pid == 0) {
+        printf("child is still running...\n");
+        sleep(1);
+    } else if (pid < 0) {
+        if (errno == ECHILD)
+            break;
+        perror("waitpid failed");
+    }
+}
+```
+
 ## Najistotniejsze efekty `fork()`
 
 Podczas **wywołania systemowego** `fork()`:
