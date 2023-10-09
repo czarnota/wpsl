@@ -263,16 +263,18 @@ Przykłady:
 
 ## PID procesu
 
-Każdy proces posiada swój unikalny identyfikator zwany numerem PID (ang. Process Identifier).
+Procesy posiadają unikalny identyfikator - PID (ang. Process Identifier).
+Do przechowywania identyfikatora procesu służy typ danych `pid_t`.
+Typ `pid_t` najczęsciej definiowany jest jako `int`, ale POSIX wymaga tylko, żeby
+była to liczba całkowita ze znakiem.
 
-Do przechowywanie identyfikatora procesu służy typ danych `pid_t`.
+Wywołania `getpid()` i `getppid()` zwracają odpowiednio PID procesu oraz PID jego rodzica.
+```c
+#include <unistd.h>
 
-Standard POSIX nie określa jaki konkretnie typ języka C ma zostać wykorzystany do
-zdefiniowania `pid_t`, określa jedynie, że ma to być typ będący liczbą całkowitą
-ze znakiem.
-
-Wywołania systemowe `getpid()` i `getppid()` służa odpowiednio:
-do pobierania identyfikatorów obecnego procesu i procesu rodzica.
+pid_t getpid(void);
+pid_t getppid(void);
+```
 
 ```c
 #include <unistd.h>
