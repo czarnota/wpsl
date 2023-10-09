@@ -247,11 +247,11 @@
 <section id="podstawowe-pojęcia" class="level2">
 <h2>Podstawowe pojęcia</h2>
 <ul class="incremental">
-<li><strong>Program</strong> - sekwencja instrukcji wyrażonych w języku programowania, który komputer jest w stanie zinterpretować i wykonać.</li>
-<li><strong>System operacyjny</strong> - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.</li>
-<li><strong>Proces</strong> - kod który się wykonuje oraz ma przypisane zasoby</li>
-<li><strong>Wątek</strong> - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).</li>
 <li><strong>Procesor</strong> - układ scalony, który wykonuje instrukcje pobierane z pamięci operacyjnej.</li>
+<li><strong>Program</strong> - sekwencja instrukcji wyrażonych w języku programowania, które komputer jest w stanie zinterpretować i wykonać.</li>
+<li><strong>Proces</strong> - program który się wykonuje oraz ma przypisane zasoby.</li>
+<li><strong>System operacyjny</strong> - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.</li>
+<li><strong>Wątek</strong> - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).</li>
 <li><strong>Wywołanie systemowe</strong> - przerwanie procesu i żądanie przez ten proces wykonania przez system operacyjny operacji uprzywilejowanej.</li>
 </ul>
 </section>
@@ -263,21 +263,21 @@
 <p>Wielozadaniowość oznacza, że system operacyjny może wykonywać wiele zadań jednocześnie. W przypadku maszyn jednoprocesorowych, system sprawia wrażenie wykonującego wiele zadań jednocześnie, a w rzeczywistości przydziela czas procesora na przemian kilku procesom.</p>
 <p><img src="assets/8.svg" /></p>
 </section>
-<section id="wielozadaniowość-na-wielu-procesorachrdzeniach" class="level2">
-<h2>Wielozadaniowość na wielu procesorach/rdzeniach</h2>
-<p>W przypadku wielu procesorów, system operacyjny może uruchamiać procesy rzeczywiście równolegle</p>
+<section id="wielozadaniowość-na-wielu-procesorach-lub-rdzeniach" class="level2">
+<h2>Wielozadaniowość na wielu procesorach lub rdzeniach</h2>
+<p>W przypadku wielu procesorów lub rdzeni, system operacyjny może uruchamiać procesy rzeczywiście równolegle.</p>
 <p><img src="assets/7.svg" /></p>
 </section>
-<section id="wielozadaniowość-na-wielu-procesorachrdzeniach-1" class="level2">
-<h2>Wielozadaniowość na wielu procesorach/rdzeniach</h2>
+<section id="wielozadaniowość-na-wielu-procesorach-lub-rdzeniach-1" class="level2">
+<h2>Wielozadaniowość na wielu procesorach lub rdzeniach</h2>
 <p>W praktyce procesy mogą być uruchamiane na różnych rdzeniach procesora.</p>
 <p><img src="assets/9.svg" /></p>
 </section>
 <section id="afiniczność-procesora" class="level2">
 <h2>Afiniczność procesora</h2>
-<p>W Linuksie możemy określić na których procesorach będzie wykonywany proces</p>
+<p>W Linuksie możemy określić na których procesorach będzie wykonywany proces.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> taskset <span class="at">-p</span> 0x11 9726</span></code></pre></div>
-<p>Podobne ustawienie istnieje również w menedżerze zadań systemu Windows</p>
+<p>Podobne ustawienie istnieje również w menedżerze zadań systemu Windows.</p>
 <p><img src="assets/affinity.png" /></p>
 </section>
 </section>
@@ -287,7 +287,7 @@
 <h2>Procesy w systemie Linux</h2>
 <p>Procesem nazywamy program, który się wykonuje. W skład procesu wchodzą:</p>
 <ul class="incremental">
-<li><strong>Stan procesora (rejestry).</strong> Dla <code>x86_64</code> są to:
+<li><strong>Stan procesora (rejestry).</strong> Na przykład, dla architektury <code>x86_64</code> (procesory Intel) są to:
 <ul class="incremental">
 <li><code>rbp</code> - wskaźnik początku stosu</li>
 <li><code>rsp</code> - wskaźnik końca stosu (ang. Stack pointer)</li>

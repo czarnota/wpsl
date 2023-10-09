@@ -6,11 +6,11 @@ title: Procesy w systemie Linux
 
 ## Podstawowe pojęcia
 
-- **Program** - sekwencja instrukcji wyrażonych w języku programowania, który komputer jest w stanie zinterpretować i wykonać.
-- **System operacyjny** - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.
-- **Proces** - kod który się wykonuje oraz ma przypisane zasoby
-- **Wątek** - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).
 - **Procesor** - układ scalony, który wykonuje instrukcje pobierane z pamięci operacyjnej.
+- **Program** - sekwencja instrukcji wyrażonych w języku programowania, które komputer jest w stanie zinterpretować i wykonać.
+- **Proces** - program który się wykonuje oraz ma przypisane zasoby.
+- **System operacyjny** - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.
+- **Wątek** - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).
 - **Wywołanie systemowe** - przerwanie procesu i żądanie przez ten proces wykonania przez system operacyjny operacji uprzywilejowanej.
 
 # Wielozadaniowość
@@ -23,14 +23,14 @@ jednocześnie, a w rzeczywistości przydziela czas procesora na przemian kilku p
 
 ![](assets/8.svg)
 
-## Wielozadaniowość na wielu procesorach/rdzeniach
+## Wielozadaniowość na wielu procesorach lub rdzeniach
 
-W przypadku wielu procesorów, system operacyjny może uruchamiać procesy
-rzeczywiście równolegle
+W przypadku wielu procesorów lub rdzeni, system operacyjny może uruchamiać procesy
+rzeczywiście równolegle.
 
 ![](assets/7.svg)
 
-## Wielozadaniowość na wielu procesorach/rdzeniach
+## Wielozadaniowość na wielu procesorach lub rdzeniach
 
 W praktyce procesy mogą być uruchamiane na różnych rdzeniach procesora.
 
@@ -38,13 +38,13 @@ W praktyce procesy mogą być uruchamiane na różnych rdzeniach procesora.
 
 ## Afiniczność procesora
 
-W Linuksie możemy określić na których procesorach będzie wykonywany proces
+W Linuksie możemy określić na których procesorach będzie wykonywany proces.
 
 ```bash
 $ taskset -p 0x11 9726
 ```
 
-Podobne ustawienie istnieje również w menedżerze zadań systemu Windows
+Podobne ustawienie istnieje również w menedżerze zadań systemu Windows.
 
 ![](assets/affinity.png)
 
@@ -55,7 +55,7 @@ Podobne ustawienie istnieje również w menedżerze zadań systemu Windows
 Procesem nazywamy program, który się wykonuje.
 W skład procesu wchodzą:
 
-- **Stan procesora (rejestry).** Dla `x86_64` są to:
+- **Stan procesora (rejestry).** Na przykład, dla architektury `x86_64` (procesory Intel) są to:
     - `rbp` - wskaźnik początku stosu
     - `rsp` - wskaźnik końca stosu (ang. Stack pointer)
     - `rip` - wskaźnik aktualnej instrukcji (ang. Program counter)
