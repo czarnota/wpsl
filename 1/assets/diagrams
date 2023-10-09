@@ -425,3 +425,31 @@ diagram 12.svg <<EOF
            '---------------------------------------'    '---------------------------------------'    '---------------------------------------'      
 $COLORDEFS
 EOF
+
+diagram processes.svg <<EOF
+
+                               "proces rodzica"
+                                   "main()"
+                                      |
+                                      |
+                                      |
+                                      |
+                                      |     "proces potomny"
+                              "fork()"*- - - - - - -*
+                                      |             |
+                                      |             |
+                      "printf(parent)"*             * "printf(child)"
+                                      |             |
+                                      |             |
+                       "wait(&status)"o             |  
+                                      !             |
+                                      !             |
+                                      *- - - - - - -v "return N"
+                                      |
+                                      |
+           "WEXITSTATUS(status) == N" *
+                                      |
+                                      |
+                            "return 0"v                                                  .
+$COLORDEFS
+EOF

@@ -290,8 +290,26 @@ int main(void)
 ## Wywołanie systemowe - `fork()`
 
 Do tworzenia procesów, służy wywołanie systemowe `fork()`.
-Wywołanie `fork()` tworzy proces potomny, który jest "klonem"
-procesu rodzica.
+
+```c
+#include <unistd.h>
+
+pid_t fork(void);
+```
+
+Utworzony proces potomny:
+
+- Jest klonem procesu rodzica
+- Otrzymuje unikalny PID.
+- Ma inny PID rodzica. To PID który wywołał `fork()`.
+- Używa dalej tego samego kodu programu.
+- Otrzymuje skopiowany jest stan procesora (w tym wskaźnik aktualnej instrukcji).
+- Otrzymuje kopię tablicy deskryptorów plików.
+- Otrzymuje kopię stron pamięci, ale dopiero po pierwszym zapisie (Copy-on-write).
+
+## Przykład działania `fork()`
+
+Poniższy kod przedstawia koncepcję działania `fork()`.
 
 ```c
    int main(void)
@@ -307,7 +325,7 @@ Po wywołaniu `fork()`:
    int main(void)                       int main(void)
    {                                    {
        printf("przed utworzeniem\n");       printf("przed utworzeniem\n");
--->    pid_t pid = fork();           -->    pid_t pid = fork();
+-->    pid_t pid = fork();           -->    pid_t pid = fork(); // (0)
        ...                                  ...
    }                                    }
 ```
@@ -355,6 +373,10 @@ dowolnego procesu potomnego.
         return 0;                     -->    return 0;
     }                                    }
 ```
+
+## Wizualizacja
+
+![](assets/processes.svg)
 
 ## `wait()` obsługa błędów
 

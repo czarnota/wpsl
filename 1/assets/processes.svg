@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="728" height="400">
+<style>
+line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
+<!--separator-->
+.r{  fill: #F44336;  }
+.g{  fill: #4CAF50;  }
+.b{  fill: #2196F3;  }
+.o{  fill: #FF9800;  }
+.y{  fill: #FFEB3B;  }
+.c{  fill: #00BCD4;  }
+.m{  fill: #9C27B0;  }
+.k{  fill: #000000;  }
+</style>
+<defs>
+<marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<polygon points="0,0 0,4 4,2 0,0"></polygon>
+</marker>
+<marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+</marker>
+<marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="2" class="filled"></circle>
+</marker>
+<marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+</marker>
+<marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+</marker>
+</defs>
+<rect class="backdrop" x="0" y="0" width="728" height="400"></rect>
+<line x1="308" y1="48" x2="308" y2="132" class="solid"></line>
+<circle cx="308" cy="136" r="3" class="filled"></circle>
+<line x1="308" y1="140" x2="308" y2="180" class="solid"></line>
+<line x1="312" y1="136" x2="320" y2="136" class="solid"></line>
+<circle cx="308" cy="184" r="3" class="filled"></circle>
+<line x1="308" y1="188" x2="308" y2="228" class="solid"></line>
+<circle cx="308" cy="232" r="3" class="nofill"></circle>
+<line x1="308" y1="236" x2="308" y2="276" class="broken"></line>
+<circle cx="308" cy="280" r="3" class="filled"></circle>
+<line x1="308" y1="284" x2="308" y2="324" class="solid"></line>
+<line x1="312" y1="280" x2="320" y2="280" class="solid"></line>
+<circle cx="308" cy="328" r="3" class="filled"></circle>
+<line x1="328" y1="136" x2="336" y2="136" class="solid"></line>
+<line x1="344" y1="136" x2="352" y2="136" class="solid"></line>
+<line x1="360" y1="136" x2="368" y2="136" class="solid"></line>
+<line x1="376" y1="136" x2="384" y2="136" class="solid"></line>
+<line x1="392" y1="136" x2="400" y2="136" class="solid"></line>
+<line x1="408" y1="136" x2="416" y2="136" class="solid"></line>
+<circle cx="420" cy="136" r="3" class="filled"></circle>
+<line x1="420" y1="140" x2="420" y2="180" class="solid"></line>
+<circle cx="420" cy="184" r="3" class="filled"></circle>
+<line x1="408" y1="280" x2="416" y2="280" class="solid"></line>
+<line x1="328" y1="280" x2="336" y2="280" class="solid"></line>
+<line x1="344" y1="280" x2="352" y2="280" class="solid"></line>
+<line x1="360" y1="280" x2="368" y2="280" class="solid"></line>
+<line x1="376" y1="280" x2="384" y2="280" class="solid"></line>
+<line x1="392" y1="280" x2="400" y2="280" class="solid"></line>
+<text x="714" y="380" >.</text>
+<text x="250" y="28" >proces rodzica</text>
+<text x="282" y="44" >main()</text>
+<text x="354" y="124" >proces potomny</text>
+<text x="242" y="140" >fork()</text>
+<text x="178" y="188" >printf(parent)</text>
+<text x="434" y="188" >printf(child)</text>
+<text x="186" y="236" >wait(&amp;status)</text>
+<text x="434" y="284" >return N</text>
+<text x="90" y="332" >WEXITSTATUS(status) == N</text>
+<text x="226" y="380" >return 0</text>
+<g>
+<line x1="308" y1="332" x2="308" y2="372" class="solid"></line>
+<polygon points="304,372 312,372 308,384" class="filled"></polygon>
+</g>
+<g>
+<line x1="420" y1="188" x2="420" y2="276" class="solid"></line>
+<polygon points="416,276 424,276 420,288" class="filled"></polygon>
+</g>
+</svg>
