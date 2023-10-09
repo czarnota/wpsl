@@ -191,16 +191,27 @@ pomiędzy procesem a zasobami zarządzanymi przez system operacyjny.
 Kod w języku C jest kompilowany do instrukcji maszynowych
 
 ```c
-int foo(int a, int b)  foo: 
-{                      pushq %rbp            // Zapisz podstawe stosu
-	int c = a + b;     movq  %rsp, %rbp      // Weź szczyt stosu jako podstawę
-	return c;          movl  %edi, %eax      // Przenieś pierwszy argument do %eax
-}                      addl  %esi, %eax      // Dodaj drugi argument do %eax
-                       movl  %eax, -4(%rbp)  // Wynik umieść na stosie
-                       movl  -4(%rbp), %eax  // Przekaż wartość zwracaną przez %eax
-                       popq  %rbp            // Załaduj zapisaną podstawę stosu podstawę stosu
-                       retq                  // Wróć z powrotem w miejsce wywołania  
+int foo(int a, int b)
+{
+	int c = a + b;
+	return c;
+}
 ```
+
+```console
+$ gcc main.c -S -O0 -o -
+_foo: 
+pushq %rbp            ; Zapisz podstawe stosu
+movq  %rsp, %rbp      ; Weź szczyt stosu jako podstawę
+movl  %edi, %eax      ; Przenieś pierwszy argument do %eax
+addl  %esi, %eax      ; Dodaj drugi argument do %eax
+movl  %eax, -4(%rbp)  ; Wynik umieść na stosie
+movl  -4(%rbp), %eax  ; Przekaż wartość zwracaną przez %eax
+popq  %rbp            ; Załaduj zapisaną podstawę stosu
+retq                  ; Wróć z powrotem w miejsce wywołania  
+```
+
+Godbolt: [https://godbolt.org/z/cd947Ko75](https://godbolt.org/z/cd947Ko75)
 
 ## Instrukcje uprzywilejowane
 
