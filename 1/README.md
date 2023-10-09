@@ -271,7 +271,7 @@ Standard POSIX nie określa jaki konkretnie typ języka C ma zostać wykorzystan
 zdefiniowania `pid_t`, określa jedynie, że ma to być typ będący liczbą całkowitą
 ze znakiem.
 
-Wywołania systemowe `getpid()` i `getppid()` służą odpowiednio:
+Wywołania systemowe `getpid()` i `getppid()` służa odpowiednio:
 do pobierania identyfikatorów obecnego procesu i procesu rodzica.
 
 ```c
@@ -361,7 +361,7 @@ Jeżeli wartość jest ujemna to wystąpił błąd. Błąd uzyskać można
 odczytująć zmienną `errno`.
 
 ```c
-pid = wait(NULL);
+pid_t pid = wait(NULL);
 if (pid < 0) {
     fprintf(stderr, "error: wait: %s\n", strerror(errno));
     return -1;
@@ -375,7 +375,7 @@ wskaźnik jako pierwszy argument wywołania `wait()`.
 
 ```c
 int status;
-pid = wait(&status);
+pid_t pid = wait(&status);
 if (pid < 0) {
     fprintf(stderr, "error: wait: %s\n", strerror(errno));
     return -1;
@@ -407,11 +407,15 @@ while (true) {
 
 ## Wywołanie `waitpid()`
 
-Wywołanie systemowe `waitpid()` pozwala zaczekać na konkretny process potomny
+Wywołanie systemowe `waitpid()` pozwala zaczekać na konkretny process potomny.
 
 ```c
 int status;
-waitpid(pid, &status, 0);
+pid_t pid = waitpid(pid, &status, 0);
+if (pid < 0) {
+    fprintf(stderr, "error: waitpid: %s\n", strerror(errno));
+    return -1;
+}
 if (WIFEXITED(status))
     printf("dziecko zwróciło: %d\n", WEXITSTATUS(status));
 ```
@@ -420,11 +424,6 @@ Tak naprawde `wait()` działa tak samo jak:
 
 ```c
 pid_t pid = waitpid(-1, &status, 0);
-```
-
-Więcej informacji
-```console
-$ man 2 wait
 ```
 
 ## Wywołanie `waitpid()` w trybie nieblokującym
