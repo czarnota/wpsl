@@ -365,6 +365,26 @@ w procesie potomnym czy w procesie rodzica.
 
 ## Oczekiwanie na zakończenie procesu potomnego
 
+Do oczekiwania na zakończenie procesu potomnego służą, wywołanie
+systemowe `wait()` oraz `waitpid()`, które blokują proces do momentu zakończenia
+dowolnego lub wybranego procesu potomnego.
+
+```c
+#include <sys/wait.h>
+
+pid_t wait(int *stat_loc);
+pid_t waitpid(pid_t pid, int *stat_loc, int options);
+
+pid_t wait3(int *stat_loc, int options, struct rusage *rusage);
+pid_t wait4(pid_t pid, int *stat_loc, int options, struct rusage *rusage);
+```
+
+`wait3()` i `wait4()` działają identycznie jak `wait()` i `waitpid()`, ale
+pozwalają też na uzyskanie statystyk na temat użytych zasobów przez zakończony
+proces.
+
+## Użycie `wait()`
+
 Do oczekiwania na zakończenie procesu potomnego służy, wywołanie
 systemowe `wait()`, które blokuje program do momentu zakończenia
 dowolnego procesu potomnego.
@@ -501,6 +521,8 @@ Wywołanie `fork()` powoduje utworzenie nowego procesu, który jest niemalże
 dokładną kopią procesu potomnego. Żeby zmienić kod wykonywanego programu należy
 użyc funkcji z rodziny `exec()`
 ```c
+#include <unistd.h>
+
 int execl(const char *path,
           const char *arg0, ..., /*, (char *)0, */);
 int execle(const char *path,
