@@ -1,7 +1,7 @@
 # Program uruchamiajacy procesy w pętli
 
 Celem zadania jest implementacja programu, którego głównym zadaniem będzie
-uruchamianie procesów wykonujących wskazany program w nieskończonej pętli.
+ponowne uruchamianie procesów wykonujących wskazany program.
 
 Użytkownik musi mieć możliwość wskazania jaki program będzie uruchamiany w pętli,
 poprzez przekazanie jego nazwy jako pierwszy argument do implementowanego
