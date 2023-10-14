@@ -7,7 +7,7 @@ Użytkownik musi mieć możliwość wskazania jaki program będzie uruchamiany w
 poprzez przekazanie jego nazwy jako pierwszy argument do implementowanego
 w tym zadaniu programu.
 
-# Funkcjonalność (wersja podstawowa)
+# Funkcjonalność
 
 W przykładach `runner` to nazwa tworzonego w tym zadaniu programu.
 
@@ -57,8 +57,6 @@ czarnota         console      13 kwi 21:33
 czarnota         ttys000       7 wrz 00:40
 ^C
 ```
-
-# Funkcjonalność (wersja rozszerzona)
 
 ## Przekazywanie argumentów do wskazanego programu
 
