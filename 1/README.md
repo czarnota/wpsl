@@ -53,7 +53,7 @@ Podobne ustawienie istnieje również w menedżerze zadań systemu Windows.
 ## Procesy w systemie Linux
 
 Procesem nazywamy program, który się wykonuje.
-W skład procesu wchodzą:
+W skład procesu wchodzą między innymi:
 
 - **Stan procesora (rejestry).** Na przykład, dla architektury `x86_64` (procesory Intel) są to:
     - `rbp` - wskaźnik początku stosu
@@ -62,17 +62,15 @@ W skład procesu wchodzą:
     - `rflags` - rejest flag procesora
     - rejestry ogólnego przeznaczenia: `rax`, `rcx`, `rdx`, `rbx`, `rsi`, `rdi`, `r8`-`r15`
 - **Pamięć wirtualna** (Tabela stron) (wskazywana przez rejestr `CR3`)
-- **Deskryptory plików**, czyli (najważniejsze):
-    - pliki (otwarte za pomocą `open()`)
-    - gniazda sieciowe (otwarte za pomocą `socket()`, `accept()`)
-    - potoki (otwarte za pomocą `pipe()`)
-    - demultiplexery zdarzeń (otwarte za pomocą `epoll_create()`)
-- Inne struktury danych istotne dla jądra Linux
+- **Deskryptory plików**, czyli identyfikatory otwartych plików, unikalne w przestrzeni procesu.
+- **Zbiór sygnałów** oczekujących na dostarczenie (`man sigpending`)
+- **Stan procesu**, określający m. in: czy process się wykonuje, czy jest zatrzymany lub czy jest oczekujący <https://elixir.bootlin.com/linux/v6.5.8/source/include/linux/sched.h#L85>
+- W jądrze Linux, proces reprezentuje `struct task_struct` (<https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L738>)
 
 ## Podglądanie procesów w systemie
 
-W systemie Linux, uruchomione procesy możemy zobaczyć za pomocą
-programu `ps`
+W systemie Linux oraz w innych systemach z rodziny Unix, uruchomione procesy możemy zobaczyć za pomocą
+programu `ps`.
 
 ```console
 $ ps

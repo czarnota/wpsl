@@ -285,7 +285,7 @@
 <h1>Procesy</h1>
 <section id="procesy-w-systemie-linux" class="level2">
 <h2>Procesy w systemie Linux</h2>
-<p>Procesem nazywamy program, który się wykonuje. W skład procesu wchodzą:</p>
+<p>Procesem nazywamy program, który się wykonuje. W skład procesu wchodzą między innymi:</p>
 <ul class="incremental">
 <li><strong>Stan procesora (rejestry).</strong> Na przykład, dla architektury <code>x86_64</code> (procesory Intel) są to:
 <ul class="incremental">
@@ -296,19 +296,15 @@
 <li>rejestry ogólnego przeznaczenia: <code>rax</code>, <code>rcx</code>, <code>rdx</code>, <code>rbx</code>, <code>rsi</code>, <code>rdi</code>, <code>r8</code>-<code>r15</code></li>
 </ul></li>
 <li><strong>Pamięć wirtualna</strong> (Tabela stron) (wskazywana przez rejestr <code>CR3</code>)</li>
-<li><strong>Deskryptory plików</strong>, czyli (najważniejsze):
-<ul class="incremental">
-<li>pliki (otwarte za pomocą <code>open()</code>)</li>
-<li>gniazda sieciowe (otwarte za pomocą <code>socket()</code>, <code>accept()</code>)</li>
-<li>potoki (otwarte za pomocą <code>pipe()</code>)</li>
-<li>demultiplexery zdarzeń (otwarte za pomocą <code>epoll_create()</code>)</li>
-</ul></li>
-<li>Inne struktury danych istotne dla jądra Linux</li>
+<li><strong>Deskryptory plików</strong>, czyli identyfikatory otwartych plików, unikalne w przestrzeni procesu.</li>
+<li><strong>Zbiór sygnałów</strong> oczekujących na dostarczenie (<code>man sigpending</code>)</li>
+<li><strong>Stan procesu</strong>, określający m. in: czy process się wykonuje, czy jest zatrzymany lub czy jest oczekujący <a href="https://elixir.bootlin.com/linux/v6.5.8/source/include/linux/sched.h#L85" class="uri">https://elixir.bootlin.com/linux/v6.5.8/source/include/linux/sched.h#L85</a></li>
+<li>W jądrze Linux, proces reprezentuje <code>struct task_struct</code> (<a href="https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L738" class="uri">https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L738</a>)</li>
 </ul>
 </section>
 <section id="podglądanie-procesów-w-systemie" class="level2">
 <h2>Podglądanie procesów w systemie</h2>
-<p>W systemie Linux, uruchomione procesy możemy zobaczyć za pomocą programu <code>ps</code></p>
+<p>W systemie Linux oraz w innych systemach z rodziny Unix, uruchomione procesy możemy zobaczyć za pomocą programu <code>ps</code>.</p>
 <pre class="console"><code>$ ps
   PID TTY           TIME CMD
   896 ttys000    0:00.10 -bash
