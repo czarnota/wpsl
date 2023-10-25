@@ -581,7 +581,7 @@ Najistotniejsze efekty wywołania systemowego `exec()`:
 - PID oraz PID rodzica pozostaje niezmieniony.
 - Ładowany jest nowy program do aktualnego procesu.
 - Deskryptory plików pozostają niezmienione.
-- Wszystkie oczekujące sygnały są usuwana.
+- Wszystkie oczekujące sygnały są usuwane.
 - Procedury obsługi sygnałów są nadpisywane domyślnymi.
 - Pamięć podmapowana pod pliki jest tracona.
 - Efektywny identyfikator użytkownika jest zapisywany jako zapisany identyfikator użytkownika.
