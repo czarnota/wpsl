@@ -536,7 +536,7 @@ retq                  ; Wróć z powrotem w miejsce wywołania  </code></pre>
 <li>Używa dalej tego samego kodu programu.</li>
 <li>Otrzymuje skopiowany jest stan procesora (w tym wskaźnik aktualnej instrukcji).</li>
 <li>Otrzymuje kopię tablicy deskryptorów plików.</li>
-<li>Otrzymuje kopię stron pamięci, ale dopiero po pierwszym zapisie (Copy-on-write).</li>
+<li>Otrzymuje kopię stron pamięci, ale dopiero po pierwszym zapisie (Copy-on-write), i tylko tych stron, które zostały zmodyfikowane.</li>
 </ul>
 </section>
 <section id="przykład-działania-fork" class="level2">
@@ -679,13 +679,21 @@ retq                  ; Wróć z powrotem w miejsce wywołania  </code></pre>
 </section>
 <section id="najistotniejsze-efekty-fork" class="level2">
 <h2>Najistotniejsze efekty <code>fork()</code></h2>
-<p>Podczas <strong>wywołania systemowego</strong> <code>fork()</code>:</p>
+<p>Proces potomny utworzony za pomocą wywołania systemowego <code>fork()</code>:</p>
 <ul class="incremental">
-<li>Używany jest ten dalej ten sam <strong>kod programu</strong></li>
-<li>Kopiowany jest <strong>stan procesora</strong> (w tym <strong>wskaźnik aktualnej instrukcji</strong>)</li>
-<li>Dziedziczone są <strong>deskryptory plików</strong>:</li>
-<li>Kopiowana są <strong>strony pamięci</strong>, ale dopiero po pierwszym zapisie (<strong>Copy-on-write</strong>)</li>
+<li>Jest klonem procesu rodzica</li>
+<li>Używa dalej tego samego kodu programu.</li>
+<li>Otrzymuje unikalny PID.</li>
+<li>Ma inny PID rodzica (<code>man getppid</code>). To PID który wywołał <code>fork()</code>.</li>
+<li>Otrzymuje skopiowany jest stan procesora (w tym wskaźnik aktualnej instrukcji).</li>
+<li>Otrzymuje kopię tablicy deskryptorów plików.</li>
+<li>Otrzymuje kopię stron pamięci, ale dopiero po pierwszym zapisie (Copy-on-write), i tylko tych stron, które zostały zmodyfikowane.</li>
 </ul>
+</section>
+<section id="copy-on-write" class="level2">
+<h2>Copy-on-write</h2>
+<p>Strony pamięci wirtualnej nowego procesu oznaczone są jako tylko do odczytu. Próba nadpisania skutkuje wyjątkiem Page Fault, którego obsługa pozwala systemowi operacyjnemu skopiować stronę</p>
+<p><img src="assets/0.svg" /></p>
 </section>
 <section id="tworzenie-procesu-który-będzie-wykonywał-inny-program" class="level2">
 <h2>Tworzenie procesu, który będzie wykonywał inny program</h2>
@@ -725,42 +733,88 @@ retq                  ; Wróć z powrotem w miejsce wywołania  </code></pre>
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
+<section id="efekty-wywołania-systemowego-exec" class="level2">
+<h2>Efekty wywołania systemowego <code>exec()</code></h2>
+<p>Najistotniejsze efekty wywołania systemowego <code>exec()</code>:</p>
+<ul class="incremental">
+<li>PID oraz PID rodzica pozostaje niezmieniony.</li>
+<li>Ładowany jest nowy program do aktualnego procesu.</li>
+<li>Deskryptory plików pozostają niezmienione.</li>
+<li>Wszystkie oczekujące sygnały są usuwana.</li>
+<li>Procedury obsługi sygnałów są nadpisywane domyślnymi.</li>
+<li>Pamięć podmapowana pod pliki jest tracona.</li>
+<li>Efektywny identyfikator użytkownika jest zapisywany jako zapisany identyfikator użytkownika.</li>
+<li>Rzeczywisty identyfikator użytkownika nie ulega zmianie.</li>
+</ul>
+</section>
+<section id="użytkownicy-związane-z-procesem" class="level2">
+<h2>Użytkownicy związane z procesem</h2>
+<p>Proces jest powiązany z użytkownikiem, za pomocą trzech identyfikatorów:</p>
+<ul class="incremental">
+<li>Rzeczywisty identyfikator użytkownika (ang. real user ID) - identyfikator użytkownika, który uruchomił proces.</li>
+<li>Efektywny identyfikator użytkownika (ang. effective user ID) - identyfikator, względem którego weryfikowane są uprawnienia.</li>
+<li>Zapisany identyfikator użytkownika (ang. saved user ID) - efektywny identyfikator zapisywany w momencie wywołania systemowego <code>exec()</code>.</li>
+</ul>
+<p>Użytkownik nieuprzywilejowany może przełączać identyfikatory tylko pomiędzy rzeczywistym, efektywnym a zapisanym identyfikatorem użytkownika. Do manipulacji służą poniższe wywołania systemowe.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> seteuid<span class="op">(</span>uid_t euid<span class="op">);</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> setuid<span class="op">(</span>uid_t uid<span class="op">);</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>uid_t geteuid<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>uid_t getuid<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span></code></pre></div>
+</section>
+<section id="grupy-związane-z-procesem" class="level2">
+<h2>Grupy związane z procesem</h2>
+<p>Proces jest powiązany z grupą , za pomocą trzech identyfikatorów:</p>
+<ul class="incremental">
+<li>Rzeczywisty identyfikator grupy (ang. real user ID) - identyfikator grupy, który uruchomił proces.</li>
+<li>Efektywny identyfikator grupy (ang. effective user ID) - identyfikator, względem którego weryfikowane są uprawnienia.</li>
+<li>Zapisany identyfikator grupy (ang. saved user ID) - efektywny identyfikator zapisywany w momencie wywołania systemowego <code>exec()</code>.</li>
+</ul>
+<p>Użytkownik nieuprzywilejowany może przełączać identyfikatory tylko pomiędzy rzeczywistym, efektywnym a zapisanym identyfikatorem grupy. Do manipulacji służą poniższe wywołania systemowe.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> setegid<span class="op">(</span>uid_t euid<span class="op">);</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> setgid<span class="op">(</span>uid_t uid<span class="op">);</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>uid_t getegid<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>uid_t getgid<span class="op">(</span><span class="dt">void</span><span class="op">);</span></span></code></pre></div>
+</section>
 <section id="procesy-zombie" class="level2">
 <h2>Procesy zombie</h2>
 <p>Jeżeli proces zakończył swoje wykonywanie, a rodzic nie wykonał <code>wait()</code> to będzie on nadal widoczny na liście procesów, do momentu wykonania <code>wait()</code> przez rodzica.</p>
 <p>Poniższy kod tworzy proces zombie, który będzie istniał około 30 sekund:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Klonujemy proces */</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Jeżeli jesteśmy dzieckiem */</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* Kończymy - proces jest zombie do wykonania wait() */</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Jeżeli jesteśmy rodzicem to czekamy 30 sekund*/</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    sleep<span class="op">(</span><span class="dv">30</span><span class="op">);</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Odczytujemy kod wyjścia procesu i usuwamy go z listy procesów */</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    wait<span class="op">(</span>NULL<span class="op">);</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Klonujemy proces */</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Jeżeli jesteśmy dzieckiem */</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* Kończymy - proces jest zombie do wykonania wait() */</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Jeżeli jesteśmy rodzicem to czekamy 30 sekund*/</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    sleep<span class="op">(</span><span class="dv">30</span><span class="op">);</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Odczytujemy kod wyjścia procesu i usuwamy go z listy procesów */</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    wait<span class="op">(</span>NULL<span class="op">);</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="pytanie" class="level2">
 <h2>Pytanie</h2>
 <p>Jeżeli nie wywołamy <code>wait()</code>, to dlaczego dziecko znika po zakończeniu rodzica?</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Nie wywołujemy tutaj wywołania systemowego wait(), więc nie zakończymy</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">       dziecka */</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Nie wywołujemy tutaj wywołania systemowego wait(), więc nie zakończymy</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">       dziecka */</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="odpowiedź" class="level2">
 <h2>Odpowiedź</h2>
@@ -784,48 +838,48 @@ systemd─┬─ModemManager─── ...
 <section id="zagadka-0" class="level2">
 <h2>Zagadka 0</h2>
 <p>Ile procesów zostanie utworzonych w poniższym programie?</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-</section>
-<section id="zagadka-1" class="level2">
-<h2>Zagadka 1</h2>
-<p>Ile procesów zostanie utworzonych w poniższym programie?</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>        fork<span class="op">();</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-</section>
-<section id="zagadka-2" class="level2">
-<h2>Zagadka 2</h2>
-<p>Ile procesów zostanie utworzonych w poniższym programie?</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        fork<span class="op">();</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        execlp<span class="op">(</span><span class="st">&quot;ls&quot;</span><span class="op">,</span> <span class="st">&quot;ls&quot;</span><span class="op">,</span> NULL<span class="op">);</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    fork<span class="op">();</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="zagadka-1" class="level2">
+<h2>Zagadka 1</h2>
+<p>Ile procesów zostanie utworzonych w poniższym programie?</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        fork<span class="op">();</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="zagadka-2" class="level2">
+<h2>Zagadka 2</h2>
+<p>Ile procesów zostanie utworzonych w poniższym programie?</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        fork<span class="op">();</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        execlp<span class="op">(</span><span class="st">&quot;ls&quot;</span><span class="op">,</span> <span class="st">&quot;ls&quot;</span><span class="op">,</span> NULL<span class="op">);</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 </section>
 <section id="planista" class="level1">
@@ -842,19 +896,19 @@ systemd─┬─ModemManager─── ...
 <h2>Jak planista reprezentuje procesy</h2>
 <p>W systemie Linux każdy proces, jest reprezentowany przez strukturę <code>struct task_struct</code></p>
 <p>Oto jej ważniejsze pola:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> task_struct <span class="op">{</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head tasks           <span class="co">/* Wpis na liscie procesów */</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    pid_t pid<span class="op">;</span>                       <span class="co">/* Identyfikator procesu */</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> mm_struct <span class="op">*</span>mm             <span class="co">/* Przestrzeń adresowa */</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>real_parent<span class="op">;</span> <span class="co">/* Prawdziwy rodzic - ten kto wywołał clone() */</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>parent<span class="op">;</span>      <span class="co">/* Odbiorca SIGCHLD i wait4() */</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head children<span class="op">;</span>       <span class="co">/* Dzieci procesu */</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> sigpending pending<span class="op">;</span>       <span class="co">/* Lista oczekujących sygnałów */</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> files_struct <span class="op">*</span>files<span class="op">;</span>      <span class="co">/* Otwarte deskryptory plików */</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">*</span>stack                      <span class="co">/* Wskaznik do stosu jądra dla tego</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co">                                        procesu - tu są zapisane rejestry */</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> task_struct <span class="op">{</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head tasks           <span class="co">/* Wpis na liscie procesów */</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    pid_t pid<span class="op">;</span>                       <span class="co">/* Identyfikator procesu */</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> mm_struct <span class="op">*</span>mm             <span class="co">/* Przestrzeń adresowa */</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>real_parent<span class="op">;</span> <span class="co">/* Prawdziwy rodzic - ten kto wywołał clone() */</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>parent<span class="op">;</span>      <span class="co">/* Odbiorca SIGCHLD i wait4() */</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head children<span class="op">;</span>       <span class="co">/* Dzieci procesu */</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> sigpending pending<span class="op">;</span>       <span class="co">/* Lista oczekujących sygnałów */</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> files_struct <span class="op">*</span>files<span class="op">;</span>      <span class="co">/* Otwarte deskryptory plików */</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">*</span>stack                      <span class="co">/* Wskaznik do stosu jądra dla tego</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co">                                        procesu - tu są zapisane rejestry */</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 </section>
 <section id="lista-procesów" class="level2">
 <h2>Lista procesów</h2>
@@ -880,17 +934,17 @@ systemd─┬─ModemManager─── ...
 <li>przerwania pochodzącego od czasomierza systemowego (Programmable System Timer);</li>
 <li>wywołania systemowego (np. <code>open()</code>, <code>fork()</code>, <code>sleep()</code>, <code>write()</code>).</li>
 </ul>
-<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">,</span> w<span class="op">;</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="dv">1</span><span class="op">;</span>                               <span class="op">&lt;----</span> tu może wystąpić przerwanie<span class="op">,</span> możliwa zmiana procesu</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> x<span class="op">);</span>                   <span class="op">&lt;----</span> wywołanie systemowe write<span class="op">(),</span> możliwa zmiana procesu</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;plik.txt&quot;</span><span class="op">,</span> O_RDONLY<span class="op">);</span> <span class="op">&lt;----</span> wywołanie systemowe open<span class="op">(),</span> możliwa zmiana procesu</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> x <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>                           <span class="op">&lt;----</span> tu może wystąpić przerwanie<span class="op">,</span> możliwa zmiana procesu</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="op">*</span>g <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(*</span>g<span class="op">));</span>         <span class="op">&lt;----</span> malloc<span class="op">()</span> nie jest wywołaniem systemowym ale</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>                                               może wywołać brk<span class="op">(),</span> sbrk<span class="op">(),</span> mmap<span class="op">(),</span> które są<span class="op">,</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>                                               czyli możliwa zmiana procesu</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">,</span> w<span class="op">;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="dv">1</span><span class="op">;</span>                               <span class="op">&lt;----</span> tu może wystąpić przerwanie<span class="op">,</span> możliwa zmiana procesu</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> x<span class="op">);</span>                   <span class="op">&lt;----</span> wywołanie systemowe write<span class="op">(),</span> możliwa zmiana procesu</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;plik.txt&quot;</span><span class="op">,</span> O_RDONLY<span class="op">);</span> <span class="op">&lt;----</span> wywołanie systemowe open<span class="op">(),</span> możliwa zmiana procesu</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> x <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>                           <span class="op">&lt;----</span> tu może wystąpić przerwanie<span class="op">,</span> możliwa zmiana procesu</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="op">*</span>g <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(*</span>g<span class="op">));</span>         <span class="op">&lt;----</span> malloc<span class="op">()</span> nie jest wywołaniem systemowym ale</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>                                               może wywołać brk<span class="op">(),</span> sbrk<span class="op">(),</span> mmap<span class="op">(),</span> które są<span class="op">,</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>                                               czyli możliwa zmiana procesu</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 </section>
 <section id="pamięć-procesu" class="level1">
@@ -898,17 +952,17 @@ systemd─┬─ModemManager─── ...
 <section id="zmienne-reprezentują-komórki-pamięci" class="level2">
 <h2>Zmienne reprezentują komórki pamięci</h2>
 <p>Każda zmienna reprezentuje pewną komórkę pamięci.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="dv">2</span><span class="op">;</span> <span class="co">/* Zmienna w sekcji .data */</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">;</span> <span class="co">/* Zmienna na stosie */</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%p\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>x<span class="op">);</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%p\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>y<span class="op">);</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="dv">2</span><span class="op">;</span> <span class="co">/* Zmienna w sekcji .data */</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">;</span> <span class="co">/* Zmienna na stosie */</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%p\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>x<span class="op">);</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%p\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>y<span class="op">);</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="pamięć-wirtualna" class="level2">
 <h2>Pamięć wirtualna</h2>
@@ -918,22 +972,22 @@ systemd─┬─ModemManager─── ...
 <section id="sekcje-pamięci" class="level2">
 <h2>Sekcje pamięci</h2>
 <p>W systemie Linux skompilowany program będzie miał odpowiednią strukturę w pamięci:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x<span class="op">;</span>  <span class="co">/* Niezainicjalizowane dane (.bss) */</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="dv">3</span><span class="op">;</span> <span class="co">/* Zainicjalizowane dane (.data) */</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> foo<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="co">/* Argumenty w rejestrach lub na stosie */</span>     <span class="op">---.</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                                                                 <span class="op">|</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">static</span> <span class="dt">int</span> x<span class="op">;</span> <span class="co">/* Niezainicjalizowane dane (.bss) */</span>           <span class="op">|</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">static</span> <span class="dt">int</span> y <span class="op">=</span> <span class="dv">4</span><span class="op">;</span> <span class="co">/* Zainicjalizowane dane (.data) */</span>         <span class="op">|</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>                                                                 <span class="op">|</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span>                                                    <span class="op">|</span>    kod</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                                                                 <span class="op">|</span>___ programu</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">;</span> <span class="co">/* Alokacja na stosie */</span>                               <span class="op">|</span>    umieszczany</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="op">*</span>y <span class="op">=</span> malloc<span class="op">(</span><span class="dv">1024</span><span class="op">);</span> <span class="co">/* Wskaźnik na stosie, */</span>              <span class="op">|</span>    w sekcji <span class="op">.</span>text</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>                           <span class="co">/* a blok pamięci na stercie */</span>        <span class="op">|</span></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    foo<span class="op">(</span><span class="dv">1</span><span class="op">);</span> <span class="co">/* Adres powrotu na stosie,                           |</span></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="co">               argumenty w rejestrach lub na stosie  */</span>           <span class="op">|</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span>                                                     <span class="op">|</span></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>                                                              <span class="op">---</span><span class="ch">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x<span class="op">;</span>  <span class="co">/* Niezainicjalizowane dane (.bss) */</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="dv">3</span><span class="op">;</span> <span class="co">/* Zainicjalizowane dane (.data) */</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> foo<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="co">/* Argumenty w rejestrach lub na stosie */</span>     <span class="op">---.</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                                                                 <span class="op">|</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">static</span> <span class="dt">int</span> x<span class="op">;</span> <span class="co">/* Niezainicjalizowane dane (.bss) */</span>           <span class="op">|</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">static</span> <span class="dt">int</span> y <span class="op">=</span> <span class="dv">4</span><span class="op">;</span> <span class="co">/* Zainicjalizowane dane (.data) */</span>         <span class="op">|</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>                                                                 <span class="op">|</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span>                                                    <span class="op">|</span>    kod</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>                                                                 <span class="op">|</span>___ programu</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">;</span> <span class="co">/* Alokacja na stosie */</span>                               <span class="op">|</span>    umieszczany</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="op">*</span>y <span class="op">=</span> malloc<span class="op">(</span><span class="dv">1024</span><span class="op">);</span> <span class="co">/* Wskaźnik na stosie, */</span>              <span class="op">|</span>    w sekcji <span class="op">.</span>text</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>                           <span class="co">/* a blok pamięci na stercie */</span>        <span class="op">|</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    foo<span class="op">(</span><span class="dv">1</span><span class="op">);</span> <span class="co">/* Adres powrotu na stosie,                           |</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="co">               argumenty w rejestrach lub na stosie  */</span>           <span class="op">|</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span>                                                     <span class="op">|</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>                                                              <span class="op">---</span><span class="ch">&#39;</span></span></code></pre></div>
 </section>
 <section id="sekcje-pamięci-procesu" class="level2">
 <h2>Sekcje pamięci procesu</h2>
@@ -981,11 +1035,6 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0  [vsyscall]</code></pre>
 <h2>KAISER</h2>
 <p>Mapowana jest tylko niezbędna część jądra. Po przełączeniu się w tryb jądra (przy wywołaniach systemowych) tabela stron jest przełączana na pełną wersję (zmiana rejestru CR3).</p>
 <p><img src="assets/5.svg" /></p>
-</section>
-<section id="copy-on-write" class="level2">
-<h2>Copy-on-write</h2>
-<p>Strony pamięci wirtualnej nowego procesu oznaczone są jako tylko do odczytu. Próba nadpisania skutkuje wyjątkiem Page Fault, którego obsługa pozwala systemowi operacyjnemu skopiować stronę</p>
-<p><img src="assets/0.svg" /></p>
 </section>
 </section>
 <section id="dziękuję-za-uwagę" class="level1">

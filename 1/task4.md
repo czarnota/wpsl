@@ -38,14 +38,14 @@ SELECT>
 przez niego gra.
 - Po wyjściu z gry użytkownik zostanie przeniesiony z powrotem
 do menu głównego. Wpisanie przez użytkownika `0`, powinno zakończyć "dashboard".
-- Przed wyświetleniem menu ekran powinien zostać wyczyszczony
+- Przed wyświetleniem menu ekran powinien zostać wyczyszczony.
 
 # Wskazówki
 
 ## Instalacja gier
 
 Gdy tekstowe, które będa uruchamiane w aplikacji można zainstalować w
-następujący sposób
+następujący sposób:
 
 ```console
 sudo apt install nudoku greed moon-buggy ninvaders nsnake
@@ -55,11 +55,13 @@ sudo apt install nudoku greed moon-buggy ninvaders nsnake
 
 Ekran terminala można wyczyścić na kilka sposobów.
 
-Jednym z nich jest wypisanie kodu controlnego "Erase in Display" za pomocą
-funkcji `printf()`. ([https://en.wikipedia.org/wiki/ANSI_escape_code]((https://en.wikipedia.org/wiki/ANSI_escape_code))
+Jednym z nich jest wypisanie kodu kontrolnego "Erase in Display"
+oraz przeniesienie kursora na pozycję `(0, 0)` używając kodu kontrolnego "Cursor position"
+za pomocą funkcji `printf()`. (<https://en.wikipedia.org/wiki/ANSI_escape_code>) 
 
 ```c
-printf("%c[2J", 0x1b);
+printf("%c[2J", 0x1b); /* Erase in Display */
+printf("%c[0;0H", 0x1b); /* Set cursor position to (0, 0) */
 ```
 
 Kolejnym sposobem, może być utworzenie procesu potomnego, który wykona program

@@ -314,7 +314,8 @@ Utworzony proces potomny:
 - Używa dalej tego samego kodu programu.
 - Otrzymuje skopiowany jest stan procesora (w tym wskaźnik aktualnej instrukcji).
 - Otrzymuje kopię tablicy deskryptorów plików.
-- Otrzymuje kopię stron pamięci, ale dopiero po pierwszym zapisie (Copy-on-write).
+- Otrzymuje kopię stron pamięci, ale dopiero po pierwszym zapisie (Copy-on-write), i tylko
+  tych stron, które zostały zmodyfikowane.
 
 ## Przykład działania `fork()`
 
@@ -506,12 +507,24 @@ while (1) {
 
 ## Najistotniejsze efekty `fork()`
 
-Podczas **wywołania systemowego** `fork()`:
+Proces potomny utworzony za pomocą wywołania systemowego `fork()`:
 
-- Używany jest ten dalej ten sam **kod programu**
-- Kopiowany jest **stan procesora** (w tym **wskaźnik aktualnej instrukcji**)
-- Dziedziczone są **deskryptory plików**:
-- Kopiowana są **strony pamięci**, ale dopiero po pierwszym zapisie (**Copy-on-write**)
+- Jest klonem procesu rodzica
+- Używa dalej tego samego kodu programu.
+- Otrzymuje unikalny PID.
+- Ma inny PID rodzica (`man getppid`). To PID który wywołał `fork()`.
+- Otrzymuje skopiowany jest stan procesora (w tym wskaźnik aktualnej instrukcji).
+- Otrzymuje kopię tablicy deskryptorów plików.
+- Otrzymuje kopię stron pamięci, ale dopiero po pierwszym zapisie (Copy-on-write), i tylko
+  tych stron, które zostały zmodyfikowane.
+
+## Copy-on-write
+
+Strony pamięci wirtualnej nowego procesu oznaczone są jako tylko do odczytu.
+Próba nadpisania skutkuje wyjątkiem Page Fault, którego obsługa pozwala systemowi
+operacyjnemu skopiować stronę
+
+![](assets/0.svg)
 
 ## Tworzenie procesu, który będzie wykonywał inny program
 
@@ -559,6 +572,61 @@ int main(int argc, char **argv)
 
     return 0;
 }
+```
+
+## Efekty wywołania systemowego `exec()`
+
+Najistotniejsze efekty wywołania systemowego `exec()`:
+
+- PID oraz PID rodzica pozostaje niezmieniony.
+- Ładowany jest nowy program do aktualnego procesu.
+- Deskryptory plików pozostają niezmienione.
+- Wszystkie oczekujące sygnały są usuwana.
+- Procedury obsługi sygnałów są nadpisywane domyślnymi.
+- Pamięć podmapowana pod pliki jest tracona.
+- Efektywny identyfikator użytkownika jest zapisywany jako zapisany identyfikator użytkownika.
+- Rzeczywisty identyfikator użytkownika nie ulega zmianie.
+
+## Użytkownicy związane z procesem
+
+Proces jest powiązany z użytkownikiem, za pomocą trzech identyfikatorów:
+
+- Rzeczywisty identyfikator użytkownika (ang. real user ID) - identyfikator użytkownika, który uruchomił proces.
+- Efektywny identyfikator użytkownika (ang. effective user ID) - identyfikator, względem którego weryfikowane są uprawnienia.
+- Zapisany identyfikator użytkownika (ang. saved user ID) - efektywny identyfikator zapisywany w momencie wywołania systemowego `exec()`.
+
+Użytkownik nieuprzywilejowany może przełączać identyfikatory tylko
+pomiędzy rzeczywistym, efektywnym a zapisanym identyfikatorem użytkownika.
+Do manipulacji służą poniższe wywołania systemowe.
+
+```c
+#include <unistd.h>
+
+int seteuid(uid_t euid);
+int setuid(uid_t uid);
+uid_t geteuid(void);
+uid_t getuid(void);
+```
+
+## Grupy związane z procesem
+
+Proces jest powiązany z grupą , za pomocą trzech identyfikatorów:
+
+- Rzeczywisty identyfikator grupy (ang. real user ID) - identyfikator grupy, który uruchomił proces.
+- Efektywny identyfikator grupy (ang. effective user ID) - identyfikator, względem którego weryfikowane są uprawnienia.
+- Zapisany identyfikator grupy (ang. saved user ID) - efektywny identyfikator zapisywany w momencie wywołania systemowego `exec()`.
+
+Użytkownik nieuprzywilejowany może przełączać identyfikatory tylko
+pomiędzy rzeczywistym, efektywnym a zapisanym identyfikatorem grupy.
+Do manipulacji służą poniższe wywołania systemowe.
+
+```c
+#include <unistd.h>
+
+int setegid(uid_t euid);
+int setgid(uid_t uid);
+uid_t getegid(void);
+uid_t getgid(void);
 ```
 
 ## Procesy zombie
@@ -871,14 +939,6 @@ Mapowana jest tylko niezbędna część jądra. Po przełączeniu się w tryb j�
 tabela stron jest przełączana na pełną wersję (zmiana rejestru CR3).
 
 ![](assets/5.svg)
-
-## Copy-on-write
-
-Strony pamięci wirtualnej nowego procesu oznaczone są jako tylko do odczytu.
-Próba nadpisania skutkuje wyjątkiem Page Fault, którego obsługa pozwala systemowi
-operacyjnemu skopiować stronę
-
-![](assets/0.svg)
 
 # Dziękuję za uwagę
 
