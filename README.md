@@ -13,7 +13,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task2-solved.md))
     - Zadanie 1.3: ([html](https://czarnota.github.io/wpsl/1/task3), [md](https://github.com/czarnota/wpsl/tree/main/1/task3.md))
     - **Zadanie 1.4**: ([html](https://czarnota.github.io/wpsl/1/task4), [md](https://github.com/czarnota/wpsl/tree/main/1/task4.md))
-    - Termin: do następnych zajęć (04.12.2023)
+    - Termin: do następnych zajęć (04.11.2023)
 
 ## Zagadnienie 2: Wątki i synchronizacja
 
@@ -23,9 +23,9 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - Zadanie 2.1: ([html](https://czarnota.github.io/wpsl/2/task1), [md](https://github.com/czarnota/wpsl/tree/main/2/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task1-solved.md))
     - Zadanie 2.2: ([html](https://czarnota.github.io/wpsl/2/task2), [md](https://github.com/czarnota/wpsl/tree/main/2/task2.md))
-    - **Zadanie 2.3**: ([html](https://czarnota.github.io/wpsl/2/task3), [md](https://github.com/czarnota/wpsl/tree/main/2/task3.md))
+    - Zadanie 2.3: ([html](https://czarnota.github.io/wpsl/2/task3), [md](https://github.com/czarnota/wpsl/tree/main/2/task3.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task3-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task3-solved.md))
-    - Termin: do następnych zajęć (15.04.2023)
+    - Termin: do następnych zajęć (18.11.2023)
 
 ## Zagadnienie 3: Obsługa plików
 
@@ -35,9 +35,9 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - Zadanie 3.1: ([html](https://czarnota.github.io/wpsl/3/task1), [md](https://github.com/czarnota/wpsl/tree/main/3/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task1-solved.md))
     - Zadanie 3.2: ([html](https://czarnota.github.io/wpsl/3/task2), [md](https://github.com/czarnota/wpsl/tree/main/3/task2.md))
-    - **Zadanie 3.3**: ([html](https://czarnota.github.io/wpsl/3/task3), [md](https://github.com/czarnota/wpsl/tree/main/3/task3.md))
+    - Zadanie 3.3: ([html](https://czarnota.github.io/wpsl/3/task3), [md](https://github.com/czarnota/wpsl/tree/main/3/task3.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task3-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task3-solved.md))
-    - Termin: do następnych zajęć (22.04.2023)
+    - Termin: do następnych zajęć (25.11.2023)
 
 ## Zagadnienie 4: Komunikacja sieciowa
 
@@ -46,9 +46,9 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 - **Laboratoria**
     - Zadanie 4.1: ([html](https://czarnota.github.io/wpsl/4/task1), [md](https://github.com/czarnota/wpsl/tree/main/4/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md))
-    - **Zadanie 4.2**: ([html](https://czarnota.github.io/wpsl/4/task2), [md](https://github.com/czarnota/wpsl/tree/main/4/task2.md))
+    - Zadanie 4.2: ([html](https://czarnota.github.io/wpsl/4/task2), [md](https://github.com/czarnota/wpsl/tree/main/4/task2.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task2-solved.md))
-    - Termin: do następnych zajęć (22.04.2023)
+    - Termin: do następnych zajęć (03.12.2023)
 
 ## Wysyłanie zadań
 
@@ -95,23 +95,47 @@ Są 4 zadania:
 
 | Zadanie                      | Termin     |
 | ---------------------------- | ---------- |
-| 1.1 Powłoka systemowa        | 15.04.2023 |
-| 2.3 Budzik                   | 15.04.2023 |
-| 3.3 Budzik zapisujący stan   | 22.04.2023 |
-| 4.2 Serwer HTTP z podstronami| 22.04.2023 |
+| 1.4 Dashboard                | 04.11.2023 |
+|                              | 18.11.2023 |
+|                              | 25.11.2023 |
+|                              | 03.12.2023 |
 
 Zadania należy przysłać, przed momentem prezentacji rozwiązania.
 
-Zadanie jest uznane jako przyjęte, jeżeli otrzymają Państwo odpowiedź zwrotną.
+Zadania będą ocenianie według następujących wytycznych:
 
-Liczba wysłanych zadań z otrzymaną odpowiedzią zwrotną w terminie oraz oceny jakie temu odpowiadają:
+- Ocena 2:
+    - Brak przysłanego zadania w terminie.
+- Ocena 3:
+    - Zadanie zostało przysłane.
+- Ocena 4:
+    - Wszystkie wymagania na ocenę 3.
+    - Kod się kompiluje.
+    - Program wykonuje zamierzoną funkcjonalność lub przynajmniej jej znaczącą część.
+- Ocena 5:
+    - Wszystkie wymagania na ocene 4.
+    - Kod się kompiluje z przełącznikami `-Wall -Werror`.
+    - Program wykonuje w pełni zamierzoną funkcjonalność.
+    - Brak wycieków pamięci.
+    - Brak błędów typu `Segmentation Fault`.
+    - Brak niebezpiecznych odczytów lub zapisów do pamięci (np. poza zakresem tablicy).
+    - Poprawne stosowanie mutexów, brak deadlocków, brak problemów typu race condition.
 
-| Liczba zadań | Ocena |
-| ------------ | ----- |
-| 1            | 3     |
-| 2            | 4     |
-| 3            | 5     |
-| 4            | 5     |
+Możliwe są oceny 3.5 oraz 4.5, jeżeli tylko część warunków dla danej oceny zostanie spełniona.
+
+Końcową oceną z laboratoriów jest średnia arytmetyczna z wszystkich zdobytych ocen,
+zaokrąglona zgodnie z poniższą tabelą:
+
+| Wartość średnia ocen | Ocena |
+| :------------------: | :---: |
+| >= 2,5  i < 3,25     | 3,0   |
+| >= 3,25 i < 3,75     | 3,5   |
+| >= 3,75 i < 4,25     | 4,0   |
+| >= 4,25 i < 4,75     | 4,5   |
+| >= 4,75              | 5,0   |
+
+Co w praktyce oznacza że do zaliczenia przedmiotu należy zdobyć co najmniej
+dwie oceny `3` lub jedną ocenę `4`.
 
 Otrzymaną ocenę należy obronić zdobywając 50% punktów z testu, który
 odbędzie się na ostatnich zajęciach. Test będzie testem wyboru, a pytania
@@ -119,17 +143,14 @@ będą typu: "Co wypisze ten kod?", "Co się dzieje w tym kodzie?".
 
 Zaliczenie testu skutkuje przepisaniem oceny z laboratoriów na ocenę z wykładu.
 
-Jeżeli ktoś nie zaliczy testu, a oddał przynajmniej jeden program, to otrzyma
+Jeżeli ktoś nie zaliczy testu, to otrzyma
 zadanie ratunkowe w postaci programu do napisania, którego oddanie do końca semestru
 ma identyczny efekt jak zaliczenie testu.
 
-Jeżeli ktoś nie oddał żadnego programu - nie musi podchodzić do testu.
+Jeżeli czyjaś średnia ocena to 2 - nie musi podchodzić do testu.
 Otrzymuje on zadanie ratunkowe w postaci programu do napisania,
 którego oddanie do końca semestru skutkuje oceną 3 z laboratoriów i wykładu.
 
 ## Zadania ratunkowe
 
-- Zadanie 3.2: ([html](https://czarnota.github.io/wpsl/3/task2), [md](https://github.com/czarnota/wpsl/tree/main/3/task2.md))
-- Zadanie 2.2: ([html](https://czarnota.github.io/wpsl/2/task2), [md](https://github.com/czarnota/wpsl/tree/main/2/task2.md))
-
-Bezpieczny termin wysłania zadania ratunkowego 06.06.2023
+Bezpieczny termin wysłania zadania ratunkowego 16.01.2024
