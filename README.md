@@ -18,7 +18,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 ## Zagadnienie 2: Wątki i synchronizacja
 
 - **Wykład**
-    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/2/slides.html), [html](https://czarnota.github.io/wpsl/2/), [md](https://github.com/czarnota/wpsl/tree/main/2/))
+    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/2/slides.html), [html](https://czarnota.github.io/wpsl/2/README), [md](https://github.com/czarnota/wpsl/tree/main/2/))
 - **Laboratoria**
     - Zadanie 2.1: ([html](https://czarnota.github.io/wpsl/2/task1), [md](https://github.com/czarnota/wpsl/tree/main/2/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task1-solved.md))
@@ -30,7 +30,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 ## Zagadnienie 3: Obsługa plików
 
 - **Wykład**
-    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/3/slides.html), [html](https://czarnota.github.io/wpsl/3/), [md](https://github.com/czarnota/wpsl/tree/main/3/))
+    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/3/slides.html), [html](https://czarnota.github.io/wpsl/3/README), [md](https://github.com/czarnota/wpsl/tree/main/3/))
 - **Laboratoria**
     - Zadanie 3.1: ([html](https://czarnota.github.io/wpsl/3/task1), [md](https://github.com/czarnota/wpsl/tree/main/3/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task1-solved.md))
@@ -42,7 +42,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 ## Zagadnienie 4: Komunikacja sieciowa
 
 - **Wykład**
-    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/4/slides.html), [html](https://czarnota.github.io/wpsl/4/), [md](https://github.com/czarnota/wpsl/tree/main/4/))
+    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/4/slides.html), [html](https://czarnota.github.io/wpsl/4/README), [md](https://github.com/czarnota/wpsl/tree/main/4/))
 - **Laboratoria**
     - Zadanie 4.1: ([html](https://czarnota.github.io/wpsl/4/task1), [md](https://github.com/czarnota/wpsl/tree/main/4/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md))
