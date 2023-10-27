@@ -13,15 +13,13 @@ Po uruchomieniu aplikacji, wyświetla ona użytkownikowi menu wyboru gier:
 
 ```
 $ ./dashboard
+ _____ _____ ____  __  __ ____   _____  __
+|_   _| ____|  _ \|  \/  | __ ) / _ \ \/ /
+  | | |  _| | |_) | |\/| |  _ \| | | \  /
+  | | | |___|  _ <| |  | | |_) | |_| /  \
+  |_| |_____|_| \_\_|  |_|____/ \___/_/\_\
 
-| |_ ___ _ __ _ __ ___ | |__   _____  __
-| __/ _ \ '__| '_ ` _ \| '_ \ / _ \ \/ /
-| ||  __/ |  | | | | | | |_) | (_) >  < 
- \__\___|_|  |_| |_| |_|_.__/ \___/_/\_\
-
-         terminal gaming console
-
-Installed games:
+            terminal gaming console
 
 1) nudoku
 2) greed
@@ -29,7 +27,7 @@ Installed games:
 4) ninvaders
 5) nsnake
 
-Type '0' to exit
+type '0' to exit
 
 SELECT>
 ```
