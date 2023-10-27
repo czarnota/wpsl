@@ -77,12 +77,12 @@ $ ps
   PID TTY           TIME CMD
   896 ttys000    0:00.10 -bash
  1073 ttys001    0:00.08 -bash
- 7601 ttys001    0:00.02 bash /Users/hehe/v/e @
+ 7601 ttys001    0:00.02 bash /Users/czarnota/v/e @
  7603 ttys001    1:40.37 nvim
  1074 ttys002    0:00.15 -bash
 75444 ttys002    0:00.00 (sleep)
  6110 ttys003    0:00.50 -bash
-75450 ttys003    0:00.00 bash /Users/hehe/v/y
+75450 ttys003    0:00.00 bash /Users/czarnota/v/y
  7870 ttys004    0:00.09 -bash
 75448 ttys004    0:00.00 sleep 1
 ```
@@ -102,16 +102,16 @@ MiB RAM :  15888,6 razem,   9129,5 wolne,   3037,6 użyte,   3721,6 buf/cache
 MiB Swap:   4880,0 razem,   4880,0 wolne,      0,0 użyte.  12497,1 dost. RAM
 
     PID UŻYTK.    PR  NI    WIRT    REZ    WSP S  %CPU  %PAM     CZAS+ KOMENDA
-   1452 hehe       9 -11 2731536  20752  16068 S   8,0   0,1   0:55.86 pulseaudio
-   3269 hehe      20   0  522940  55472  40716 R   5,7   0,3   4:34.44 x-terminal-emul
-   9773 hehe      20   0  217860  52624  35892 S   4,6   0,3   1:22.04 MainThread
-   5321 hehe      20   0 4935640 751040 310720 S   3,4   4,6   4:44.81 firefox
-   8058 hehe      20   0  319064  50504  39920 S   2,3   0,3   0:54.45 RDD Process
-  34580 hehe      20   0   23400   4224   3288 R   2,3   0,0   0:00.05 top
+   1452 czarnota   9 -11 2731536  20752  16068 S   8,0   0,1   0:55.86 pulseaudio
+   3269 czarnota  20   0  522940  55472  40716 R   5,7   0,3   4:34.44 x-terminal-emul
+   9773 czarnota  20   0  217860  52624  35892 S   4,6   0,3   1:22.04 MainThread
+   5321 czarnota  20   0 4935640 751040 310720 S   3,4   4,6   4:44.81 firefox
+   8058 czarnota  20   0  319064  50504  39920 S   2,3   0,3   0:54.45 RDD Process
+  34580 czarnota  20   0   23400   4224   3288 R   2,3   0,0   0:00.05 top
     287 root      20   0       0      0      0 I   1,1   0,0   0:02.22 kworker/4:1-events
-   1903 hehe      20   0 4463536 392068 118248 S   1,1   2,4   1:30.14 gnome-shell
-   1989 hehe      20   0  396140   8576   7056 S   1,1   0,1   0:20.24 ibus-daemon
-   2286 hehe      20   0 5165376 252416  77816 S   1,1   1,6   0:09.15 dropbox
+   1903 czarnota  20   0 4463536 392068 118248 S   1,1   2,4   1:30.14 gnome-shell
+   1989 czarnota  20   0  396140   8576   7056 S   1,1   0,1   0:20.24 ibus-daemon
+   2286 czarnota  20   0 5165376 252416  77816 S   1,1   1,6   0:09.15 dropbox
       1 root      20   0  170040  14056   8280 S   0,0   0,1   0:01.51 systemd
 ```
 
