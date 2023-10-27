@@ -5,7 +5,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
 ## Zagadnienie 1: Procesy w systemie Linux
 
 - **Wykład**
-    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/1/slides.html), [html](https://czarnota.github.io/wpsl/1/), [md](https://github.com/czarnota/wpsl/tree/main/1/))
+    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/1/slides.html), [html](https://czarnota.github.io/wpsl/1/README), [md](https://github.com/czarnota/wpsl/tree/main/1/))
 - **Laboratoria**
     - Zadanie 1.1: ([html](https://czarnota.github.io/wpsl/1/task1), [md](https://github.com/czarnota/wpsl/tree/main/1/task1.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/1/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/1/task1-solved.md))
