@@ -9,9 +9,24 @@ title: Procesy w systemie Linux
 - **Procesor** - układ scalony, który wykonuje instrukcje pobierane z pamięci operacyjnej.
 - **Program** - sekwencja instrukcji wyrażonych w języku programowania, które komputer jest w stanie zinterpretować i wykonać.
 - **Proces** - program który się wykonuje oraz ma przypisane zasoby.
-- **System operacyjny** - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.
+- **System operacyjny** - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych.
 - **Wątek** - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).
 - **Wywołanie systemowe** - przerwanie procesu i żądanie przez ten proces wykonania przez system operacyjny operacji uprzywilejowanej.
+
+## Linux, UNIX, POSIX
+
+- **GNU/Linux** - rodzina uniksopodobnych systemów operacyjnych opartych o oprogramowanie systemu GNU i jądro Linux.
+- **Unix** - system operacyjny stworzony przez AT&T w latach 70, na bazie którego powstało wiele pochodnych systemów. Obecnie jest to znak towarowy należący do The Open Group.
+- **POSIX** - standard IEEE implementowanych przez systemy pochodne od Unix'a oraz uniksopodobne.
+- **Single UNIX Specification** - standard The Open Group bazujący na POSIX, po którego warunków spełnieniu system może być określany jako UNIX
+
+Przykłady certyfikowanych systemów UNIX: macOS, z/OS, HP-UX.
+
+Przykłady niecertyfikowanych systemów uniksopodobnych: Ubuntu (oparty na GNU/Linux), FreeBSD, QNX.
+
+Standardy określają na przykład, że: do wyświetlania listy plików w katalogu służy polecenie `ls`,
+wątki można utworzyć za pomocą `pthread_create()`, a nowy proces można utworzyć za pomocą `fork()`.
+
 
 # Wielozadaniowość
 

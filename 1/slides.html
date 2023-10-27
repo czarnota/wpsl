@@ -250,10 +250,22 @@
 <li><strong>Procesor</strong> - układ scalony, który wykonuje instrukcje pobierane z pamięci operacyjnej.</li>
 <li><strong>Program</strong> - sekwencja instrukcji wyrażonych w języku programowania, które komputer jest w stanie zinterpretować i wykonać.</li>
 <li><strong>Proces</strong> - program który się wykonuje oraz ma przypisane zasoby.</li>
-<li><strong>System operacyjny</strong> - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych,.</li>
+<li><strong>System operacyjny</strong> - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych.</li>
 <li><strong>Wątek</strong> - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).</li>
 <li><strong>Wywołanie systemowe</strong> - przerwanie procesu i żądanie przez ten proces wykonania przez system operacyjny operacji uprzywilejowanej.</li>
 </ul>
+</section>
+<section id="linux-unix-posix" class="level2">
+<h2>Linux, UNIX, POSIX</h2>
+<ul class="incremental">
+<li><strong>GNU/Linux</strong> - rodzina uniksopodobnych systemów operacyjnych opartych o oprogramowanie systemu GNU i jądro Linux.</li>
+<li><strong>Unix</strong> - system operacyjny stworzony przez AT&amp;T w latach 70, na bazie którego powstało wiele pochodnych systemów. Obecnie jest to znak towarowy należący do The Open Group.</li>
+<li><strong>POSIX</strong> - standard IEEE implementowanych przez systemy pochodne od Unix’a oraz uniksopodobne.</li>
+<li><strong>Single UNIX Specification</strong> - standard The Open Group bazujący na POSIX, po którego warunków spełnieniu system może być określany jako UNIX</li>
+</ul>
+<p>Przykłady certyfikowanych systemów UNIX: macOS, z/OS, HP-UX.</p>
+<p>Przykłady niecertyfikowanych systemów uniksopodobnych: Ubuntu (oparty na GNU/Linux), FreeBSD, QNX.</p>
+<p>Standardy określają na przykład, że: do wyświetlania listy plików w katalogu służy polecenie <code>ls</code>, wątki można utworzyć za pomocą <code>pthread_create()</code>, a nowy proces można utworzyć za pomocą <code>fork()</code>.</p>
 </section>
 </section>
 <section id="wielozadaniowość" class="level1">
