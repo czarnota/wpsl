@@ -602,7 +602,7 @@ Najistotniejsze efekty wywołania systemowego `exec()`:
 - Efektywny identyfikator użytkownika jest zapisywany jako zapisany identyfikator użytkownika.
 - Rzeczywisty identyfikator użytkownika nie ulega zmianie.
 
-## Użytkownicy związane z procesem
+## Użytkownicy związani z procesem
 
 Proces jest powiązany z użytkownikiem, za pomocą trzech identyfikatorów:
 
