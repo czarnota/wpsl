@@ -10,7 +10,7 @@ title: Procesy w systemie Linux
 - **Program** - sekwencja instrukcji wyrażonych w języku programowania, które komputer jest w stanie zinterpretować i wykonać.
 - **Proces** - program który się wykonuje oraz ma przypisane zasoby.
 - **System operacyjny** - program który tworzy środowisko do uruchamiania programów, zarządza dostępem procesu do zasobów sprzętowych.
-- **Wątek** - najmniejsza jednostka wykonywanego kodu, która może być zaplanowana przez planiste (ang. Scheduler).
+- **Wątek** - wykonujący się ciąg instrukcji w ramach procesu, współbieżnie z innymi wątkami.
 - **Wywołanie systemowe** - przerwanie procesu i żądanie przez ten proces wykonania przez system operacyjny operacji uprzywilejowanej.
 
 ## Linux, UNIX, POSIX
