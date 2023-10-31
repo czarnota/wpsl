@@ -144,6 +144,7 @@ Użytkownik musi mieć możliwość wprowadzenia treści przypomnienia o długo�
 - `man localtime_r` - konwersja `time_t` na `struct tm`, w celu wydobycia godziny i minuty
 - `man strcmp` - porównywanie ciągów znaków
 - `man sscanf` - skanowanie ciągu znaków
+- `man strlen` - obliczanie długości ciągu znaków
 
 ## Pobieranie aktualnego czasu
 
