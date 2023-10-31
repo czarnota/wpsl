@@ -14,7 +14,7 @@ $ ./program
 
 ## Dodawanie przypomnień
 
-Użytkownik może wpisać `HH:MM Tresc przypomnienia`, gdzie `HH` to godzina, a `MM`
+Użytkownik może wpisać `H:M Tresc przypomnienia`, gdzie `H` to godzina, a `M`
 to minuta o której ma zostać wyświetlona treść przypomnienia. Spowoduje to dodanie
 przypomnienia do listy przypomnień.
 
@@ -24,7 +24,7 @@ $ ./program
 Added reminder "13:00 koniec zajec" at 13:00
 ```
 
-Nie jest konieczne rozdzielanie linijki na czas i wiadomość - jako treść przymomnienia
+Nie jest konieczne rozdzielanie linijki na czas i wiadomość - jako treść przypomnienia
 można przyjąć całą linijkę jaką wpisał użytkownik.
 
 ## Maksymalna liczba przypomnień
@@ -65,7 +65,7 @@ komendę `list`.
 ## Przypominanie
 
 Program musi wyświetlić użytkownikowi treść przypomnienia w momencie, gdy nadejdzie
-czas na który dane przyponienie zostało zaplanowane.
+czas na który dane przypomnienie zostało zaplanowane.
 
 W tym celu program powinien w osobnym wątku odpytywać system operacyjny o aktualną
 godzinę oraz minutę i jeżeli będzie ona równa godzinie, na którą zostało zaplanowane
@@ -73,7 +73,7 @@ jedno z przypomnień, to treść przypomnienia musi wyswietlić się użytkownik
 
 ```
 >
-9:30 koniec zajęć           <---- Gdy wybiła godzina 9:30
+9:30 koniec zajec           <---- Gdy wybiła godzina 9:30
 ```
 
 ## Usuwanie przypomnienia po jego wystąpieniu
@@ -106,12 +106,12 @@ uruchamiony wątek odpytywania aktualnego czasu.
 ## Nieznane komendy
 
 Program musi wspierać następujące komendy:
-- `list` - wyświetlanie przypomnień,
-- `exit` - kończenie programu,
-- `HH:MM Text` - dodawanie przypomnień;
+- `list` - wyświetlanie przypomnień;
+- `exit` - kończenie programu;
+- `H:M Text` - dodawanie przypomnień.
 
 Jeżeli użytkownik wpisze komendę, która nie jest znana, to program po prostu ją ignoruje
-i odczytuje następną linie
+i odczytuje następną linie.
 
 ```
 > sadas
@@ -148,7 +148,7 @@ Użytkownik musi mieć możliwość wprowadzenia treści przypomnienia o długo�
 ## Pobieranie aktualnego czasu
 
 W celu pobrania aktualnej godziny i minuty można wykorzystać funkcję `time()` oraz
-`localtime_r`. Można wykorzystać następujący przykład:
+`localtime_r()`. Ich użycie ilustruje następujący przykład:
 
 ```c
 #include <stdio.h>
@@ -264,9 +264,9 @@ int main(void)
 ## Reprezentacja listy przypomnień w pamięci
 
 Lista przypomnień musi pomieścić 5 elementów. Wobec tego będziemy przechowywać:
-- 5 godzin, o których ma wystąpić przypomnienie
-- 5 minut, o których ma wystąpić przypomnienie
-- 5 treści przypomnien, które będą wyświetlane
+- 5 godzin, o których ma wystąpić przypomnienie;
+- 5 minut, o których ma wystąpić przypomnienie;
+- 5 treści przypomnien, które będą wyświetlane.
 
 ```c
 #include <stdio.h>
@@ -381,5 +381,42 @@ int main(void)
             break;
         }
     }
+}
+```
+
+## Uruchomienie drugiego wątku
+
+Poniższy przykład przedstawia program, który uruchamia drugi wątek.
+
+```c
+#include <pthread.h>
+#include <stdio.h>
+#include <unistd.h>
+
+void *thread_function(void *arg)
+{
+    sleep(1);
+    printf("second thread\n");
+    return NULL;
+}
+
+int main(void)
+{
+    pthread_t thread;
+    int ret = pthread_create(&thread, NULL, thread_function, NULL);
+    if (ret) {
+        fprintf(stderr, "pthread_create failed with %d\n", ret);
+        return 1;
+    }
+
+    printf("main thread\n");
+
+    ret = pthread_join(thread, NULL);
+    if (ret) {
+        fprintf(stderr, "pthread_join failed with %d\n", ret);
+        return 1;
+    }
+
+    return 0;
 }
 ```
