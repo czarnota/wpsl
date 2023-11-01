@@ -424,4 +424,6 @@ int main(void)
 
 ## Diagram aktywności przedstawiający działanie listy przypomnień
 
+Poniżej przedstawiono możliwą implementację programu za pomocą diagramu aktywności.
+
 ![Diagram aktywności przedstawiający działanie listy przypomnień](assets/task4-activity-diagram.svg)
