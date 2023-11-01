@@ -145,6 +145,7 @@ Użytkownik musi mieć możliwość wprowadzenia treści przypomnienia o długo�
 - `man strcmp` - porównywanie ciągów znaków
 - `man sscanf` - skanowanie ciągu znaków
 - `man strlen` - obliczanie długości ciągu znaków
+- `man 3 sleep` - usypianie wątku na zadaną ilość sekund
 
 ## Pobieranie aktualnego czasu
 
