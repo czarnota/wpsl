@@ -97,7 +97,7 @@ z listy przypomnień.
 ## Zakończenie programu
 
 Jeżeli użytkownik wpisze `exit`, to program powinien się zakończyć, kończąć przy tym
-uruchamiony wątek odpytywania aktualnego czasu.
+uruchomiony wątek odpytywania aktualnego czasu.
 
 ```
 > exit
