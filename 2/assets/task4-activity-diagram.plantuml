@@ -1,0 +1,41 @@
+@startuml
+start
+:pthread_create();
+fork
+	partition "**wątek** główny" {
+		while (!koniec)
+			:Wczytaj linie;
+			switch (linia)
+				case (H:M Tekst)
+					:pthread_mutex_lock();
+					:Dodaj do tablicy przypomnień;
+					:pthread_mutex_unlock();
+				case (list)
+					:pthread_mutex_lock();
+					:Wyświetl tablicę przypomnień;
+					:pthread_mutex_unlock();
+				case (exit)
+					:pthread_mutex_lock();
+					:koniec = true;
+					:pthread_mutex_unlock();
+			endswitch
+		endwhile
+	}
+fork again
+	partition "**wątek** przypomnień" {
+		while (!koniec)
+			:Odczytaj aktualną godzinę i minutę;
+			:pthread_mutex_lock();
+			if (Istnieje przypomnienie o tej godzinie i minucie) then (tak)
+				:Wyswietl przypomnienie;
+				:Usuń przypomnienie z tablicy;
+			else (nie)
+			endif
+			:pthread_mutex_unlock();
+			:sleep(1);
+		endwhile
+	}
+end fork
+:pthread_join();
+stop
+@enduml

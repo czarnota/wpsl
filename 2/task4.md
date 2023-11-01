@@ -421,3 +421,7 @@ int main(void)
     return 0;
 }
 ```
+
+## Diagram aktywności przedstawiający działanie listy przypomnień
+
+![Diagram aktywności przedstawiający działanie listy przypomnień](assets/task4-activity-diagram.svg)
