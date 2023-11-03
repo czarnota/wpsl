@@ -253,7 +253,7 @@ Przykład - funkcja wątku, która wypisuje liczby od 1 do 10:
 ```c
 void *print_numbers(void *arg)
 {
-    for (unsigned int i = 0; i < 10; ++i)
+    for (int i = 0; i < 10; ++i)
         printf("%d\n");
 
     return NULL;
@@ -310,7 +310,7 @@ zakończenia wątku na który oczekujemy.
 
 void *print_numbers(void *arg)
 {
-    for (unsigned int i = 0; i < 10; ++i)
+    for (int i = 0; i < 10; ++i)
         printf("%d\n");
 
     return NULL;
@@ -377,7 +377,7 @@ void *print_numbers(void *arg)
     int *start = arg;
 
     /* Wypisanie liczb od *start do *start + 10 */
-    for (unsigned int i = *start; i < *start + 10; ++i)
+    for (int i = *start; i < *start + 10; ++i)
         printf("%d\n");
 
     return NULL;
