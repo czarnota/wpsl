@@ -31,17 +31,22 @@ add(3.0f, 11.0f);
 
 ## Informacje wstępne - funkcja, która nie zwraca wartości
 
+Jeżeli jako typ zwracany użyjemy `void`, to oznacza to, że funkcja
+nie zwraca żadnej wartości.
+
 ```c
-void introduce(const char *name, const char *surname)
+void introduce(int age)
 {
-    printf("Hi! I am %s %s\n", name, surname);
+    if (age < 0)
+        return;
+    printf("Hi! I am %d years old\n", age);
 }
 ```
 
 Wywołanie:
 
 ```c
-introduce("Jan", "Kowalski");
+introduce(30);
 ```
 
 ## Informacje wstępne - wskaźniki
@@ -87,7 +92,7 @@ int liczba = *x; /* Problem */
 
 ## Informacje wstępne - wskaźnik `void *`
 
-Pomimo tego że rozmiary zmiennych wskaźnikowych są zawsze takie same, nie powinno
+Pomimo tego, że rozmiary zmiennych wskaźnikowych są zawsze takie same, nie powinno
 się mieszać typów:
 
 ```c
@@ -158,30 +163,57 @@ int main(void)
 }
 ```
 
-## Po co nam wskaźniki na funkcję?
+## Po co nam wskaźniki na funkcję? - przykład 1
 
-Wskaźniki na funkcję są przydatne jeżeli chcemy zmienić zachowanie kodu minimalnie w niego ingerując
-lub zmienić zachowanie kodu w trakcie działania.
+Wskaźniki na funkcję umożliwiają tworzenie bardziej generyczniego kodu.
 
 ```c
-int add(int x, int y)
+int add(int x, int y) { return x + y; }
+int sub(int x, int y) { return x - y; }
+
+int main(void)
 {
-    return x + y;
+    int a, b;
+    char op;
+    if (scanf("%d %c %d", &a, &op, &b) != 3)
+        return 1;
+    int (*operation)(int a0, int a1) = NULL;
+
+    if (op == '+')
+        operation = add;
+    else if (op == '-')
+        operation = sub;
+    else
+        return 1;
+    printf("%d\n", operation(1, 2));
+    return 0;
+}
+```
+
+## Po co nam wskaźniki na funkcję? - przykład 2
+
+```c
+void print_rows(int x, bool last)
+{
+    printf("%d\n", x);
 }
 
-int sub(int x, int y)
+void print_commas(int x, bool last)
 {
-    return x - y;
+    printf(last ? "%d\n" : "%d, ", x);
+}
+
+void range(int start, int end, void (*fn)(int x, bool last))
+{
+    for (int i = start; i < end; ++i)
+        fn(i, i == end - 1);
 }
 
 int main(void)
 {
-    /* Wystarczy przypisać inną wartość, a zmienia się działanie programu */
-    int (*operation)(int a, int b) = sub;
-
-    int result = operation(1, 2);
-
-    printf("%d\n", result);
+    range(1, 10, print_rows);
+    range(1, 10, print_commas);
+    return 0;
 }
 ```
 
@@ -234,12 +266,8 @@ Nowy wątek można utworzyć za pomocą funkcji `pthread_create()`. Jako
 argument należy jej przekazać funkcję wątku.
 
 ```c
-/**
- * @thread: wskaźnik do zmiennej w której zostanie zapisany 'uchwyt' do wątku
- * @attr: atrybuty wątku (można przekazać NULL i narazie o tym nie myśleć)
- * @start_routine: funkcja wątku
- * @arg: argument do funkcji wątku
- */
+#include <pthread.h>
+
 int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
                    void *(*start_routine)(void *), void *arg);
 ```
@@ -259,6 +287,12 @@ if (err)
 Po utworzeniu nowego wątku, rozpocznie się jego wykonywanie. Przed zakończeniem
 programu powinniśmy poczekać na zakończenie wątku za pomocą funkcji
 `pthread_join()`.
+
+```c
+#include <pthread.h>
+
+int pthread_join(pthread_t thread, void **value_ptr);
+```
 
 ```c
 err = pthread_join(thread, NULL);
@@ -474,26 +508,73 @@ W danym momencie do współdzielonego zasobu powinien mieć dostęp tylko jeden
 wątek. Oznacza to, że jeżeli jeden wątek korzysta ze współdzielonego
 zasobu, to drugi powinien zaczekać, aż ten pierwszy skończy.
 
-Do takiej synchronizacji wykorzystywane są mutexy (od ang. Mutual Exclusion). Poniżej przedstawiono przykład
-tworzenia mutexu.
+Do takiej synchronizacji wykorzystywane są mutexy (od ang. Mutual Exclusion).
+
+Mutexy są reprezentowane przez typ `pthread_mutex_t`.
 
 ```c
-pthread_mutex_t lock;
+#include <pthread.h>
+
+typedef /*implementation-defined*/ pthread_mutex_t;
+```
+
+## Mutexy - inicjalizacja
+
+Mutex może zostać zainicjalizowany za pomocą stałej `PTHREAD_MUTEX_INITIALIZER`.
+
+```c
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+```
+
+Lub za pomocą funkcji `pthread_mutex_init()`. W takim przypadku należy go zdeinicjalizować
+gdy nie jest już używany za pomocą `pthread_mutex_destroy()`.
+
+```c
+#include <pthread.h>
+
+/* Inicjalizacja */
+int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
+
+/* Deinicjalizacja */
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+```
+
+## Mutexy - inicjalizacja przykład
+
+```c
+#include <pthread.h>
+
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER
 
 int main(void)
 {
+    pthread_mutex_t another_lock;
 	/* Inicjalizacja mutexu */
-	int ret = pthread_mutex_init(&lock, NULL);
+	int ret = pthread_mutex_init(&another_lock, NULL);
 	if (ret)
 		return 1;
 	...
 	/* Deinicjalizacja mutexu */
-	pthread_mutex_destroy(&lock, NULL);
+	pthread_mutex_destroy(&another_lock, NULL);
 	return 0;
 }
 ```
 
 ## Blokowanie mutexów
+
+Do blokowania mutexów służą funkcje `pthread_mutex_lock()` i `pthread_mutex_unlock()`.
+
+```c
+#include <pthread.h>
+
+/* Blokowanie mutexu */
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+
+/* Odblokowanie mutexu */
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+```
+ 
+## Blokowanie mutexów - działanie
 
 ```c
 --> pthread_mutex_lock(&lock);          --> pthread_mutex_lock(&lock);
