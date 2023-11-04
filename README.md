@@ -26,6 +26,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - Zadanie 2.3: ([html](https://czarnota.github.io/wpsl/2/task3), [md](https://github.com/czarnota/wpsl/tree/main/2/task3.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task3-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task3-solved.md))
     - Zadanie 2.4: ([html](https://czarnota.github.io/wpsl/2/task4), [md](https://github.com/czarnota/wpsl/tree/main/2/task4.md))
+        - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/2/task4-solved), [md](https://github.com/czarnota/wpsl/tree/main/2/task4-solved.md))
     - Termin: do następnych zajęć (18.11.2023)
 
 ## Zagadnienie 3: Obsługa plików
