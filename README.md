@@ -41,15 +41,15 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task3-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task3-solved.md))
     - Termin: do następnych zajęć (25.11.2023)
 
-## Zagadnienie 4: Komunikacja sieciowa
+## Zagadnienie 5: Komunikacja sieciowa
 
 - **Wykład**
-    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/4/slides.html), [html](https://czarnota.github.io/wpsl/4/README), [md](https://github.com/czarnota/wpsl/tree/main/4/))
+    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/5/slides.html), [html](https://czarnota.github.io/wpsl/5/README), [md](https://github.com/czarnota/wpsl/tree/main/5/))
 - **Laboratoria**
-    - Zadanie 4.1: ([html](https://czarnota.github.io/wpsl/4/task1), [md](https://github.com/czarnota/wpsl/tree/main/4/task1.md))
-        - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task1-solved.md))
-    - Zadanie 4.2: ([html](https://czarnota.github.io/wpsl/4/task2), [md](https://github.com/czarnota/wpsl/tree/main/4/task2.md))
-        - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/4/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/4/task2-solved.md))
+    - Zadanie 5.1: ([html](https://czarnota.github.io/wpsl/5/task1), [md](https://github.com/czarnota/wpsl/tree/main/5/task1.md))
+        - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/5/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/5/task1-solved.md))
+    - Zadanie 5.2: ([html](https://czarnota.github.io/wpsl/5/task2), [md](https://github.com/czarnota/wpsl/tree/main/5/task2.md))
+        - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/5/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/5/task2-solved.md))
     - Termin: do następnych zajęć (03.12.2023)
 
 ## Wysyłanie zadań
