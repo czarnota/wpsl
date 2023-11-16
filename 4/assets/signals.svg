@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="240">
+<style>
+line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
+<!--separator-->
+
+</style>
+<defs>
+<marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<polygon points="0,0 0,4 4,2 0,0"></polygon>
+</marker>
+<marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+</marker>
+<marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="2" class="filled"></circle>
+</marker>
+<marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+</marker>
+<marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+</marker>
+</defs>
+<rect class="backdrop" x="0" y="0" width="560" height="240"></rect>
+<rect x="44" y="8" width="128" height="64" class="solid nofill" rx="0"></rect>
+<text x="82" y="44" >Proces</text>
+<text x="138" y="44" >1</text>
+<rect x="300" y="8" width="128" height="64" class="solid nofill" rx="0"></rect>
+<text x="338" y="44" >Proces</text>
+<text x="394" y="44" >2</text>
+<rect x="4" y="152" width="464" height="64" class="solid nofill" rx="0"></rect>
+<text x="170" y="188" >System</text>
+<text x="226" y="188" >operacyjny</text>
+<text x="82" y="124" >SIGYYY</text>
+<text x="154" y="124" >SIGXXX</text>
+<text x="546" y="220" >.</text>
+<text x="378" y="108" >kill(1, SIGXXX)</text>
+<g>
+<polygon points="64,92 68,80 72,92" class="filled"></polygon>
+<line x1="68" y1="92" x2="68" y2="144" class="solid"></line>
+</g>
+<g>
+<polygon points="136,92 140,80 144,92" class="filled"></polygon>
+<line x1="140" y1="92" x2="140" y2="144" class="solid"></line>
+</g>
+<g>
+<line x1="364" y1="80" x2="364" y2="132" class="solid"></line>
+<polygon points="360,132 368,132 364,144" class="filled"></polygon>
+</g>
+</svg>

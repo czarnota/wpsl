@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Komunikacja międzyprocesowa</title>
+    <style>
+    html { -moz-text-size-adjust: none; -webkit-text-size-adjust: none; text-size-adjust: none; }
+    * { box-sizing: border-box; }
+    .level2, h1 { max-height: 92vh; margin: 1em auto; background: #fff;
+                  font-size: 12px; aspect-ratio: 16 / 9; padding: 1.5em;
+                  display: flex; flex-direction: column; overflow: hidden;
+                  flex: 1 1 auto; box-shadow: 0 0 0.5em #ddd; color: #333; }
+    h1 { align-items: center; flex-direction: row; padding: 0.75em; margin: 0.5em auto;}
+    body { margin: 0; padding: 0; font-family: Helvetica, sans-serif;
+           background: rgb(237, 237, 240); font-size: 200px; }
+    h2 { font-size: 2em; color: #005; padding: 0; }
+    img { display: block; margin: auto; width: 100%; height: 100%;
+          overflow: hidden; object-fit: contain;}
+    section > p, section > ul { line-height: 1.5em; }
+    ul { padding-left: 1em; }
+    h2 { margin: 0 0 0.4em 0; }
+    pre { line-height: 1.125em; }
+
+    @page { size: 16in 9in; margin: 0; }
+    @media print {
+        body { -webkit-print-color-adjust: exact; }
+        .level2, h1 { max-height: 100vh; margin: 0; }
+    }
+
+    .language-console .gp { color: #6ec071; }
+    .sourceCode.diff .st { color: #cc6666; }
+    .sourceCode.diff .va { color: #b5bd68; }
+
+    /*
+
+        Name:       Base16 Tomorrow Dark
+        Author:     Chris Kempson (http://chriskempson.com)
+
+        Pygments template by Jan T. Sott (https://github.com/idleberg)
+        Created with Base16 Builder by Chris Kempson (https://github.com/chriskempson/base16-builder)
+
+    */
+    .sourceCode .hll { background-color: #373b41; }
+    .sourceCode { background: #1d1f21; color: #ffffff; }
+    .sourceCode .co { color: #969896; } /* Comment */
+    .sourceCode .err { color: #cc6666; }
+
+    /* Error */
+    .sourceCode .kw { color: #b294bb; } /* Keyword */
+    .sourceCode .cf { color: #b294bb; } /* Keyword */
+    .sourceCode .l { color: #de935f; }
+
+    /* Literal */
+    .sourceCode .n { color: #ffffff; }
+
+    /* Name */
+    .sourceCode .ot { color: #8abeb7; } /* Operator */
+    .sourceCode .op { color: #8abeb7; } /* Operator */
+    .sourceCode .p { color: #ffffff; }
+
+    /* Punctuation */
+    .sourceCode .cm { color: #969896; }
+
+    /* Comment.Multiline */
+    .sourceCode .pp { color: #69AE69; } /* Comment.Preproc */
+    .sourceCode .im { color: #69AE69; } /* Comment.Preproc */
+    .sourceCode .c1 { color: #969896; }
+
+    /* Comment.Single */
+    .sourceCode .cs { color: #969896; }
+
+    /* Comment.Special */
+    .sourceCode .gd { color: #cc6666; }
+
+    /* Generic.Deleted */
+    .sourceCode .ge { font-style: italic; }
+
+    /* Generic.Emph */
+    .sourceCode .gh { color: #ffffff; font-weight: bold; }
+
+    /* Generic.Heading */
+    .sourceCode .gi { color: #b5bd68; }
+
+    /* Generic.Inserted */
+    .sourceCode .gp { color: #969896; font-weight: bold; }
+
+    /* Generic.Prompt */
+    .sourceCode .gs { font-weight: bold; } 
+    /* Generic.Strong */
+    .sourceCode .gu { color: #8abeb7; font-weight: bold; }
+
+    /* Generic.Subheading */
+    .sourceCode .kc { color: #b294bb; }
+
+    /* Keyword.Constant */
+    .sourceCode .kd { color: #b294bb; }
+
+    /* Keyword.Declaration */
+    .sourceCode .kn { color: #8abeb7; }
+
+    /* Keyword.Namespace */
+    .sourceCode .kp { color: #b294bb; }
+
+    /* Keyword.Pseudo */
+    .sourceCode .kr { color: #b294bb; }
+
+    /* Keyword.Reserved */
+    .sourceCode .dt { color: #f0c674; } /* Keyword.Type */
+    .sourceCode .ld { color: #b5bd68; }
+
+    /* Literal.Date */
+    .sourceCode .m { color: #de935f; }
+
+    /* Literal.Number */
+    .sourceCode .s { color: #b5bd68; }
+
+    /* Literal.String */
+    .sourceCode .na { color: #81a2be; }
+
+    /* Name.Attribute */
+    .sourceCode .bu { color: #ffffff; } /* Name.Builtin */
+    .sourceCode .nc { color: #f0c674; }
+
+    /* Name.Class */
+    .sourceCode .no { color: #cc6666; }
+
+    /* Name.Constant */
+    .sourceCode .nd { color: #8abeb7; }
+
+    /* Name.Decorator */
+    .sourceCode .ni { color: #ffffff; }
+
+    /* Name.Entity */
+    .sourceCode .ne { color: #cc6666; }
+
+    /* Name.Exception */
+    .sourceCode .fu { color: #81a2be; } /* Name.Function */
+
+    /* Name.Label */
+    .sourceCode .nn { color: #f0c674; }
+
+    /* Name.Namespace */
+    .sourceCode .nx { color: #81a2be; }
+
+    /* Name.Other */
+    .sourceCode .py { color: #ffffff; }
+
+    /* Name.Property */
+    .sourceCode .nt { color: #8abeb7; }
+
+    /* Name.Tag */
+    .sourceCode .va { color: #cc6666; } /* Name.Variable */
+    .sourceCode .ow { color: #8abeb7; }
+
+    /* Operator.Word */
+    .sourceCode .w { color: #ffffff; }
+
+    /* Text.Whitespace */
+    .sourceCode .mf { color: #de935f; }
+
+    /* Literal.Number.Float */
+    .sourceCode .mh { color: #de935f; }
+
+    /* Literal.Number.Hex */
+    .sourceCode .dv { color: #de935f; }
+    .sourceCode .er { color: #de935f; }
+
+    /* Literal.Number.Integer */
+    .sourceCode .mo { color: #de935f; }
+
+    /* Literal.Number.Oct */
+    .sourceCode .sb { color: #b5bd68; }
+
+    /* Literal.String.Backtick */
+    .sourceCode .sc { color: #ffffff; }
+
+    /* Literal.String.Char */
+    .sourceCode .sd { color: #969896; }
+
+    /* x Literal.String.Doc */
+    .sourceCode .st { color: #b5bd68; }
+
+    /* Literal.String.Double */
+    .sourceCode .sc { color: #de935f; } 
+    /* Literal.String.Escape */
+    .sourceCode .sh { color: #b5bd68; }
+
+    /* Literal.String.Heredoc */
+    .sourceCode .si { color: #de935f; }
+
+    /* Literal.String.Interpol */
+    .sourceCode .sx { color: #b5bd68; }
+
+    /* Literal.String.Other */
+    .sourceCode .sr { color: #b5bd68; }
+
+    /* Literal.String.Regex */
+    .sourceCode .s1 { color: #b5bd68; }
+
+    /* Literal.String.Single */
+    .sourceCode .ss { color: #b5bd68; }
+
+    /* Literal.String.Symbol */
+    .sourceCode .bp { color: #ffffff; }
+
+    /* Name.Builtin.Pseudo */
+    .sourceCode .vc { color: #cc6666; }
+
+    /* Name.Variable.Class */
+    .sourceCode .vg { color: #cc6666; }
+
+    /* Name.Variable.Global */
+    .sourceCode .vi { color: #cc6666; }
+
+    /* Name.Variable.Instance */
+    .sourceCode .il { color: #de935f; }
+
+    /* Literal.Number.Integer.Long */
+
+    div.sourceCode { vertical-align: top; }
+
+    pre { font-family: monospace; font-size: 0.8em; }
+
+    .sourceCode a { color: #fff }
+
+    .sourceCode pre { padding: 0; margin: 0; }
+
+    pre code { display: block; padding: 1em 1.25em; overflow-x: auto; background: #1d1f21; color: #ffffff; }
+
+    .sourceCode pre code::-webkit-scrollbar { -webkit-appearance: none; }
+    .sourceCode pre code::-webkit-scrollbar:vertical { width: 10px; }
+    .sourceCode pre code::-webkit-scrollbar:horizontal { height: 10px; }
+    .sourceCode pre code::-webkit-scrollbar-thumb { background-color: #555; }
+    .sourceCode pre code::-webkit-scrollbar-track { background-color: #333; }
+    .sourceCode::selection { background: #fff; /* WebKit/Blink Browsers */ color: #000; }
+    .sourceCode::-moz-selection { background: #fff; /* Gecko Browsers */ color: #000; }
+    p > code, li > code { background: #fff; padding: 0.1em 0.2em; box-shadow: 0 2px 4px 0 #ddd; border: 1px solid #ddd; }
+
+    div.sourceCode, pre, section > p, section > ul { margin: 0 0 0.7em 0; }
+
+    </style>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+<section id="zagadnienie-4-komunikacja-międzyprocesowa" class="level1">
+<h1>Zagadnienie 4: Komunikacja międzyprocesowa</h1>
+<section id="do-czego-służy-komunikacja-międzyprocesowa" class="level2">
+<h2>Do czego służy komunikacja międzyprocesowa</h2>
+<p>Procesy w przeciwieństwie do wątków posiadają odrębną przestrzeń adresową, czyli nie współdzielą pamięci. Dzięki temu nie przeszkadzają sobie nawzajem podczas wykonywania. Jednak czasem zachodzi potrzeba skomunikowania dwóch procesów. Służą do tego narzędzia komunikacji międzyprocesowej (ang. inter-process communication, IPC). Są to:</p>
+<ul class="incremental">
+<li>sygnały</li>
+<li>potoki nienazwane</li>
+<li>potoki nazwane</li>
+<li>pamięć współdzielona</li>
+<li>semafory</li>
+<li>kolejki komunikatów</li>
+<li>gniazda</li>
+</ul>
+</section>
+</section>
+<section id="sygnały" class="level1">
+<h1>Sygnały</h1>
+<section id="sygnały-1" class="level2">
+<h2>Sygnały</h2>
+<p>Sygnały to przerwania programowe, które system operacyjny wywołuje w celu powiadomienia procesów o zdarzeniach. Można je zaliczyć do komunikacji międzyprocesowej, ponieważ mogą zostać zainicjowane przez inny proces.</p>
+<p><img src="assets/signals.svg" /></p>
+</section>
+<section id="przykładowe-sygnały-i-domyślne-reakcje" class="level2">
+<h2>Przykładowe sygnały i domyślne reakcje</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sygnał</th>
+<th style="text-align: left;">Zdarzenie</th>
+<th style="text-align: left;">Domyślna akcja</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">SIGABRT</td>
+<td style="text-align: left;">Wysłane przez <code>abort()</code></td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIGARLM</td>
+<td style="text-align: left;">Wysłane przez <code>alarm()</code></td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SIGCHLD</td>
+<td style="text-align: left;">Proces potomny się zakończył</td>
+<td style="text-align: left;">Zignoruj</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIGINT</td>
+<td style="text-align: left;">Użytkownik wysłał znak <code>Ctrl-C</code></td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SIGQUIT</td>
+<td style="text-align: left;">Użytkownik wysłał znak <code>Ctrl-\</code></td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIGKILL</td>
+<td style="text-align: left;">Nieprzechwytywalne zakończenie procesu</td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SIGTERM</td>
+<td style="text-align: left;">Zakończenie procesu</td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIGSTOP</td>
+<td style="text-align: left;">Wymuszenie zatrzymania procesu</td>
+<td style="text-align: left;">Zatrzymaj proces</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SIGCONT</td>
+<td style="text-align: left;">Proces został kontynuowany</td>
+<td style="text-align: left;">Zignoruj</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIGPIPE</td>
+<td style="text-align: left;">Zapis do potoku, którego nikt nie czyta</td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SIGHUP</td>
+<td style="text-align: left;">Zamknięto terminal kontrolujący proces</td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIGSEGV</td>
+<td style="text-align: left;">Nieprawidłowy dostęp do pamięci</td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SIGUSR1</td>
+<td style="text-align: left;">Zdarzenie 1 ogólnego przeznaczenia</td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIGUSR2</td>
+<td style="text-align: left;">Zdarzenie 2 ogólnego przeznaczenia</td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SIGWINCH</td>
+<td style="text-align: left;">Terminal kontrolujący zmienił rozmiar</td>
+<td style="text-align: left;">Zignoruj</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIGILL</td>
+<td style="text-align: left;">Procej wykonał nieprawidłową instrukcję</td>
+<td style="text-align: left;">Zakończ proces</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="wysyłanie-sygnałów-do-procesów" class="level2">
+<h2>Wysyłanie sygnałów do procesów</h2>
+<p>Do wysyłania sygnałów do procesów, służy wywołanie systemowe <code>kill()</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;signal.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> kill<span class="op">(</span>pid_t pid<span class="op">,</span> <span class="dt">int</span> sig<span class="op">);</span></span></code></pre></div>
+<p>Przykład: wysłanie signału <code>SIGTERM</code> do procesu o numerze PID <code>1024</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> err <span class="op">=</span> kill<span class="op">(</span><span class="dv">1024</span><span class="op">,</span> SIGTERM<span class="op">);</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>err<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędów */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="własne-procedury-obsługi-sygnałów" class="level2">
+<h2>Własne procedury obsługi sygnałów</h2>
+<p>Domyślne zachowanie na odebrany sygnał (za wyjątkiem <code>SIGKILL</code> i <code>SIGSTOP</code>) można nadpisać używając wywołania systemowego <code>sigaction()</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;signal.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> sigaction <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>sa_handler<span class="op">)(</span><span class="dt">int</span><span class="op">);</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>sa_sigaction<span class="op">)(</span><span class="dt">int</span><span class="op">,</span> siginfo_t <span class="op">*,</span> <span class="dt">void</span> <span class="op">*);</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    sigset_t sa_mask<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> sa_flags<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">(*</span>sa_restorer<span class="op">)(</span><span class="dt">void</span><span class="op">);</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sigaction<span class="op">(</span><span class="dt">int</span> signum<span class="op">,</span> <span class="dt">const</span> <span class="kw">struct</span> sigaction <span class="op">*</span><span class="dt">restrict</span> act<span class="op">,</span> <span class="kw">struct</span> sigaction <span class="op">*</span><span class="dt">restrict</span> oldact<span class="op">);</span></span></code></pre></div>
+</section>
+<section id="własne-procedury-obsługi-sygnałów---przykład" class="level2">
+<h2>Własne procedury obsługi sygnałów - przykład</h2>
+<p>Zamiast natychmiastowego zakończenia, ustawiana jest flaga przerywająca główną pętlę programu.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;signal.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">volatile</span> <span class="dt">sig_atomic_t</span> flag<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> signal_handler<span class="op">(</span><span class="dt">int</span> signal<span class="op">)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    flag <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> <span class="kw">struct</span> sigaction act <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>sa_handler <span class="op">=</span> signal_handler<span class="op">,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sigaction<span class="op">(</span>SIGINT<span class="op">,</span> <span class="op">&amp;</span>act<span class="op">,</span> NULL<span class="op">))</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(!</span>flag<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* ... */</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        sleep<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;shutting down...</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="wymagania-jakie-musi-spełniać-procedura-obsługi-sygnału" class="level2">
+<h2>Wymagania jakie musi spełniać procedura obsługi sygnału</h2>
+<p>W procedurze obsługi sygnału można wywoływać tylko funkcje, które są <em>wielobieżne</em> (ang. re-entrant). Przykładem funkcji wielobieżnej jest:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> add<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Przykład funkcji, która nie jest wielobieżna:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> numbers<span class="op">[</span><span class="dv">64</span><span class="op">],</span> numbers_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> append<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    numbers<span class="op">[</span>numbers_count<span class="op">]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                    <span class="co">// &lt;----- jeżeli wystąpi sygnał i append() zostanie wywołane to będzie niespójnosć.</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    numbers_count <span class="op">=</span> <span class="op">(</span>numbers_count <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">%</span> <span class="dv">64</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Wywoływanie funkcji nie będącą wielobieżną czyni, wywołującą ja funkcję też funkcją nie wielobieżną.</p>
+</section>
+<section id="bezpieczne-funkcje-w-obsłudze-sygnałów" class="level2">
+<h2>Bezpieczne funkcje w obsłudze sygnałów</h2>
+<p>Standard POSIX określa, które funkcje z biblioteki standardowej można bezpiecznie wywoływać w procedurze obsługi sygnałów. Funkcje te oznaczone są jako <em>async-signal-safe</em> (<code>man signal-safety</code>):</p>
+<ul class="incremental">
+<li><em>async-signal-safe</em> są na przykład: <code>read()</code>, <code>write()</code>, <code>open()</code>, <code>fork()</code>;</li>
+<li>niebezpieczne są na przykład: <code>malloc()</code>, <code>free()</code>, <code>printf()</code>, <code>pthread_mutex_lock()</code>.</li>
+</ul>
+<p>Dodatkowo dostęp do jakichkolwiek zmiennych z <em>static storage duration</em> (czyli w praktyce wszelkich zmiennych globalnych) innych niż typu <code>volatile sig_atomic_t</code> jest niezdefiniowanym zachowaniem.</p>
+<p>Z tego powodu najbezpieczniej jest ograniczyc procedure obsługi sygnału tylko do ustawienia flagi.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">volatile</span> <span class="dt">sig_atomic_t</span> flag<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> signal_handler<span class="op">(</span><span class="dt">int</span> signal<span class="op">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    flag <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="synchroniczna-obsługa-sygnałów-w-osobnym-wątku" class="level2">
+<h2>Synchroniczna obsługa sygnałów w osobnym wątku</h2>
+<p>Z powodu bardzo dużych ograniczeń dotyczących procedur obsługi sygnałów, lepszym rozwiązaniem może się okazać synchroniczna obsługa sygnałów w dedykowanym wątku.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pthread_mutex_lock lock <span class="op">=</span> PTHREAD_MUTEX_INITIALIZER<span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> flag<span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="op">*</span>signal_thread<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>arg<span class="op">)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">const</span> sigset_t <span class="op">*</span>set <span class="op">=</span> arg<span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> signal_number<span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>sigwait<span class="op">(</span>set<span class="op">,</span> <span class="op">&amp;</span>signal_number<span class="op">))</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>sigismember<span class="op">(</span>set<span class="op">,</span> signal_number<span class="op">))</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        pthread_mutex_lock<span class="op">(&amp;</span>lock<span class="op">);</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        flag <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        pthread_mutex_unlock<span class="op">(&amp;</span>lock<span class="op">);</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> NULL<span class="op">;</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="synchroniczna-obsługa-sygnałów---maskowanie-sygnałów" class="level2">
+<h2>Synchroniczna obsługa sygnałów - maskowanie sygnałów</h2>
+<p>Zamaskowany sygnał będzie oczekiwał do momentu wywołania <code>sigwait()</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">**</span>argv<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    sigset_t set<span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    sigemptyset<span class="op">(&amp;</span>set<span class="op">);</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    sigaddset<span class="op">(&amp;</span>set<span class="op">,</span> SIGINT<span class="op">);</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sigprocmask<span class="op">(</span>SIG_SETMASK<span class="op">,</span> <span class="op">&amp;</span>set<span class="op">,</span> NULL<span class="op">))</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    pthread_t thread<span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pthread_create<span class="op">(&amp;</span>thread<span class="op">,</span> NULL<span class="op">,</span> signal_thread<span class="op">,</span> <span class="op">&amp;</span>set<span class="op">))</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> stop <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(!</span>stop<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* ... */</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        pthread_mutex_lock<span class="op">(&amp;</span>lock<span class="op">);</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        stop <span class="op">=</span> flag<span class="op">;</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        pthread_mutex_unlock<span class="op">(&amp;</span>lock<span class="op">);</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    pthread_cancel<span class="op">(</span>thread<span class="op">);</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    pthread_join<span class="op">(</span>thread<span class="op">,</span> NULL<span class="op">);</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+</section>
+<section id="potoki-nienazwane" class="level1">
+<h1>Potoki nienazwane</h1>
+<section id="potoki-nienazwane-1" class="level2">
+<h2>Potoki nienazwane</h2>
+<p>Potoki nienazwane pozwalają na jednostronne przesyłanie danych pomiędzy procesami.</p>
+<p><img src="assets/pipe.svg" /></p>
+<p>Strona podręcznika: <code>man 7 pipe</code>.</p>
+</section>
+<section id="potoki-nienazwane---tworzenie" class="level2">
+<h2>Potoki nienazwane - tworzenie</h2>
+<p>Tworzenie potoku nienazwanego odbywa się za pomocą wywołania systemowego <code>pipe()</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> pipe<span class="op">(</span><span class="dt">int</span> fd<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span></code></pre></div>
+<p>Utworzyć potok można w następujący sposób:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd<span class="op">[</span><span class="dv">2</span><span class="op">];</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> err <span class="op">=</span> pipe<span class="op">(</span>fd<span class="op">);</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>err<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędów */</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Po wywołaniu, desktyptor <code>fd[0]</code> będzie służył do odczytywania danych z potoku, natomiast <code>fd[1]</code> będzie służył do wpisywania danych do potoku.</p>
+</section>
+<section id="potoki-nienazwane---zapis" class="level2">
+<h2>Potoki nienazwane - zapis</h2>
+<p>Do zapisu danych do potoku służy wywołanie systemowe <code>write()</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> write<span class="op">(</span><span class="dt">int</span> fd<span class="op">,</span> <span class="dt">const</span> <span class="dt">void</span> <span class="op">*</span>buf<span class="op">,</span> <span class="dt">size_t</span> count<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> num_written <span class="op">=</span> write<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">],</span> <span class="st">&quot;hello&quot;</span><span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>num_written <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>num_written <span class="op">!=</span> <span class="dv">5</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* częściowy zapis */</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Zapisanie danych do potoku powoduje zablokowanie procesu jeżeli potok jest pełny (o ile nie jest ustawiona flaga <code>O_NONBLOCK</code> (<code>man fcntl</code>)).</p>
+<p>Zapisanie danych do potoku, którego druga strona została zamknięta powoduje wystąpienie sygnału <code>SIGPIPE</code>.</p>
+</section>
+<section id="potoki-nienazwane---odczyt" class="level2">
+<h2>Potoki nienazwane - odczyt</h2>
+<p>Do odczytu danych do potoku służy wywołanie systemowe <code>read()</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> read<span class="op">(</span><span class="dt">int</span> fd<span class="op">,</span> <span class="dt">void</span> <span class="op">*</span>buf<span class="op">,</span> <span class="dt">size_t</span> count<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> buf<span class="op">[</span><span class="dv">6</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">}</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> num_read <span class="op">=</span> read<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">],</span> buf<span class="op">,</span> <span class="dv">5</span><span class="op">);</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>num_read <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>num_read <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* druga strona została zamknięta */</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>num_read <span class="op">!=</span> <span class="dv">5</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* częściowy odczyt */</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Odczytanie danych z potoku powoduje zablokowanie procesu jeżeli potok jest pusty (o ile nie jest ustawiona flaga <code>O_NONBLOCK</code> (<code>man fcntl</code>)).</p>
+<p>Odczytanie danych z potoku, którego druga strona została zamknięta powoduje zwrócenie <code>0</code>.</p>
+</section>
+<section id="potoki-nienazwane---przykład" class="level2">
+<h2>Potoki nienazwane - przykład</h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> fd<span class="op">[</span><span class="dv">2</span><span class="op">];</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pipe<span class="op">(</span>fd<span class="op">))</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>fd<span class="op">[</span><span class="dv">0</span><span class="op">]);</span>                                  <span class="co">/* zamknięcie deskryptora do odczytu */</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        write<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">],</span> <span class="st">&quot;Hello world&quot;</span><span class="op">,</span> <span class="dv">11</span><span class="op">);</span>               <span class="co">/* wysłanie wiadomości */</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">]);</span>                                  <span class="co">/* zamknięcie deskryptora do zapisu */</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>pid <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>fd<span class="op">[</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">]);</span>                                      <span class="co">/* zamknięcie deskryptora do zapisu */</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> b<span class="op">[</span><span class="dv">256</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">};</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ssize_t</span> num_read <span class="op">=</span> read<span class="op">(</span>fd<span class="op">[</span><span class="dv">0</span><span class="op">],</span> b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span>  <span class="co">/* odebranie wiadomości */</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>num_read <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s</span><span class="st">&quot;</span><span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">[</span><span class="dv">0</span><span class="op">]);</span>                                      <span class="co">/* zamknięcie deskryptora do odczytu */</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    wait<span class="op">(</span>NULL<span class="op">);</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="potoki-nienazwane---przykład-2" class="level2">
+<h2>Potoki nienazwane - przykład 2</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pipe<span class="op">(</span>fd<span class="op">))</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>dup2<span class="op">(</span>fd<span class="op">[</span><span class="dv">0</span><span class="op">],</span> <span class="dv">0</span><span class="op">))</span> <span class="op">{</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>            close<span class="op">(</span>fd<span class="op">[</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> execlp<span class="op">(</span><span class="st">&quot;sort&quot;</span><span class="op">,</span> <span class="st">&quot;sort&quot;</span><span class="op">,</span> NULL<span class="op">)</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    pid <span class="op">=</span> fork<span class="op">();</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        close<span class="op">(</span>fd<span class="op">[</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>dup2<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">],</span> <span class="dv">1</span><span class="op">))</span> <span class="op">{</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>            close<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> execlp<span class="op">(</span><span class="st">&quot;ls&quot;</span><span class="op">,</span> <span class="st">&quot;ls&quot;</span><span class="op">,</span> NULL<span class="op">)</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">[</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    wait<span class="op">(</span>NULL<span class="op">);</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    wait<span class="op">(</span>NULL<span class="op">);</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+</section>
+<section id="potoki-nazwane" class="level1">
+<h1>Potoki nazwane</h1>
+<section id="potoki-nazwane-1" class="level2">
+<h2>Potoki nazwane</h2>
+<p>Potoki nazwane pozwalają na jednostronne przesyłanie danych pomiędzy procesami. W przeciwieństwie do potoków nienazwanych, przesyłanie danych możliwe jest pomiędzy dowolnymi procesami, a nie tylko tymi które odziedziczyły deskryptory potoku po procesie rodzica, ponieważ potoki nazwane mają swoją reprezentację w systemie plików.</p>
+<p><img src="assets/named-pipe.svg" /></p>
+</section>
+<section id="potoki-nazwane---tworzenie" class="level2">
+<h2>Potoki nazwane - tworzenie</h2>
+<p>Do tworzenia potoku nazwanego służy wywołanie systemowe <code>mkfifo()</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/stat.h&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> mkfifo<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> mode_t mode<span class="op">);</span></span></code></pre></div>
+<p>Przykład:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/stat.h&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mkfifo<span class="op">(</span><span class="st">&quot;foo&quot;</span><span class="op">,</span> <span class="bn">0777</span><span class="op">)</span> <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Można też wykorzystać narzędzie <code>mkfifo</code>.</p>
+<pre><code>$ mkfifo foo</code></pre>
+</section>
+<section id="potoki-nazwane---odczyt" class="level2">
+<h2>Potoki nazwane - odczyt</h2>
+<p>Poniższy program odczyta dane z potoku o nazwie <code>foo</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> read_fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;foo&quot;</span><span class="op">,</span> O_RDONLY<span class="op">);</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>read_fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> message<span class="op">[</span><span class="dv">64</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">};</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ssize_t</span> num_read <span class="op">=</span> read<span class="op">(</span>read_fd<span class="op">,</span> message<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>message<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>num_read <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s</span><span class="st">&quot;</span><span class="op">,</span> message<span class="op">);</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>read_fd<span class="op">);</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="potoki-nazwane---zapis" class="level2">
+<h2>Potoki nazwane - zapis</h2>
+<p>Poniższy program wpisze dane do potoku o nazwie <code>foo</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> read_fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;foo&quot;</span><span class="op">,</span> O_WRONLY<span class="op">);</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>read_fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> message<span class="op">[</span><span class="dv">64</span><span class="op">]</span> <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span><span class="op">;</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> len <span class="op">=</span> strlen<span class="op">(</span>message<span class="op">);</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ssize_t</span> num_written <span class="op">=</span> write<span class="op">(</span>write_fd<span class="op">,</span> message<span class="op">,</span> len<span class="op">);</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>num_read <span class="op">!=</span> <span class="op">(</span><span class="dt">ssize_t</span><span class="op">)</span>len<span class="op">)</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>write_fd<span class="op">);</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+</section>
+<section id="pamięć-współdzielona" class="level1">
+<h1>Pamięć współdzielona</h1>
+<section id="pamięć-współdzielona---wywołania-systemowe" class="level2">
+<h2>Pamięć współdzielona - wywołania systemowe</h2>
+<p>Mechanizm pamięci współdzielonej pozwala na podmapowanie strony pamieci wirtualnej odnoszącej się do tej samej pamięci fizycznej.</p>
+<p><img src="assets/shm.svg" /></p>
+<p>Strona podręcznika: <code>man shm_overview</code></p>
+</section>
+<section id="pamięć-współdzielona-1" class="level2">
+<h2>Pamięć współdzielona</h2>
+<p>To tworzenia, zamykania i usuwania pamięci wspóldzielonej służą wywołania systemowe <code>shm_open()</code>, <code>close()</code>, <code>shm_unlink()</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/mman.h&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> shm_open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">,</span> <span class="op">...);</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> shm_unlink<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">);</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> close<span class="op">(</span><span class="dt">int</span> fd<span class="op">);</span></span></code></pre></div>
+<p>Do mapowanie i odmapowywania pamięci współdzielonej służa wywołania systemowe <code>mmap()</code> i <code>munmap()</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/mman.h&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="op">*</span>mmap<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>addr<span class="op">,</span> <span class="dt">size_t</span> len<span class="op">,</span> <span class="dt">int</span> prot<span class="op">,</span> <span class="dt">int</span> flags<span class="op">,</span> <span class="dt">int</span> fd<span class="op">,</span> off_t offset<span class="op">);</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> munmap<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>addr<span class="op">,</span> <span class="dt">size_t</span> len<span class="op">);</span></span></code></pre></div>
+</section>
+<section id="pamięć-współdzielona---współdzielenie-danych" class="level2">
+<h2>Pamięć współdzielona - współdzielenie danych</h2>
+<p>Pamięć współdzielona to po prostu blok pamięci o zadanym rozmiarze. Interpretacja tego bloku pamięci zależy od programisty. Możemy na przykład zinterpretować go jako następującą strukturę:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> data <span class="op">{</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> message<span class="op">[</span><span class="dv">32</span><span class="op">];</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> data <span class="op">*</span>data <span class="op">=</span> mmap<span class="op">(</span>NULL<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(*</span>data<span class="op">),</span> PROT_READ <span class="op">|</span> PROT_WRITE<span class="op">,</span> MAP_SHARED<span class="op">,</span> fd<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>data <span class="op">==</span> MAP_FAILED<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Uwaga! współdzielenie wskaźników pokazujących do zmiennych w pamięci współdzielonej nie zadziała ponieważ pamięć współdzielona może zostać podmapowana pod różne adresy wirtualne.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> x <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> <span class="op">*</span>a<span class="op">;</span> <span class="co">// przechowywanie tutaj adresu b, nie będzie mialo sensu w innym procesie */</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> b<span class="op">;</span>  <span class="co">// ponieważ b będzie miało inny adres wirtualny w innym procesie</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="pamięć-współdzielona---proces-1" class="level2">
+<h2>Pamięć współdzielona - proces 1</h2>
+<p>Poniższy przykład pokazuje odczytywanie wiadomości umieszczonej w pamięci współdzielonej:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> shm_open<span class="op">(</span><span class="st">&quot;/mem&quot;</span><span class="op">,</span> O_CREAT <span class="op">|</span> O_RDWR<span class="op">,</span> <span class="bn">0666</span><span class="op">);</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>ftruncate<span class="op">(</span>fd<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span><span class="kw">struct</span> data<span class="op">)))</span> <span class="op">{</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> data <span class="op">*</span>data <span class="op">=</span> mmap<span class="op">(</span>NULL<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(*</span>data<span class="op">),</span> PROT_READ <span class="op">|</span> PROT_WRITE<span class="op">,</span> MAP_SHARED<span class="op">,</span> fd<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>data <span class="op">==</span> MAP_FAILED<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s\n</span><span class="st">&quot;</span><span class="op">,</span> data<span class="op">-&gt;</span>message<span class="op">);</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    sleep<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>close<span class="op">(</span>fd<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>shm_unlink<span class="op">(</span><span class="st">&quot;/mem&quot;</span><span class="op">))</span> <span class="op">{</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="pamięć-współdzielona---proces-2" class="level2">
+<h2>Pamięć współdzielona - proces 2</h2>
+<p>Poniższy przykład pokazuje zapisywanie wiadomości umieszczonej w pamięci współdzielonej:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> shm_open<span class="op">(</span><span class="st">&quot;/mem&quot;</span><span class="op">,</span> O_RDWR<span class="op">,</span> <span class="bn">0666</span><span class="op">);</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> data <span class="op">*</span>data <span class="op">=</span> mmap<span class="op">(</span>NULL<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(*</span>data<span class="op">),</span> PROT_READ <span class="op">|</span> PROT_WRITE<span class="op">,</span> MAP_SHARED<span class="op">,</span> fd<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>data <span class="op">==</span> MAP_FAILED<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>snprintf<span class="op">(</span>data<span class="op">-&gt;</span>message<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>data<span class="op">-&gt;</span>message<span class="op">),</span> <span class="st">&quot;</span><span class="sc">%s</span><span class="st">&quot;</span><span class="op">,</span> argv<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>munmap<span class="op">(</span>data<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(*</span>data<span class="op">)))</span> <span class="op">{</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>close<span class="op">(</span>fd<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="pamięc-współdzielona---posix-vs-system-v" class="level2">
+<h2>Pamięc współdzielona - POSIX vs System V</h2>
+<p>Przedstawione funkcje służące do operowania na pamięci współdzielonej są ustandaryzowane przez POSIX. Alternatywą dla POSIX są tzw. funkcje System V:</p>
+<ul class="incremental">
+<li>odpowiednik <code>shm_open()</code> to <code>shmget()</code>,</li>
+<li>odpowiednik <code>mmap()</code> to <code>shmat()</code>,</li>
+<li>odpowiednik <code>munmap()</code> to <code>shmdt()</code>;</li>
+</ul>
+<p>Pamięć współdzielona System V to starsze API niż POSIX, ale jest szerzej dostępne.</p>
+</section>
+</section>
+<section id="semafory" class="level1">
+<h1>Semafory</h1>
+<section id="semafory-1" class="level2">
+<h2>Semafory</h2>
+<p>Semafory pozwalają na ograniczenie liczby procesów, które w danym momencie mają dostęp do współdzielonego zasobu.</p>
+<p>Strona podręcznika: <code>man sem_overview</code></p>
+</section>
+<section id="semafory-2" class="level2">
+<h2>Semafory</h2>
+<p>Do otwierania, zamykania i usuwania semaforów służą funkcję <code>sem_open()</code>, <code>sem_close()</code>, <code>sem_unlink()</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;semaphore.h&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sem_close<span class="op">(</span>sem_t <span class="op">*</span>sem<span class="op">);</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>sem_t <span class="op">*</span> sem_open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">,</span> <span class="op">...);</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sem_unlink<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">);</span></span></code></pre></div>
+<p>Do dekrementacji semaforu i inkrementacjia, służą funkcję <code>sem_wait()</code> i <code>sem_post()</code>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;semaphore.h&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sem_wait<span class="op">(</span>sem_t <span class="op">*</span>sem<span class="op">);</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sem_post<span class="op">(</span>sem_t <span class="op">*</span>sem<span class="op">);</span></span></code></pre></div>
+<p>Funkcja <code>sem_wait()</code> jeżeli semafor ma wartość większą od <code>0</code> to dekrementuje semafor, w przeciwnym wypadku blokuje proces do momentu aż inny proces nie zinkrementuje semafora za pomocą <code>sem_post()</code>.</p>
+</section>
+<section id="semafory---przykład---proces-1" class="level2">
+<h2>Semafory - przykład - proces 1</h2>
+<p>Poniższy przykład prezentuja zabezpieczenie dostępu do pamięci współdzielonej za pomocą semafora.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sem_t <span class="op">*</span>lock <span class="op">=</span> sem_open<span class="op">(</span><span class="st">&quot;/mem.lock&quot;</span><span class="op">,</span> O_CREAT<span class="op">,</span> <span class="bn">0666</span><span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>lock <span class="op">==</span> SEM_FAILED<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sem_wait<span class="op">(</span>lock<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* obsługa błędu */</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s\n</span><span class="st">&quot;</span><span class="op">,</span> data<span class="op">-&gt;</span>message<span class="op">);</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sem_post<span class="op">(</span>lock<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">/* obsługa błędu */</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    sleep<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>ret <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>sem_close<span class="op">(</span>lock<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>sem_unlink<span class="op">(</span><span class="st">&quot;/mem.lock&quot;</span><span class="op">))</span> <span class="op">{</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="semafory---przykład---proces-2" class="level2">
+<h2>Semafory - przykład - proces 2</h2>
+<p>Poniższy przykład prezentuja zabezpieczenie dostępu do pamięci współdzielonej za pomocą semafora w drugim procesie:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sem_t <span class="op">*</span>lock <span class="op">=</span> sem_open<span class="op">(</span><span class="st">&quot;/mem.lock&quot;</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>lock <span class="op">==</span> SEM_FAILED<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>sem_wait<span class="op">(</span>lock<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>snprintf<span class="op">(</span>data<span class="op">-&gt;</span>message<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>data<span class="op">-&gt;</span>message<span class="op">),</span> <span class="st">&quot;</span><span class="sc">%s</span><span class="st">&quot;</span><span class="op">,</span> argv<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>sem_post<span class="op">(</span>lock<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>ret <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>sem_close<span class="op">(</span>lock<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="mutexy" class="level2">
+<h2>Mutexy</h2>
+<p>Jedną z wad semaforów jest to, że jeżeli jeden proces zdekrementuje semafor za pomocą <code>sem_wait()</code> i następnie zostanie unicestwiony. (np. poprzez nieprzechwytywalny sygnał <code>SIGKILL</code>) to drugi proces, chcący wywołać <code>sem_wait()</code> zostanie permanentnie zablokowany. Rozwiązaniem problemu może być wykorzystanie mutexu z atrybutami:</p>
+<ul class="incremental">
+<li><code>PTHREAD_PROCESS_SHARED</code> - mutex współdzielony pomiędzy procesami,</li>
+<li><code>PTHREAD_MUTEX_ROBUST</code> - <code>pthread_mutex_lock()</code> zwróci <code>EOWNERDEAD</code>, gdy trzymający umrze;</li>
+</ul>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> data <span class="op">{</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> message<span class="op">[</span><span class="dv">32</span><span class="op">];</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    pthread_mutex_lock lock<span class="op">;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pthread_mutexattr_t attr<span class="op">;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>pthread_mutexattr_init<span class="op">(&amp;</span>attr<span class="op">);</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>pthread_mutexattr_setrobust<span class="op">(&amp;</span>attr<span class="op">,</span> PTHREAD_MUTEX_ROBUST<span class="op">);</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>pthread_mutexattr_setpshared<span class="op">(&amp;</span>attr<span class="op">,</span> PTHREAD_PROCESS_SHARED<span class="op">);</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>pthread_mutex_init<span class="op">(&amp;</span>data<span class="op">-&gt;</span>lock<span class="op">,</span> <span class="op">&amp;</span>attr<span class="op">);</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>pthread_mutexattr_destroy<span class="op">(&amp;</span>attr<span class="op">);</span></span></code></pre></div>
+</section>
+<section id="mutexy-współdzielone-przez-procesy" class="level2">
+<h2>Mutexy współdzielone przez procesy</h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>pthread_mutex_lock<span class="op">(&amp;</span>data<span class="op">-&gt;</span>lock<span class="op">)</span> <span class="op">==</span> EOWNERDEAD<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* zakoncz program */</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>snprintf<span class="op">(</span>data<span class="op">-&gt;</span>message<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>data<span class="op">-&gt;</span>message<span class="op">),</span> <span class="st">&quot;</span><span class="sc">%s</span><span class="st">&quot;</span><span class="op">,</span> argv<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>pthread_mutex_unlock<span class="op">(&amp;</span>data<span class="op">-&gt;</span>lock<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pthread_mutex_lock<span class="op">(&amp;</span>data<span class="op">-&gt;</span>lock<span class="op">)</span> <span class="op">==</span> EOWNERDEAD<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        snprintf<span class="op">(</span>data<span class="op">-&gt;</span>message<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>data<span class="op">-&gt;</span>message<span class="op">),</span> <span class="st">&quot;</span><span class="sc">%s</span><span class="st">&quot;</span><span class="op">,</span> <span class="st">&quot;&quot;</span><span class="op">);</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s\n</span><span class="st">&quot;</span><span class="op">,</span> data<span class="op">-&gt;</span>message<span class="op">);</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    sleep<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    pthread_mutex_unlock<span class="op">(&amp;</span>data<span class="op">-&gt;</span>lock<span class="op">);</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="semafory---posix-vs-system-v" class="level2">
+<h2>Semafory - POSIX vs System V</h2>
+<p>Przedstawione funkcje służące do operowania na semaforach są ustandaryzowane przez POSIX. Alternatywą dla POSIX są tzw. funkcje System V:</p>
+<ul class="incremental">
+<li>odpowiednik <code>sem_open()</code> to <code>semget()</code>,</li>
+<li>odpowiednik <code>sem_wait()</code> i <code>sem_post()</code> to <code>semop()</code>;</li>
+</ul>
+<p>Semafory System V to starsze API niż POSIX, ale jest szerzej dostępne.</p>
+<p>Jedną z funkcjonalności, które możliwia System V to flaga <code>SEM_UNDO</code>, pozwalająca na odwrócenie operacji na semaforze w przypadku niespodziewanej śmierci procesu.</p>
+</section>
+</section>
+<section id="kolejki-komunikatów" class="level1">
+<h1>Kolejki komunikatów</h1>
+<section id="kolejki-komunikatów-1" class="level2">
+<h2>Kolejki komunikatów</h2>
+<p>Kolejki komunikatów pozwalają na przesyłanie wiadomości pomiędzy procesami. Od potoków odróżnia je to, że komunikacja oparta jest na wiadomościach a nie na strumieniu danych. W przypadku potoków, proces odczytujący może odczytać całą zawartość jednym wywołaniem <code>read()</code>.</p>
+<p><img src="assets/mq.svg" /></p>
+<p>Więcej na <code>man mq_overview</code></p>
+</section>
+<section id="kolejki-komunikatów---operacje" class="level2">
+<h2>Kolejki komunikatów - operacje</h2>
+<p>Do tworzenia, otwierania, zamykania i usuwania kolejek komunikatów służą funkcje <code>mq_open()</code>, <code>mq_close()</code> i <code>mq_unlink()</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span><span class="pp">           </span><span class="co">/* For O_* constants */</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/stat.h&gt;</span><span class="pp">        </span><span class="co">/* For mode constants */</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;mqueue.h&gt;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>mqd_t mq_open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">);</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>mqd_t mq_open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">,</span> mode_t mode<span class="op">,</span> <span class="kw">struct</span> mq_attr <span class="op">*</span>attr<span class="op">);</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> mq_close<span class="op">(</span>mqd_t mqdes<span class="op">);</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> mq_unlink<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">);</span></span></code></pre></div>
+<p>Gdy juz otworzymy kolejkę, wiadomości można wysyłać za pomocą <code>mq_send()</code> i <code>mq_receive()</code>. Funkcje te będą blokować gdy kolejka jest pełna (<code>mq_send()</code>) i gdy jest pusta (<code>mq_receive()</code>), jeżeli nie otworzono kolejki z flagą <code>O_NONBLOCK</code>.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;mqueue.h&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> mq_send<span class="op">(</span>mqd_t mqdes<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>msg_ptr<span class="op">,</span> <span class="dt">size_t</span> msg_len<span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">int</span> msg_prio<span class="op">);</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> mq_receive<span class="op">(</span>mqd_t mqdes<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span>msg_ptr<span class="op">,</span> <span class="dt">size_t</span> msg_len<span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">int</span> <span class="op">*</span>msg_prio<span class="op">);</span></span></code></pre></div>
+</section>
+<section id="przykład-odbierania-komunikatów" class="level2">
+<h2>Przykład odbierania komunikatów</h2>
+<p>Poniższy przykład przedstawia program odczytujący komunikaty do kolejki komunikatów.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/stat.h&gt;</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;mqueue.h&gt;</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">**</span>argv<span class="op">)</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    mq_unlink<span class="op">(</span><span class="st">&quot;/foo&quot;</span><span class="op">);</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    mqd_t mq <span class="op">=</span> mq_open<span class="op">(</span><span class="st">&quot;/foo&quot;</span><span class="op">,</span> O_CREAT <span class="op">|</span> O_RDONLY<span class="op">,</span> <span class="bn">0666</span><span class="op">,</span> <span class="op">&amp;(</span><span class="kw">struct</span> mq_attr<span class="op">)</span> <span class="op">{</span> <span class="op">.</span>mq_maxmsg <span class="op">=</span> <span class="dv">8</span><span class="op">,</span> <span class="op">.</span>mq_msgsize <span class="op">=</span> <span class="dv">31</span> <span class="op">});</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mq <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> msg<span class="op">[</span><span class="dv">32</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">};</span></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>mq_receive<span class="op">(</span>mq<span class="op">,</span> msg<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>msg<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> NULL<span class="op">)</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s\n</span><span class="st">&quot;</span><span class="op">,</span> msg<span class="op">);</span></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mq_close<span class="op">(</span>mq<span class="op">))</span></span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;mq_close&quot;</span><span class="op">);</span></span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mq_unlink<span class="op">(</span><span class="st">&quot;/foo&quot;</span><span class="op">))</span></span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;mq_unlink&quot;</span><span class="op">);</span></span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="przykład-wysyłania-komunikatów" class="level2">
+<h2>Przykład wysyłania komunikatów</h2>
+<p>Poniższy przykład przedstawia program wysyłający komunikaty do kolejki komunikatów.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/stat.h&gt;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;mqueue.h&gt;</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">**</span>argv<span class="op">)</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>argc <span class="op">&lt;</span> <span class="dv">2</span><span class="op">)</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    mqd_t mq <span class="op">=</span> mq_open<span class="op">(</span><span class="st">&quot;/foo&quot;</span><span class="op">,</span> O_WRONLY <span class="op">|</span> O_NONBLOCK<span class="op">);</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mq <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mq_send<span class="op">(</span>mq<span class="op">,</span> argv<span class="op">[</span><span class="dv">1</span><span class="op">],</span> strlen<span class="op">(</span>argv<span class="op">[</span><span class="dv">1</span><span class="op">]),</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;mq_send&quot;</span><span class="op">);</span></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mq_close<span class="op">(</span>mq<span class="op">))</span></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>        perror<span class="op">(</span><span class="st">&quot;mq_close&quot;</span><span class="op">);</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="zakończenie-głównej-pętli" class="level2">
+<h2>Zakończenie głównej pętli</h2>
+<p>Program zawierający główną pętle oczekującą na wywołania systemowe można zakończyć np. wysyłając do niego sygnał <code>SIGINT</code>, jednak to spowoduje jego natychmiastowe zakończenie - nie będzie czasu na zamknięcie zasobów (np. usunięcie kolejki). Żeby umożliwić przerwanie takiej pętli można wykorzystać procedury obsługi sygnałów.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;signal.h&gt;</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> nothing<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{}</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">const</span> <span class="kw">struct</span> sigaction nothing_act <span class="op">=</span> <span class="op">{</span> <span class="op">.</span>sa_handler <span class="op">=</span> nothing <span class="op">};</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">**</span>argv<span class="op">)</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sigaction<span class="op">(</span>SIGQUIT<span class="op">,</span> <span class="op">&amp;</span>nothing_act<span class="op">,</span> NULL<span class="op">))</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sigaction<span class="op">(</span>SIGINT<span class="op">,</span> <span class="op">&amp;</span>nothing_act<span class="op">,</span> NULL<span class="op">))</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Jeżeli zainstalujemy procedurę obsługi sygnałów, to zablokowane wywołanie systemowe zostanie przerwane a zmienna <code>errno</code> będzie ustawiana jako <code>EINTR</code>.</p>
+</section>
+<section id="zakończenie-głównej-pętli---obługa-eintr" class="level2">
+<h2>Zakończenie głównej pętli - obługa <code>EINTR</code></h2>
+<p>Poniżej przedstawiono obsługę kodu błędu <code>EINTR</code>, który występuje w momencie przerwania zablokowanego wywołania systemowego poprzez odebrany sygnał.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> msg<span class="op">[</span><span class="dv">32</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">};</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>mq_receive<span class="op">(</span>mq<span class="op">,</span> msg<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>msg<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> NULL<span class="op">)</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>errno <span class="op">==</span> EINTR<span class="op">)</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s\n</span><span class="st">&quot;</span><span class="op">,</span> msg<span class="op">);</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>mq_close<span class="op">(</span>mq<span class="op">))</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span><span class="st">&quot;mq_close&quot;</span><span class="op">);</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>mq_unlink<span class="op">(</span><span class="st">&quot;/foo&quot;</span><span class="op">))</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span><span class="st">&quot;mq_unlink&quot;</span><span class="op">);</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>printf<span class="op">(</span><span class="st">&quot;finished</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span></code></pre></div>
+</section>
+<section id="kolejki-komunikatów---posix-vs-system-v" class="level2">
+<h2>Kolejki komunikatów - POSIX vs System V</h2>
+<p>Przedstawione funkcje służące do operowania na kolejkach komunikatów są ustandaryzowane przez POSIX. Alternatywą dla POSIX są tzw. funkcje System V:</p>
+<ul class="incremental">
+<li>odpowiednik <code>mq_open()</code> to <code>msgget()</code>,</li>
+<li>odpowiednik <code>mq_send()</code> to <code>msgsng()</code>,</li>
+<li>odpowiednik <code>mq_receive()</code> to <code>msgrcv()</code>;</li>
+</ul>
+<p>Kolejki komunikatów System V to starsze API niż POSIX, ale jest szerzej dostępne. (na przykład MacOS nie wspiera kolejek POSIX)</p>
+<p>Jedną z różnic pomiędzy tymi API jest: - kolejki System V, dają możliwość filtrowania wiadomości po ich typie. - kolejki POSIX, dają możliwość priorytetyzacji wiadomości oraz umożliwiają otrzymywanie notyfikacji za pomocą sygnałów.</p>
+</section>
+</section>
+<section id="dziękuję-za-uwagę" class="level1">
+<h1>Dziękuję za uwagę</h1>
+</section>
+  <script>
+    /*!	
+    * FitText.js 1.0 jQuery free version
+    *
+    * Copyright 2011, Dave Rupert http://daverupert.com 
+    * Released under the WTFPL license 
+    * http://sam.zoy.org/wtfpl/
+    * Modified by Slawomir Kolodziej http://slawekk.info
+    *
+    * Date: Tue Aug 09 2011 10:45:54 GMT+0200 (CEST)
+    */
+    (function(){
+
+      var addEvent = function (el, type, fn) {
+        if (el.addEventListener)
+          el.addEventListener(type, fn, false);
+            else
+                el.attachEvent('on'+type, fn);
+      };
+      
+      var extend = function(obj,ext){
+        for(var key in ext)
+          if(ext.hasOwnProperty(key))
+            obj[key] = ext[key];
+        return obj;
+      };
+
+      window.fitText = function (el, kompressor, options) {
+
+        var settings = extend({
+          'minFontSize' : -1/0,
+          'maxFontSize' : 1/0
+        },options);
+
+        var fit = function (el) {
+          var compressor = kompressor || 1;
+
+          var resizer = function () {
+            el.style.fontSize = Math.max(Math.min(el.clientWidth / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)) + 'px';
+          };
+
+          // Call once to set.
+          resizer();
+
+          // Bind events
+          // If you have any js library which support Events, replace this part
+          // and remove addEvent function (or use original jQuery version)
+          addEvent(window, 'resize', resizer);
+          addEvent(window, 'orientationchange', resizer);
+        };
+
+        if (el.length)
+          for(var i=0; i<el.length; i++)
+            fit(el[i]);
+        else
+          fit(el);
+
+        // return set of elements
+        return el;
+      };
+    })();
+
+    fitText(document.querySelectorAll('.level2'), 5);
+    fitText(document.querySelectorAll('h1'), 2.5);
+
+    document.querySelectorAll('p > img').forEach(e => e.parentNode.style.overflow="hidden");
+
+  </script>
+  </body>
+</html>

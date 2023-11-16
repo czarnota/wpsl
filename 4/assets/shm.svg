@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="672" height="320">
+<style>
+line, path, circle, rect, polygon{stroke:black;stroke-width:1;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Iosevka Fixed, monospace;font-size:14px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
+<!--separator-->
+
+</style>
+<defs>
+<marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<polygon points="0,0 0,4 4,2 0,0"></polygon>
+</marker>
+<marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+</marker>
+<marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="2" class="filled"></circle>
+</marker>
+<marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+</marker>
+<marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+</marker>
+</defs>
+<rect class="backdrop" x="0" y="0" width="672" height="320"></rect>
+<text x="58" y="12" >proces</text>
+<text x="114" y="12" >a</text>
+<text x="554" y="12" >proces</text>
+<text x="610" y="12" >b</text>
+<text x="330" y="76" >0</text>
+<text x="74" y="124" >A</text>
+<text x="578" y="236" >A&#39;</text>
+<text x="274" y="12" >pamięć fizyczna</text>
+<g>
+<line x1="4" y1="24" x2="164" y2="24" class="solid"></line>
+<line x1="4" y1="24" x2="4" y2="296" class="solid"></line>
+<line x1="164" y1="24" x2="164" y2="296" class="solid"></line>
+<line x1="4" y1="88" x2="164" y2="88" class="solid"></line>
+<line x1="164" y1="120" x2="200" y2="120" class="solid"></line>
+<line x1="4" y1="152" x2="164" y2="152" class="solid"></line>
+<line x1="4" y1="296" x2="164" y2="296" class="solid"></line>
+<path d="M 208,72 A 4,4 0,0,0 204,76" class="nofill"></path>
+<line x1="204" y1="76" x2="204" y2="116" class="solid"></line>
+<line x1="208" y1="72" x2="240" y2="72" class="solid"></line>
+<polygon points="240,68 248,72 240,76" class="filled"></polygon>
+<path d="M 204,116 A 4,4 0,0,1 200,120" class="nofill"></path>
+</g>
+<g>
+<line x1="252" y1="24" x2="412" y2="24" class="solid"></line>
+<line x1="252" y1="24" x2="252" y2="296" class="solid"></line>
+<line x1="412" y1="24" x2="412" y2="296" class="solid"></line>
+<line x1="252" y1="40" x2="412" y2="40" class="solid"></line>
+<line x1="252" y1="104" x2="412" y2="104" class="solid"></line>
+<line x1="252" y1="296" x2="412" y2="296" class="solid"></line>
+</g>
+<g>
+<line x1="500" y1="24" x2="660" y2="24" class="solid"></line>
+<line x1="500" y1="24" x2="500" y2="296" class="solid"></line>
+<line x1="660" y1="24" x2="660" y2="296" class="solid"></line>
+<line x1="500" y1="200" x2="660" y2="200" class="solid"></line>
+<line x1="500" y1="264" x2="660" y2="264" class="solid"></line>
+<line x1="500" y1="296" x2="660" y2="296" class="solid"></line>
+<polygon points="424,68 416,72 424,76" class="filled"></polygon>
+<line x1="424" y1="72" x2="456" y2="72" class="solid"></line>
+<path d="M 456,72 A 4,4 0,0,1 460,76" class="nofill"></path>
+<line x1="460" y1="76" x2="460" y2="228" class="solid"></line>
+<path d="M 460,228 A 4,4 0,0,0 464,232" class="nofill"></path>
+<line x1="464" y1="232" x2="500" y2="232" class="solid"></line>
+</g>
+</svg>

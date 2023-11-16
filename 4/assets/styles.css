@@ -1,0 +1,16 @@
+pre { font-size: 0.7em; }
+.level1 h1 {
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000;
+}
+
+#zagadnienie-4-komunikacja-międzyprocesowa h1 { background-image: url("ipc.jpg"); }
+#sygnały h1 { background-image: url("signals.jpg"); }
+#potoki-nienazwane h1 { background-image: url("unnamed-pipe.jpg"); }
+#potoki-nazwane h1 { background-image: url("named-pipe.png"); }
+#pamięć-współdzielona h1 { background-image: url("shared-memory.jpg"); }
+#semafory h1 { background-image: url("semaphores.jpg"); }
+#kolejki-komunikatów h1 { background-image: url("message-queues.jpg"); }
+#gniazda h1 { background-image: url("sockets.jpg"); }
+#dziękuję-za-uwagę h1 { background-image: url("bg7.jpg"); text-align: center; justify-content: center; }

@@ -41,6 +41,11 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task3-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task3-solved.md))
     - Termin: do następnych zajęć (25.11.2023)
 
+## Zagadnienie 4: Komunikacja międzyprocesowa
+
+- **Wykład**
+    - Prezentacja ([slajdy](https://czarnota.github.io/wpsl/4/slides.html), [html](https://czarnota.github.io/wpsl/4/README), [md](https://github.com/czarnota/wpsl/tree/main/4/))
+
 ## Zagadnienie 5: Komunikacja sieciowa
 
 - **Wykład**
