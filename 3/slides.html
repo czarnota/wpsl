@@ -275,11 +275,9 @@
 <section id="standard-c---otwieranie-pliku-do-odczytu" class="level2">
 <h2>Standard C - otwieranie pliku do odczytu</h2>
 <p>Do otwierenia pliku służy funkcja <code>fopen()</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@path:</span><span class="co"> ścieżka do pliku</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@mode:</span><span class="co"> tryb w jakim otwierany jest plik</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">FILE</span> <span class="op">*</span>fopen<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>mode<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">FILE</span> <span class="op">*</span>fopen<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>mode<span class="op">);</span></span></code></pre></div>
 <p>Przykład:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FILE</span> <span class="op">*</span>file <span class="op">=</span> fopen<span class="op">(</span><span class="st">&quot;plik.txt&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">);</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>file<span class="op">)</span></span>
@@ -300,22 +298,17 @@
 <section id="standard-c---zamykanie-pliku" class="level2">
 <h2>Standard C - zamykanie pliku</h2>
 <p>Do zamykania pliku służy funkcja <code>fclose()</code></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@file</span><span class="cv">:</span><span class="co"> wskaźnik do pliku</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fclose<span class="op">(</span><span class="dt">FILE</span> <span class="op">*</span>file<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fclose<span class="op">(</span><span class="dt">FILE</span> <span class="op">*</span>file<span class="op">);</span></span></code></pre></div>
 <p>Przykład:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fclose<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
 </section>
 <section id="standard-c---odczytywanie-danych-z-pliku" class="level2">
 <h2>Standard C - odczytywanie danych z pliku</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@ptr:</span><span class="co"> wskaźnik do miejsca w pamięci gdzie mamy wczytać dane</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@size:</span><span class="co"> rozmiar elementu</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@nitems:</span><span class="co"> liczba elementów</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@file</span><span class="cv">:</span><span class="co"> plik z którego odczytujemy</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> fread<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>ptr<span class="op">,</span> <span class="dt">size_t</span> size<span class="op">,</span> <span class="dt">size_t</span> nitems<span class="op">,</span> <span class="dt">FILE</span> <span class="op">*</span>file<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> fread<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>ptr<span class="op">,</span> <span class="dt">size_t</span> size<span class="op">,</span> <span class="dt">size_t</span> nitems<span class="op">,</span> <span class="dt">FILE</span> <span class="op">*</span>file<span class="op">);</span></span></code></pre></div>
 <p>Przykład - odczytanie z pliku do 32 bajtów:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> bytes<span class="op">[</span><span class="dv">32</span><span class="op">];</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> count <span class="op">=</span> fread<span class="op">(</span>bytes<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>bytes<span class="op">),</span> file<span class="op">);</span></span>
@@ -326,13 +319,9 @@
 </section>
 <section id="standard-c---zapisanie-danych-do-pliku" class="level2">
 <h2>Standard C - zapisanie danych do pliku</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@ptr:</span><span class="co"> wskaźnik do miejsca w pamięci z którego mamy zapisać dane</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@size:</span><span class="co"> rozmiar elementu</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@nitems:</span><span class="co"> liczba elementów</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@file</span><span class="cv">:</span><span class="co"> plik do którego zapisujemy</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> fwrite<span class="op">(</span><span class="dt">const</span> <span class="dt">void</span> <span class="op">*</span>ptr<span class="op">,</span> <span class="dt">size_t</span> size<span class="op">,</span> <span class="dt">size_t</span> nitems<span class="op">,</span> <span class="dt">FILE</span> <span class="op">*</span>file<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> fwrite<span class="op">(</span><span class="dt">const</span> <span class="dt">void</span> <span class="op">*</span>ptr<span class="op">,</span> <span class="dt">size_t</span> size<span class="op">,</span> <span class="dt">size_t</span> nitems<span class="op">,</span> <span class="dt">FILE</span> <span class="op">*</span>file<span class="op">);</span></span></code></pre></div>
 <p>Przykład - zapisanie ciągu znaków <code>"Hello world"</code> w pliku:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> text<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span><span class="op">;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -378,69 +367,81 @@
 <p>Standardowy strumień błędów jest plikiem. Jest on otwarty pod zmienną globalną o nazwie <code>stderr</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;error: serious bug number </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="dv">123</span><span class="op">);</span></span></code></pre></div>
 </section>
+<section id="standard-c---buforowanie" class="level2">
+<h2>Standard C - buforowanie</h2>
+<p>Funkcje do obsługi plików zdefiniowane przez standard języka C, wykonują buforowanie.</p>
+<p>Do zmiany trybu buforowania służy funkcja <code>setvbuf()</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> setvbuf<span class="op">(</span><span class="dt">FILE</span> <span class="op">*</span><span class="dt">restrict</span> stream<span class="op">,</span> <span class="dt">char</span> <span class="op">*</span><span class="dt">restrict</span> buf<span class="op">,</span> <span class="dt">int</span> type<span class="op">,</span> <span class="dt">size_t</span> size<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>setvbuf<span class="op">(</span>file<span class="op">,</span> NULL<span class="op">,</span> _IONBF<span class="op">,</span> <span class="dv">0</span><span class="op">);</span> <span class="co">/* brak buforowania */</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>setvbuf<span class="op">(</span>file<span class="op">,</span> NULL<span class="op">,</span> _IONLBF<span class="op">,</span> <span class="dv">0</span><span class="op">);</span> <span class="co">/* buforowanie linii */</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>setvbuf<span class="op">(</span>file<span class="op">,</span> NULL<span class="op">,</span> _IONFBF<span class="op">,</span> <span class="dv">0</span><span class="op">);</span> <span class="co">/* buforowanie blokowe */</span></span></code></pre></div>
+<p>W przypadku buforowania dane zapisywane najpierw są do wewnętrznego bufora, a wysyłane do systemu operacyjnego są po napotkaniu znaku końca linii (buforowanie liniowe) lub zapełnienia bufora (buforowanie blokowe). Podobna sytuacja jest w przypadku odczytów, które najpierw zapełnią wewnętrzny bufor, z którego dopiero będą kopiowane dane do użytkownika, żeby uniknąć nadmiernej komunikacji z systemem operacyjnym.</p>
+</section>
 <section id="przykład---zapisanie-standardowego-wejscia-do-pliku" class="level2">
 <h2>Przykład - zapisanie standardowego wejscia do pliku</h2>
-<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FILE</span> <span class="op">*</span>file <span class="op">=</span> fopen<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> <span class="st">&quot;wb&quot;</span><span class="op">);</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>file<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">char</span> chunk<span class="op">[</span><span class="dv">128</span><span class="op">];</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> count <span class="op">=</span> fread<span class="op">(</span>chunk<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>chunk<span class="op">),</span> stdin<span class="op">);</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>count<span class="op">)</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> count_wr <span class="op">=</span> fwrite<span class="op">(</span>chunk<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> count<span class="op">,</span> file<span class="op">);</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>count_wr <span class="op">!=</span> count<span class="op">)</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>fclose<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
-<pre><code>$ echo ten_tekst_bedzie_w_out.txt | ./program</code></pre>
-</section>
-<section id="przykład---zapisanie-2-zmiennych-do-pliku" class="level2">
-<h2>Przykład - zapisanie 2 zmiennych do pliku</h2>
 <div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FILE</span> <span class="op">*</span>file <span class="op">=</span> fopen<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> <span class="st">&quot;wb&quot;</span><span class="op">);</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>file<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> b<span class="op">;</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> count <span class="op">=</span> fwrite<span class="op">(&amp;</span>a<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">),</span> <span class="dv">1</span><span class="op">,</span> file<span class="op">);</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    fclose<span class="op">(</span>file<span class="op">);</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> fwrite<span class="op">(&amp;</span>b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">),</span> <span class="dv">1</span><span class="op">,</span> file<span class="op">);</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    fclose<span class="op">(</span>file<span class="op">);</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>fclose<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">char</span> chunk<span class="op">[</span><span class="dv">128</span><span class="op">];</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> count <span class="op">=</span> fread<span class="op">(</span>chunk<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>chunk<span class="op">),</span> stdin<span class="op">);</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>count<span class="op">)</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> count_wr <span class="op">=</span> fwrite<span class="op">(</span>chunk<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> count<span class="op">,</span> file<span class="op">);</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>count_wr <span class="op">!=</span> count<span class="op">)</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>fclose<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
+<pre><code>$ echo ten_tekst_bedzie_w_out.txt | ./program</code></pre>
+</section>
+<section id="przykład---zapisanie-2-zmiennych-do-pliku" class="level2">
+<h2>Przykład - zapisanie 2 zmiennych do pliku</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FILE</span> <span class="op">*</span>file <span class="op">=</span> fopen<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> <span class="st">&quot;wb&quot;</span><span class="op">);</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>file<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> b<span class="op">;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> count <span class="op">=</span> fwrite<span class="op">(&amp;</span>a<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">),</span> <span class="dv">1</span><span class="op">,</span> file<span class="op">);</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    fclose<span class="op">(</span>file<span class="op">);</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> fwrite<span class="op">(&amp;</span>b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">),</span> <span class="dv">1</span><span class="op">,</span> file<span class="op">);</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    fclose<span class="op">(</span>file<span class="op">);</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>fclose<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
 </section>
 <section id="przykład---odczytanie-2-zmiennych-z-pliku" class="level2">
 <h2>Przykład - odczytanie 2 zmiennych z pliku</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FILE</span> <span class="op">*</span>file <span class="op">=</span> fopen<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> <span class="st">&quot;rb&quot;</span><span class="op">);</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>file<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> b<span class="op">;</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> count <span class="op">=</span> fread<span class="op">(&amp;</span>a<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">),</span> <span class="dv">1</span><span class="op">,</span> file<span class="op">);</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    fclose<span class="op">(</span>file<span class="op">);</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> fread<span class="op">(&amp;</span>b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">),</span> <span class="dv">1</span><span class="op">,</span> file<span class="op">);</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    fclose<span class="op">(</span>file<span class="op">);</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>fclose<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FILE</span> <span class="op">*</span>file <span class="op">=</span> fopen<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> <span class="st">&quot;rb&quot;</span><span class="op">);</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>file<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> b<span class="op">;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> count <span class="op">=</span> fread<span class="op">(&amp;</span>a<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">),</span> <span class="dv">1</span><span class="op">,</span> file<span class="op">);</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    fclose<span class="op">(</span>file<span class="op">);</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> fread<span class="op">(&amp;</span>b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">),</span> <span class="dv">1</span><span class="op">,</span> file<span class="op">);</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    fclose<span class="op">(</span>file<span class="op">);</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>fclose<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
 </section>
 </section>
 <section id="obsługa-plików---wywołania-systemowe" class="level1">
@@ -454,159 +455,149 @@
 <li><code>read()</code> - odczytuje porcję danych z pliku</li>
 <li><code>write()</code> - wpisuje porcję danych do pliku</li>
 </ul>
-<p>W celu skorzystania z tych funkcji należy dołączyć następujące nagłówki</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></span></code></pre></div>
+<p>Te funkcje nie wykonują buforowania w przestrzeni użytkownika tak jak <code>fread()</code>, czy <code>fwrite()</code> - buforowanie jest wykonywane na poziomie systemu operacyjnego.</p>
 </section>
 <section id="wywołania-systemowe---otwieranie-pliku-do-odczytu" class="level2">
 <h2>Wywołania systemowe - otwieranie pliku do odczytu</h2>
 <p>Do otwierenia pliku służy funkcja <code>open()</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@path:</span><span class="co"> ścieżka do pliku</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@oflag:</span><span class="co"> flagi określający tryb otwarcia pliku</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@mode:</span><span class="co"> uprawnienia do pliku - w przypadku tworzenia pliku</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">);</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">,</span> mode_t mode<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">);</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>path<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">,</span> mode_t mode<span class="op">);</span></span></code></pre></div>
 <p>Przykład:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;plik.txt&quot;</span><span class="op">,</span> O_RDONLY<span class="op">)</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: can&#39;t open file</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;plik.txt&quot;</span><span class="op">,</span> O_RDONLY<span class="op">)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: can&#39;t open file</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span></code></pre></div>
 </section>
 <section id="wywołania-systemowe---otwieranie-pliku-do-zapisu" class="level2">
 <h2>Wywołania systemowe - otwieranie pliku do zapisu</h2>
-<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;plik.txt&quot;</span><span class="op">,</span> O_WRONLY <span class="op">|</span> O_CREAT <span class="op">|</span> O_TRUNC<span class="op">,</span> <span class="bn">0644</span><span class="op">)</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: can&#39;t open file</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;plik.txt&quot;</span><span class="op">,</span> O_WRONLY <span class="op">|</span> O_CREAT <span class="op">|</span> O_TRUNC<span class="op">,</span> <span class="bn">0644</span><span class="op">)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: can&#39;t open file</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span></code></pre></div>
 <p>Jeżeli plik nie istnieje - zostanie utworzony. Jeżeli istnieje, jego zawartość zostanie usunięta.</p>
 <p>Nie ma podziału na tryb binarny i tryb tekstowy. Jest tylko tryb binarny.</p>
 </section>
 <section id="wywołania-systemowe---zamykanie-pliku" class="level2">
 <h2>Wywołania systemowe - zamykanie pliku</h2>
 <p>Do zamykania pliku służy funkcja <code>close()</code></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@fd:</span><span class="co"> deskryptor pliku</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> close<span class="op">(</span><span class="dt">int</span> fd<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> close<span class="op">(</span><span class="dt">int</span> fd<span class="op">);</span></span></code></pre></div>
 <p>Przykład:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>close<span class="op">(</span>file_fd<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>close<span class="op">(</span>file_fd<span class="op">);</span></span></code></pre></div>
 </section>
 <section id="wywołania-systemowe---wczytywanie-danych-z-pliku" class="level2">
 <h2>Wywołania systemowe - wczytywanie danych z pliku</h2>
-<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@fd:</span><span class="co"> deskryptor pliku</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@buf:</span><span class="co"> miejsce w pamięci gdzie zostaną zapisane dane z pliku</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@count:</span><span class="co"> liczba bajtów do odczytania</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> read<span class="op">(</span><span class="dt">int</span> fd<span class="op">,</span> <span class="dt">void</span> <span class="op">*</span>buf<span class="op">,</span> <span class="dt">size_t</span> count<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> read<span class="op">(</span><span class="dt">int</span> fd<span class="op">,</span> <span class="dt">void</span> <span class="op">*</span>buf<span class="op">,</span> <span class="dt">size_t</span> count<span class="op">);</span></span></code></pre></div>
 <p>Przykład - odczytanie z pliku do 32 bajtów:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> bytes<span class="op">[</span><span class="dv">32</span><span class="op">];</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> count <span class="op">=</span> read<span class="op">(</span>fd<span class="op">,</span> bytes<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>bytes<span class="op">));</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Koniec pliku */</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Bląd odczytu */</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> bytes<span class="op">[</span><span class="dv">32</span><span class="op">];</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> count <span class="op">=</span> read<span class="op">(</span>fd<span class="op">,</span> bytes<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>bytes<span class="op">));</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Koniec pliku */</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Bląd odczytu */</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Plik <code>fd</code> musi być otwarty do odczytu.</p>
 </section>
 <section id="wywołania-systemowe---zapisywanie-danych-do-pliku" class="level2">
 <h2>Wywołania systemowe - zapisywanie danych do pliku</h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@fd:</span><span class="co"> deskryptor pliku</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@buf:</span><span class="co"> miejsce w pamięci z którego zostaną zapisane dane do pliku</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * </span><span class="an">@count:</span><span class="co"> liczba bajtów do zapisu</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> write<span class="op">(</span><span class="dt">int</span> fd<span class="op">,</span> <span class="dt">const</span> <span class="dt">void</span> <span class="op">*</span>buf<span class="op">,</span> <span class="dt">size_t</span> count<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> write<span class="op">(</span><span class="dt">int</span> fd<span class="op">,</span> <span class="dt">const</span> <span class="dt">void</span> <span class="op">*</span>buf<span class="op">,</span> <span class="dt">size_t</span> count<span class="op">);</span></span></code></pre></div>
 <p>Przykład - zapisanie ciągu znaków <code>"Hello world"</code> w pliku</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> text<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span><span class="op">;</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> count <span class="op">=</span> write<span class="op">(</span>fd<span class="op">,</span> text<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>text<span class="op">));</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>text<span class="op">))</span> <span class="op">{</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Nie wszystko się udało zapisać - błąd */</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> text<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span><span class="op">;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> count <span class="op">=</span> write<span class="op">(</span>fd<span class="op">,</span> text<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>text<span class="op">));</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>text<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Nie wszystko się udało zapisać - błąd */</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="wywołanie-systemowe---standardowe-wyjście-jest-plikiem" class="level2">
 <h2>Wywołanie systemowe - standardowe wyjście jest plikiem</h2>
 <p>Standardowe wyjście jest plikiem. Jest ono otwarte pod deskryptorem <code>1</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> text<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span><span class="op">;</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>write<span class="op">(</span><span class="dv">1</span><span class="op">,</span> text<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>text<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> text<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;Hello world&quot;</span><span class="op">;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>write<span class="op">(</span><span class="dv">1</span><span class="op">,</span> text<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>text<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span></code></pre></div>
 </section>
 <section id="wywołanie-systemowe---standardowe-wejście-jest-plikiem" class="level2">
 <h2>Wywołanie systemowe - standardowe wejście jest plikiem</h2>
 <p>Standardowe wejście jest plikiem. Jest ono otwarte pod deskryptorem <code>0</code>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> character<span class="op">;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> ret <span class="op">=</span> read<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="op">&amp;</span>character<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>ret <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Koniec wejścia albo błąd */</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> character<span class="op">;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> ret <span class="op">=</span> read<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="op">&amp;</span>character<span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>ret <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Koniec wejścia albo błąd */</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="wywołanie-systemowe---standardowy-strumień-błędów-jest-plikiem" class="level2">
 <h2>Wywołanie systemowe - standardowy strumień błędów jest plikiem</h2>
 <p>Standardowy strumień błędów jest plikiem. Jest on otwarty pod deskryptorem <code>2</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>write<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="st">&quot;error: successfully failed</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> strlen<span class="op">(</span><span class="st">&quot;error: successfully failed</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">));</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>write<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="st">&quot;error: successfully failed</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> strlen<span class="op">(</span><span class="st">&quot;error: successfully failed</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">));</span></span></code></pre></div>
 </section>
 <section id="przykład---zapisanie-standardowego-wejscia-do-pliku-1" class="level2">
 <h2>Przykład - zapisanie standardowego wejscia do pliku</h2>
-<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> O_CREATE <span class="op">|</span> O_WRONLY <span class="op">|</span> O_TRUNC<span class="op">,</span> <span class="bn">0664</span><span class="op">);</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;&quot;</span><span class="op">);</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">char</span> chunk<span class="op">[</span><span class="dv">128</span><span class="op">];</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ssize_t</span> count <span class="op">=</span> read<span class="op">(</span><span class="dv">0</span><span class="op">,</span> chunk<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>chunk<span class="op">));</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>count <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ssize_t</span> count_wr <span class="op">=</span> write<span class="op">(</span>fd<span class="op">,</span> chunk<span class="op">,</span> count<span class="op">);</span></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>count_wr <span class="op">!=</span> count<span class="op">)</span></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>close<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> O_CREATE <span class="op">|</span> O_WRONLY <span class="op">|</span> O_TRUNC<span class="op">,</span> <span class="bn">0664</span><span class="op">);</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;&quot;</span><span class="op">);</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">char</span> chunk<span class="op">[</span><span class="dv">128</span><span class="op">];</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ssize_t</span> count <span class="op">=</span> read<span class="op">(</span><span class="dv">0</span><span class="op">,</span> chunk<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>chunk<span class="op">));</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>count <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ssize_t</span> count_wr <span class="op">=</span> write<span class="op">(</span>fd<span class="op">,</span> chunk<span class="op">,</span> count<span class="op">);</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>count_wr <span class="op">!=</span> count<span class="op">)</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>close<span class="op">(</span>file<span class="op">);</span></span></code></pre></div>
 <pre><code>$ echo ten_tekst_bedzie_w_out.txt | ./program</code></pre>
 </section>
 <section id="przykład---zapisanie-2-zmiennych-do-pliku-1" class="level2">
 <h2>Przykład - zapisanie 2 zmiennych do pliku</h2>
-<div class="sourceCode" id="cb37"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> O_CREAT <span class="op">|</span> O_WRONLY <span class="op">|</span> O_TRUC<span class="op">,</span> <span class="bn">0664</span><span class="op">);</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;&quot;</span><span class="op">);</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> b<span class="op">;</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> count <span class="op">=</span> write<span class="op">(</span>fd<span class="op">,</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">));</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">))</span> <span class="op">{</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">);</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> write<span class="op">(</span>fd<span class="op">,</span> <span class="op">&amp;</span>b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">));</span></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">))</span> <span class="op">{</span></span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">);</span></span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>close<span class="op">(</span>fd<span class="op">);</span></span></code></pre></div>
-</section>
-<section id="przykład---odczytanie-2-zmiennych-z-pliku-1" class="level2">
-<h2>Przykład - odczytanie 2 zmiennych z pliku</h2>
-<div class="sourceCode" id="cb38"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> O_RDONLY<span class="op">);</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>file<span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> O_CREAT <span class="op">|</span> O_WRONLY <span class="op">|</span> O_TRUC<span class="op">,</span> <span class="bn">0664</span><span class="op">);</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>fd <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;&quot;</span><span class="op">);</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> b<span class="op">;</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> count <span class="op">=</span> read<span class="op">(</span>fd<span class="op">,</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">));</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> count <span class="op">=</span> write<span class="op">(</span>fd<span class="op">,</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">));</span></span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">))</span> <span class="op">{</span></span>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">);</span></span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> read<span class="op">(</span>fd<span class="op">,</span> <span class="op">&amp;</span>b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">));</span></span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> write<span class="op">(</span>fd<span class="op">,</span> <span class="op">&amp;</span>b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">));</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">))</span> <span class="op">{</span></span>
 <span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">);</span></span>
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>close<span class="op">(</span>fd<span class="op">);</span></span></code></pre></div>
+</section>
+<section id="przykład---odczytanie-2-zmiennych-z-pliku-1" class="level2">
+<h2>Przykład - odczytanie 2 zmiennych z pliku</h2>
+<div class="sourceCode" id="cb39"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fd <span class="op">=</span> open<span class="op">(</span><span class="st">&quot;out.txt&quot;</span><span class="op">,</span> O_RDONLY<span class="op">);</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(!</span>file<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;err: failed to open file &#39;out.txt&#39;&quot;</span><span class="op">);</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">;</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> b<span class="op">;</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="dt">ssize_t</span> count <span class="op">=</span> read<span class="op">(</span>fd<span class="op">,</span> <span class="op">&amp;</span>a<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">));</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>a<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">);</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> read<span class="op">(</span>fd<span class="op">,</span> <span class="op">&amp;</span>b<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">));</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>count <span class="op">!=</span> <span class="kw">sizeof</span><span class="op">(</span>b<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    close<span class="op">(</span>fd<span class="op">);</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>close<span class="op">(</span>fd<span class="op">);</span></span></code></pre></div>
 </section>
 <section id="endianowość" class="level2">
 <h2>Endianowość</h2>
@@ -632,13 +623,14 @@ Big endian:
 <li>Zamieniając kolejność bajtów na jedną ustaloną endianowość (np. Big Endian) i zapisując ją w ten sposób do pliku. Następnie wykonywać operację odwrotną przy odczytywaniu - jeżeli jesteśmy na innej endianowości.</li>
 </ul>
 <p>Nagłówek <code>&lt;arpa/inet.h&gt;</code> definiuje funkcje pozwalające zamienić endianowość liczby.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;arpa/inet.h&gt;</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> htonl<span class="op">(</span><span class="dt">uint32_t</span> hostlong<span class="op">);</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="dt">uint16_t</span> htons<span class="op">(</span><span class="dt">uint16_t</span> hostshort<span class="op">);</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> ntohl<span class="op">(</span><span class="dt">uint32_t</span> netlong<span class="op">);</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="dt">uint16_t</span> ntohs<span class="op">(</span><span class="dt">uint16_t</span> netshort<span class="op">);</span></span></code></pre></div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> n_host_endian <span class="op">=</span> <span class="bn">0xFA30</span><span class="op">;</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> big_endian <span class="op">=</span> htonl<span class="op">(</span>n_host_endian<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;arpa/inet.h&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> htonl<span class="op">(</span><span class="dt">uint32_t</span> hostlong<span class="op">);</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="dt">uint16_t</span> htons<span class="op">(</span><span class="dt">uint16_t</span> hostshort<span class="op">);</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> ntohl<span class="op">(</span><span class="dt">uint32_t</span> netlong<span class="op">);</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="dt">uint16_t</span> ntohs<span class="op">(</span><span class="dt">uint16_t</span> netshort<span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> n_host_endian <span class="op">=</span> <span class="bn">0xFA30</span><span class="op">;</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="dt">uint32_t</span> big_endian <span class="op">=</span> htonl<span class="op">(</span>n_host_endian<span class="op">);</span></span></code></pre></div>
 </section>
 </section>
 <section id="dziękuję-za-uwagę" class="level1">

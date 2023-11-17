@@ -32,10 +32,8 @@ Biblioteka standardowa języka dostarcza funkcję do obsługi plików:
 
 Do otwierenia pliku służy funkcja `fopen()`.
 ```c
-/**
- * @path: ścieżka do pliku
- * @mode: tryb w jakim otwierany jest plik
- */
+#include <stdio.h>
+
 FILE *fopen(const char *path, const char *mode);
 ```
 
@@ -69,9 +67,8 @@ jego zawartosć zostanie usunięta.
 
 Do zamykania pliku służy funkcja `fclose()`
 ```c
-/**
- * @file: wskaźnik do pliku
- */
+#include <stdio.h>
+
 int fclose(FILE *file);
 ```
 
@@ -83,12 +80,8 @@ fclose(file);
 ## Standard C - odczytywanie danych z pliku
 
 ```c
-/**
- * @ptr: wskaźnik do miejsca w pamięci gdzie mamy wczytać dane
- * @size: rozmiar elementu
- * @nitems: liczba elementów
- * @file: plik z którego odczytujemy
- */
+#include <stdio.h>
+
 size_t fread(void *ptr, size_t size, size_t nitems, FILE *file);
 ```
 
@@ -106,12 +99,8 @@ Plik `file` musi być otwarty do odczytu.
 ## Standard C - zapisanie danych do pliku
 
 ```c
-/**
- * @ptr: wskaźnik do miejsca w pamięci z którego mamy zapisać dane
- * @size: rozmiar elementu
- * @nitems: liczba elementów
- * @file: plik do którego zapisujemy
- */
+#include <stdio.h>
+
 size_t fwrite(const void *ptr, size_t size, size_t nitems, FILE *file);
 ```
 
@@ -186,6 +175,31 @@ o nazwie `stderr`.
 ```c
 fprintf(stderr, "error: serious bug number %d\n", 123);
 ```
+
+## Standard C - buforowanie
+
+Funkcje do obsługi plików zdefiniowane przez standard języka C, wykonują buforowanie.
+
+Do zmiany trybu buforowania służy funkcja `setvbuf()`.
+
+```c
+#include <stdio.h>
+
+int setvbuf(FILE *restrict stream, char *restrict buf, int type, size_t size);
+```
+
+```c
+setvbuf(file, NULL, _IONBF, 0); /* brak buforowania */
+setvbuf(file, NULL, _IONLBF, 0); /* buforowanie linii */
+setvbuf(file, NULL, _IONFBF, 0); /* buforowanie blokowe */
+```
+
+W przypadku buforowania dane zapisywane najpierw są do wewnętrznego bufora, a
+wysyłane do systemu operacyjnego są po napotkaniu znaku końca linii (buforowanie liniowe)
+lub zapełnienia bufora (buforowanie blokowe). Podobna sytuacja jest w przypadku odczytów,
+które najpierw zapełnią wewnętrzny bufor, z którego dopiero będą kopiowane dane do użytkownika,
+żeby uniknąć nadmiernej komunikacji z systemem operacyjnym.
+
 
 ## Przykład - zapisanie standardowego wejscia do pliku
 
@@ -271,21 +285,15 @@ POSIX definiuje między innymi następujące wywołania systemowe do obsługi pl
 - `read()` - odczytuje porcję danych z pliku
 - `write()` - wpisuje porcję danych do pliku
 
-W celu skorzystania z tych funkcji należy dołączyć następujące nagłówki
-```c
-#include <unistd.h>
-#include <fcntl.h>
-```
+Te funkcje nie wykonują buforowania w przestrzeni użytkownika tak jak `fread()`,
+czy `fwrite()` - buforowanie jest wykonywane na poziomie systemu operacyjnego.
 
 ## Wywołania systemowe - otwieranie pliku do odczytu
 
 Do otwierenia pliku służy funkcja `open()`.
 ```c
-/**
- * @path: ścieżka do pliku
- * @oflag: flagi określający tryb otwarcia pliku
- * @mode: uprawnienia do pliku - w przypadku tworzenia pliku
- */
+#include <fcntl.h>
+
 int open(const char *path, int oflag);
 int open(const char *path, int oflag, mode_t mode);
 ```
@@ -314,9 +322,8 @@ Nie ma podziału na tryb binarny i tryb tekstowy. Jest tylko tryb binarny.
 
 Do zamykania pliku służy funkcja `close()`
 ```c
-/**
- * @fd: deskryptor pliku
- */
+#include <unistd.h>
+
 int close(int fd);
 ```
 
@@ -328,11 +335,9 @@ close(file_fd);
 ## Wywołania systemowe - wczytywanie danych z pliku
 
 ```c
-/**
- * @fd: deskryptor pliku
- * @buf: miejsce w pamięci gdzie zostaną zapisane dane z pliku
- * @count: liczba bajtów do odczytania
- */
+#include <unistd.h>
+#include <sys/types.h>
+
 ssize_t read(int fd, void *buf, size_t count);
 ```
 
@@ -353,11 +358,9 @@ Plik `fd` musi być otwarty do odczytu.
 ## Wywołania systemowe - zapisywanie danych do pliku
 
 ```c
-/**
- * @fd: deskryptor pliku
- * @buf: miejsce w pamięci z którego zostaną zapisane dane do pliku
- * @count: liczba bajtów do zapisu
- */
+#include <unistd.h>
+#include <sys/types.h>
+
 ssize_t write(int fd, const void *buf, size_t count);
 ```
 
@@ -511,6 +514,7 @@ Nagłówek `<arpa/inet.h>` definiuje funkcje pozwalające zamienić endianowoś�
 
 ```c
 #include <arpa/inet.h>
+
 uint32_t htonl(uint32_t hostlong);
 uint16_t htons(uint16_t hostshort);
 uint32_t ntohl(uint32_t netlong);
