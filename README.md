@@ -39,6 +39,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
     - Zadanie 3.2: ([html](https://czarnota.github.io/wpsl/3/task2), [md](https://github.com/czarnota/wpsl/tree/main/3/task2.md))
     - Zadanie 3.3: ([html](https://czarnota.github.io/wpsl/3/task3), [md](https://github.com/czarnota/wpsl/tree/main/3/task3.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/3/task3-solved), [md](https://github.com/czarnota/wpsl/tree/main/3/task3-solved.md))
+    - *Zadanie 3.4*: ([html](https://czarnota.github.io/wpsl/3/task4), [md](https://github.com/czarnota/wpsl/tree/main/3/task4.md))
     - Termin: do następnych zajęć (25.11.2023)
 
 ## Zagadnienie 4: Komunikacja międzyprocesowa
@@ -100,12 +101,12 @@ W wiadomości email należy załączyć plik lub pliki z kodem źródłowym w pl
 
 Są 4 zadania:
 
-| Zadanie                      | Termin     |
-| ---------------------------- | ---------- |
-| 1.4 Dashboard                | 04.11.2023 |
-| 2.4 Lista przypomnień        | 18.11.2023 |
-|                              | 25.11.2023 |
-|                              | 03.12.2023 |
+| Zadanie                               | Termin     |
+| ------------------------------------- | ---------- |
+| 1.4 Dashboard                         | 04.11.2023 |
+| 2.4 Lista przypomnień                 | 18.11.2023 |
+| 3.4 Lista przypomnień zapisująca stan | 25.11.2023 |
+|                                       | 03.12.2023 |
 
 Zadania należy przysłać, przed momentem prezentacji rozwiązania.
 
