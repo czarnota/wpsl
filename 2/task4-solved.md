@@ -7,11 +7,12 @@ za zakończenie programu oraz mutex chroniący te dane.
 
 ```c
 #include <pthread.h>
+#include <stdbool.h>
 
 char texts[5][255];
 int hours[5];
 int mins[5];
-int quit;
+bool quit;
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 ```
 
@@ -97,13 +98,12 @@ void trigger_reminder(void)
 
 ## Krok 5
 
-Napiszmy funkcję, przeznaczoną do uruchomienia w osobnym wątku i będzie okresowo
+Napiszmy funkcję, przeznaczoną do uruchomienia w osobnym wątku, która będzie okresowo
 sprawdzać przypomnienia:
 
 ```c
 ...
 #include <unistd.h>
-#include <stdbool.h>
 
 ...
 
@@ -207,7 +207,7 @@ int main(void)
 	}
 
 	pthread_mutex_lock(&lock);
-	quit = 1;
+	quit = true;
 	pthread_mutex_unlock(&lock);
 
 	pthread_join(thread, NULL);
@@ -362,7 +362,7 @@ int main(void)
 	}
 
 	pthread_mutex_lock(&lock);
-	quit = 1;
+	quit = true;
 	pthread_mutex_unlock(&lock);
 
 	pthread_join(thread, NULL);
