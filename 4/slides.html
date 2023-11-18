@@ -703,14 +703,14 @@
 </section>
 <section id="pamięć-współdzielona-1" class="level2">
 <h2>Pamięć współdzielona</h2>
-<p>To tworzenia, zamykania i usuwania pamięci wspóldzielonej służą wywołania systemowe <code>shm_open()</code>, <code>close()</code>, <code>shm_unlink()</code>.</p>
+<p>Do tworzenia, zamykania i usuwania pamięci wspóldzielonej służą wywołania systemowe <code>shm_open()</code>, <code>close()</code>, <code>shm_unlink()</code>.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/mman.h&gt;</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> shm_open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">,</span> <span class="op">...);</span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> shm_unlink<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">);</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> close<span class="op">(</span><span class="dt">int</span> fd<span class="op">);</span></span></code></pre></div>
-<p>Do mapowanie i odmapowywania pamięci współdzielonej służa wywołania systemowe <code>mmap()</code> i <code>munmap()</code>.</p>
+<p>Do mapowania i odmapowywania pamięci współdzielonej służą wywołania systemowe <code>mmap()</code> i <code>munmap()</code>.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/mman.h&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="op">*</span>mmap<span class="op">(</span><span class="dt">void</span> <span class="op">*</span>addr<span class="op">,</span> <span class="dt">size_t</span> len<span class="op">,</span> <span class="dt">int</span> prot<span class="op">,</span> <span class="dt">int</span> flags<span class="op">,</span> <span class="dt">int</span> fd<span class="op">,</span> off_t offset<span class="op">);</span></span>
@@ -810,7 +810,7 @@
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sem_close<span class="op">(</span>sem_t <span class="op">*</span>sem<span class="op">);</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>sem_t <span class="op">*</span> sem_open<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">,</span> <span class="dt">int</span> oflag<span class="op">,</span> <span class="op">...);</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sem_unlink<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">);</span></span></code></pre></div>
-<p>Do dekrementacji semaforu i inkrementacjia, służą funkcję <code>sem_wait()</code> i <code>sem_post()</code>.</p>
+<p>Do dekrementacji semaforu i inkrementacji, służą funkcję <code>sem_wait()</code> i <code>sem_post()</code>.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;semaphore.h&gt;</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sem_wait<span class="op">(</span>sem_t <span class="op">*</span>sem<span class="op">);</span></span>
@@ -819,7 +819,7 @@
 </section>
 <section id="semafory---przykład---proces-1" class="level2">
 <h2>Semafory - przykład - proces 1</h2>
-<p>Poniższy przykład prezentuja zabezpieczenie dostępu do pamięci współdzielonej za pomocą semafora.</p>
+<p>Poniższy przykład prezentuje zabezpieczenie dostępu do pamięci współdzielonej za pomocą semafora w procesie odczytującym dane.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sem_t <span class="op">*</span>lock <span class="op">=</span> sem_open<span class="op">(</span><span class="st">&quot;/mem.lock&quot;</span><span class="op">,</span> O_CREAT<span class="op">,</span> <span class="bn">0666</span><span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>lock <span class="op">==</span> SEM_FAILED<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
@@ -848,7 +848,7 @@
 </section>
 <section id="semafory---przykład---proces-2" class="level2">
 <h2>Semafory - przykład - proces 2</h2>
-<p>Poniższy przykład prezentuja zabezpieczenie dostępu do pamięci współdzielonej za pomocą semafora w drugim procesie:</p>
+<p>Poniższy przykład prezentuje zabezpieczenie dostępu do pamięci współdzielonej za pomocą semafora w procesie zapisującym dane.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sem_t <span class="op">*</span>lock <span class="op">=</span> sem_open<span class="op">(</span><span class="st">&quot;/mem.lock&quot;</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>lock <span class="op">==</span> SEM_FAILED<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* obsługa błędu */</span></span>
@@ -1039,11 +1039,15 @@
 <p>Przedstawione funkcje służące do operowania na kolejkach komunikatów są ustandaryzowane przez POSIX. Alternatywą dla POSIX są tzw. funkcje System V:</p>
 <ul class="incremental">
 <li>odpowiednik <code>mq_open()</code> to <code>msgget()</code>,</li>
-<li>odpowiednik <code>mq_send()</code> to <code>msgsng()</code>,</li>
+<li>odpowiednik <code>mq_send()</code> to <code>msgsnd()</code>,</li>
 <li>odpowiednik <code>mq_receive()</code> to <code>msgrcv()</code>;</li>
 </ul>
-<p>Kolejki komunikatów System V to starsze API niż POSIX, ale jest szerzej dostępne. (na przykład MacOS nie wspiera kolejek POSIX)</p>
-<p>Jedną z różnic pomiędzy tymi API jest: - kolejki System V, dają możliwość filtrowania wiadomości po ich typie. - kolejki POSIX, dają możliwość priorytetyzacji wiadomości oraz umożliwiają otrzymywanie notyfikacji za pomocą sygnałów.</p>
+<p>Kolejki komunikatów System V to starsze API niż POSIX, ale jest szerzej dostępne. (na przykład MacOS nie wspiera kolejek POSIX, pomimo że jest certyfikowanym UNIXem).</p>
+<p>Jedną z różnic pomiędzy tymi API jest:</p>
+<ul class="incremental">
+<li>kolejki System V, dają możliwość filtrowania wiadomości po ich typie.</li>
+<li>kolejki POSIX, dają możliwość priorytetyzacji wiadomości oraz umożliwiają otrzymywanie notyfikacji za pomocą sygnałów.</li>
+</ul>
 </section>
 </section>
 <section id="dziękuję-za-uwagę" class="level1">

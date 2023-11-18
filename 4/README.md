@@ -482,7 +482,7 @@ Strona podręcznika: `man shm_overview`
 
 ## Pamięć współdzielona
 
-To tworzenia, zamykania i usuwania pamięci wspóldzielonej służą wywołania systemowe `shm_open()`, `close()`, `shm_unlink()`.
+Do tworzenia, zamykania i usuwania pamięci wspóldzielonej służą wywołania systemowe `shm_open()`, `close()`, `shm_unlink()`.
 
 ```c
 #include <sys/mman.h>
@@ -493,7 +493,7 @@ int shm_unlink(const char *name);
 int close(int fd);
 ```
 
-Do mapowanie i odmapowywania pamięci współdzielonej służa wywołania systemowe `mmap()` i `munmap()`.
+Do mapowania i odmapowywania pamięci współdzielonej służą wywołania systemowe `mmap()` i `munmap()`.
 ```c
 #include <sys/mman.h>
 
@@ -619,7 +619,7 @@ sem_t * sem_open(const char *name, int oflag, ...);
 int sem_unlink(const char *name);
 ```
 
-Do dekrementacji semaforu i inkrementacjia, służą funkcję `sem_wait()` i `sem_post()`.
+Do dekrementacji semaforu i inkrementacji, służą funkcję `sem_wait()` i `sem_post()`.
 
 ```c
 #include <semaphore.h>
@@ -633,8 +633,8 @@ wypadku blokuje proces do momentu aż inny proces nie zinkrementuje semafora za 
 
 ## Semafory - przykład - proces 1
 
-Poniższy przykład prezentuja zabezpieczenie dostępu do pamięci współdzielonej
-za pomocą semafora.
+Poniższy przykład prezentuje zabezpieczenie dostępu do pamięci współdzielonej
+za pomocą semafora w procesie odczytującym dane.
 
 ```c
 sem_t *lock = sem_open("/mem.lock", O_CREAT, 0666, 1);
@@ -666,8 +666,8 @@ if (sem_unlink("/mem.lock")) {
 
 ## Semafory - przykład - proces 2
 
-Poniższy przykład prezentuja zabezpieczenie dostępu do pamięci współdzielonej
-za pomocą semafora w drugim procesie:
+Poniższy przykład prezentuje zabezpieczenie dostępu do pamięci współdzielonej
+za pomocą semafora w procesie zapisującym dane.
 
 ```c
 sem_t *lock = sem_open("/mem.lock", 0);
@@ -909,16 +909,16 @@ Przedstawione funkcje służące do operowania na kolejkach komunikatów są ust
 przez POSIX. Alternatywą dla POSIX są tzw. funkcje System V:
 
 - odpowiednik `mq_open()` to  `msgget()`,
-- odpowiednik `mq_send()` to  `msgsng()`,
+- odpowiednik `mq_send()` to  `msgsnd()`,
 - odpowiednik `mq_receive()` to  `msgrcv()`;
 
 Kolejki komunikatów System V to starsze API niż POSIX, ale jest szerzej dostępne.
-(na przykład MacOS nie wspiera kolejek POSIX)
+(na przykład MacOS nie wspiera kolejek POSIX, pomimo że jest certyfikowanym UNIXem).
 
 Jedną z różnic pomiędzy tymi API jest:
+
 - kolejki System V, dają możliwość filtrowania wiadomości po ich typie.
 - kolejki POSIX, dają możliwość priorytetyzacji wiadomości oraz umożliwiają
   otrzymywanie notyfikacji za pomocą sygnałów.
-
 
 # Dziękuję za uwagę
