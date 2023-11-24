@@ -2,269 +2,242 @@
 title: Komunikacja sieciowa
 ---
 
-# Zagadnienie 5: Komunikacja sieciowa
+# Zagadnienie 5: Gniazda
 
-## Informacje wstępne - tablice
+## Gniazda
 
-Tablicą nazwywamy ciąg elementów takiego samego typu.
+Gniazda pozwalają na komunikację pomiędzy procesami działającymi na tej
+samej maszynie oraz działającymi na różnych maszynach.
 
-Przykłady tablic:
-```c
-float numbers[4] = {1.0f, -1.0f, -2.0f, -3.0f};
-int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-char name[] = { 'S', 't', 'e', 'f', 'a', 'n', 0 };
-char name2[] = "Stefan";
-```
+Systemy uniksowe oferują wiele różnych typów gniazd, jednak ustandaryzowane przez
+POSIX są:
 
-Elementy tablicy są ułożone pod kolejnymi adresami w pamięci:
-```c
-int values[] = {1, 2, 3};
-```
+- gniazda lokalne (ang. Unix domain sockets), `AF_UNIX`;
+- gniazda sieciowe (ang. network sockets), `AF_INET` i `AF_INET6`.
 
-```
-0x4 0x8 0xb
-  +---+---+---+
-  | 1 | 2 | 3 |
-  +---+---+---+
-```
+## Gniazda - tworzenie
 
-## Informacje wstępne - nazwa tablicy jest wskaźnikiem do pierwszego elementu
+Do tworzenia gniazd sieciowych służy wywołanie systemowe `socket()`.
 
 ```c
-int values[] = {1, 2, 3};
-int *p = values;
+#include <sys/socket.h>
+
+int socket(int domain, int type, int protocol);
 ```
 
-```
-0x4 0x8 0xb             p
-  +---+---+---+          +---+
-  | 1 | 2 | 3 |          |0x4|
-  +---+---+---+          +---+
-  ^------------------------'
-```
-
-## Informacje wstępne - struktury
-
-O ile tablice reprezentowały ciąg elementów takiego samego typu, to struktury
-reprezentują zbiór elementów o możliwie różnych typach.
-
-Definicja struktury:
 ```c
-struct person {
-    int age;
-    float salary;
-    char name[16];
+int fd = -1;
+/* Lokalny, niezawodny, połączeniowy strumień danych */
+fd = socket(AF_UNIX, SOCK_STREAM, 0);
+/* Lokalne, zawodne, bezpołączeniowe wiadomości */
+fd = socket(AF_UNIX, SOCK_DGRAM, 0);
+/* Lokalne, niezawodne, połączeniowe wiadomości */
+fd = socket(AF_UNIX, SOCK_SEQPACKET, 0);
+/* Sieciowy, IPv4, niezawodny, połączeniowy strumień danych oparty o protokół TCP */
+fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+/* Sieciowe, IPv4, zawodne, bezpołączeniowe wiadomości oparte o protokół UDP */
+fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+/* Sieciowe, IPv4, niezawodne, połączeniowe wiadomości oparte o protokół SCTP */
+fd = socket(AF_INET, SOCK_SEQPACKET, IPPROTO_SCTP);
+/* Sieciowy, IPv6, niezawodny, połączeniowy strumień danych oparty o protokół TCP */
+fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+/* Sieciowe, IPv6, zawodne, bezpołączeniowe wiadomości oparte o protokół UDP */
+fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+/* Sieciowe, IPv6, niezawodne, połączeniowe wiadomości oparte o protokół SCTP */
+fd = socket(AF_INET, SOCK_SEQPACKET, IPPROTO_SCTP);
+```
+
+
+## Gniazda
+
+
+Do operacji na gniazdach służy następujący zestaw wywołań systemowych:
+
+```c
+#include <sys/types.h>
+#include <sys/socket>
+#include <unistd.h>
+
+/* Po obu stronach */
+int socket(int domain, int type, int protocol);
+
+/* Po stronie klienta */
+int connect(int socket, const struct sockaddr *address, socklen_t address_len);
+
+/* Po strinie serwera */
+int bind(int socket, const struct sockaddr *address, socklen_t address_len);
+int listen(int socket, int backlog);
+int accept(int socket, struct sockaddr *restrict address, socklen_t *restrict address_len);
+
+/* Po obu stronach */
+ssize_t read(int fd, void *data, size_t count);
+ssize_t write(int fd, const void *data, size_t count);
+int close(int fd);
+```
+
+## Gniazda lokalne - struktura adresu
+
+```c
+#include <sys/un.h>
+
+struct sockaddr_un {
+	sa_family_t sun_family;               /* AF_UNIX */
+	char        sun_path[108];            /* Ścieżka */
 };
 ```
 
-Utworzenie obiektu struktury i wypełnienie pól:
+## Gniazda sieciowe - struktura adresu
+
 ```c
-struct person p;
-p.age = 46;
-p.salary = 1029384732.0f;
-snprintf(p.name, sizeof(p.name), "%s", "Daniel");
-```
+#include <netinet/in.h>
 
-## Informacje wstępne - struktury - inicjalizacja
+struct sockaddr_in {
+	short            sin_family;   // e.g. AF_INET
+	unsigned short   sin_port;     // e.g. htons(3490)
+	struct in_addr   sin_addr;     // see struct in_addr, below
+	char             sin_zero[8];  // zero this if you want to
+};
 
-Strukturę można zainicjalizować podając kolejno jej elementy.
-```c
-struct person p = { 46, 1029384732.0f, "Daniel" };
+struct in_addr {
+	unsigned long s_addr;  // load with inet_aton()
+};
 
-/* Rekomendowaną praktyką jest stosowanie "designated initializers" z C99 */
-struct person p2 = {
-    .age = 46,
-    .salary = 1029384732.0f,
-    .name = "Daniel",
-    /* Pola pominięte bedą zainicjalizowane zerami */
+struct sockaddr_in6 {
+	sa_family_t     sin6_family;   /* AF_INET6 */
+	in_port_t       sin6_port;     /* port number */
+	uint32_t        sin6_flowinfo; /* IPv6 flow information */
+	struct in6_addr sin6_addr;     /* IPv6 address */
+	uint32_t        sin6_scope_id; /* Scope ID (new in Linux 2.4) */
+};
+
+struct in6_addr {
+	unsigned char   s6_addr[16];   /* IPv6 address */
 };
 ```
 
-Inicjalizacja struktury samymi zerami:
-```c
-struct person p = {0};
-```
+## Komunikacja klienta z serwerem
 
-## Informacje wstępne - struktury układ w pamięci
-
-```c
-struct foo {
-    char a;
-    int b;
-    int c;
-};
-```
-Jeżeli kompilujemy program na architekturę, gdzie `sizeof(int) == 4`, to wtedy
-struktura może wyglądać w pamięci następujący sposób:
-```
-+---+---+---+---+---+---+---+---+---+
-| a |       b       |       c       |
-+---+---+---+---+---+---+---+---+---+
-```
-**Czy aby na pewno?**
-
-## Informacje wstępne - padding
-
-Niestety, w praktyce najprawdopodobniej kompilator wyrówna pola struktury tak
-aby adresy były podzielne np. przez 4, ponieważ w ten sposób procesor może
-je szybciej zaadresować:
-```c
-struct foo {
-    char a;
-    int b;
-    int c;
-};
-```
-```
-+---+---+---+---+---+---+---+---+---+---+---+---+
-| a |  padding  |       b       |       c       |
-+---+---+---+---+---+---+---+---+---+---+---+---+
-```
-Wartość `sizeof(struct foo)` najprawdopodobniej wyniesie `12`, a nie  `9`.
-
-**Jak pozbyć się/ograniczyć padding?**
+![](assets/communication.png)
 
 
-## Informacje wstępne - ograniczenie paddingu
+## Przesyłanie danych przez gniazda 
 
-Padding można ograniczyć zamieniając kolejność pól. Optymalizując struktury w
-ten sposób, można zaoszczędzić pamięć.
+Oprócz `read()` i `write()` można wykorzystać też `recv()` lub `recvfrom()` oraz
+`send()` lub `sendto()`.
 
 ```c
-struct foo {
-    int b;
-    int c;
-    char a;
-};
-```
-```
-+---+---+---+---+---+---+---+---+---+
-|       b       |       c       | a |
-+---+---+---+---+---+---+---+---+---+
+#include <sys/socket.h>
+
+ssize_t
+recv(int socket, void *buffer, size_t length, int flags);
+ssize_t
+send(int socket, const void *buffer, size_t length, int flags);
+
+ssize_t
+recvfrom(int socket, void *restrict buffer, size_t length, int flags,
+ struct sockaddr *restrict address, socklen_t *restrict address_len);
+ssize_t
+sendto(int socket, const void *buffer, size_t length, int flags,
+ const struct sockaddr *dest_addr, socklen_t dest_len);
 ```
 
-Alternatywnie, kompilatory oferują **niestandardowe** rozszerzenia umożliwiające
-wyłączenie paddingu: `#pragma pack` w MSVC i `__attribute__((packed))` w `gcc`.
+## Gniazda lokalne - serwer
+```c
+	int fd = socket(AF_UNIX, SOCK_STREAM, 0);
+	if (fd < 0)
+		return 1;
 
-## Informacje wstępne - operacje na strukturach
+	unlink(addr.sun_path);
+	const struct sockaddr_un addr = {
+		.sun_family = AF_UNIX, .sun_path = "foo",
+	};
+	if (bind(fd, (const struct sockaddr *)&addr, sizeof(addr)))
+		goto err_close;
+	if (listen(fd, 8))
+		goto err_close;
 
-Struktury obsługują operator przypisania `=`, który powoduje przekopiowanie
-wartości każdego pola.
+	while (1) {
+		int client_fd = accept(fd, NULL, NULL);
+		if (client_fd < 0)
+			break;
+		char msg[256] = {0};
+		ssize_t num_read = read(client_fd, msg, sizeof(msg) - 1);
+		if (num_read)
+			printf("%s\n", msg);
+		close(client_fd);
+	}
+err_close:
+	close(fd);
+	unlink(addr.sun_path);
+```
+
+## Gniazda lokalne - klient
 
 ```c
-struct vec2 {
-    float x;
-    float y;
-};
+	int fd = socket(AF_UNIX, SOCK_STREAM, 0);
+	if (fd < 0)
+		return 1;
 
-struct vec2 position_a = { 2.0f, 10.0f };
-struct vec2 position_b = position_a;
+	const struct sockaddr_un addr = {
+		.sun_family = AF_UNIX,
+		.sun_path = "foo",
+	};
 
-printf("%f %f", position_b.x, position_b.y);
+	int err = connect(fd, (const struct sockaddr *)&addr, sizeof(addr));
+	if (err)
+		goto err_close;
+
+	ssize_t num_written = write(fd, "Hello world", strlen("Hello world"));
+	if (num_written <= 0) {
+		/* error */
+	}
+
+err_close:
+	close(fd);
+
 ```
 
-## Informacje wstępne - definicja i utworzenie obiektu w jednym
-
-Strukturę możemy zdefiniować i od razu utworzyć zmienną jej typu:
-
+## Gniazda sieciowe - serwer
 ```c
-struct player_config {
-    struct vec2 velocity;
-    char name[32];
-    int max_hp;
-} configuration = {
-    .velocity = { 0.0f, 1.0f },
-    .name = "Marian",
-    .max_hp = 200,
-};
+	#include <netinet/in.h>
+	...
 
-printf("%s", configuration.name);
+	int fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (fd < 0)
+		return 1;
+
+	const struct sockaddr_in addr = {
+		.sin_family = AF_INET,
+		.sin_port = htons(2000),
+	};
+	if (bind(fd, (const struct sockaddr *)&addr, sizeof(addr)))
+		goto err_close;
+
+	...
 ```
 
-## Informacje wstępne - anonimowe struktury
-
-Gdy od razu tworzymy zmienną możemy pominąć nazwę typu:
+## Gniazda sieciowe - klient
 
 ```c
-struct {
-    struct vec2 velocity;
-    char name[32];
-    int max_hp;
-} configuration = {
-    .velocity = { 0.0f, 1.0f },
-    .name = "Marian",
-    .max_hp = 200,
-};
+	#include <netinet/in.h>
+	...
 
-printf("%s", configuration.name);
-```
+	int fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (fd < 0)
+		return 1;
 
-## Informacje wstępne - tablice struktur
+	struct sockaddr_in addr = {
+		.sin_family = AF_INET,
+		.sin_port = htons(2000),
+	};
+	if (!inet_aton("127.0.0.1", &addr.sin_addr))
+		goto err_close;
 
-Nic nie stoi na przeszkodzie aby łączyć tablice i struktury:
-```c
-struct month_info {
-    int number;
-    int days;
-    char name[32];
-};
-struct month_info months[] = {
-    { .number = 1, .days = 31, .name = "January" },
-    { .number = 2, .days = 28, .name = "February" },
-    { .number = 3, .days = 31, .name = "March" },
-    { .number = 4, .days = 30, .name = "April" },
-    { .number = 5, .days = 31, .name = "May" },
-    { .number = 6, .days = 30, .name = "June" },
-    { .number = 7, .days = 31, .name = "July" },
-    { .number = 8, .days = 31, .name = "August" },
-    { .number = 9, .days = 30, .name = "September" },
-    { .number = 10, .days = 31, .name = "October" },
-    { .number = 11, .days = 30, .name = "November" },
-    { .number = 12, .days = 31, .name = "December" },
-};
-```
+	int err = connect(fd, (const struct sockaddr *)&addr, sizeof(addr));
+	if (err)
+		goto err_close;
 
-## Informacje wstępne - wskaźniki na struktury
-
-```c
-struct foo { int a; };
-```
-Do pól struktury odnosimy się używając operatora `.`:
-```c
-struct foo foo = { 1 }:
-
-printf("%d\n", foo.a);
-```
-
-Do pól struktury poprzez wskaźnik odnosimy się używając operatora `->`:
-```c
-struct foo foo = { 1 };
-struct foo *bar = &foo;
-
-printf("%d\n", bar->a);
-printf("%d\n", (*bar).a);
-```
-
-## Informacje wstępne - lista jednokierunkowa
-Lista jednokierunkowa, podobnie jak tablica pozwala na utworzenie kolekcji elementów
-takiego samego typu - z tą różnicą że elementy nie będą ułożone kolejno w pamięci.
-```c
-struct book {
-    /* Wskaźnik do następnego elementu */
-    struct book *next;
-    char title[128];
-};
-```
-
-```c
-struct book book1 = { .next = NULL, .title = "Harry Potter i Tablica Charów" };
-struct book book2 = { .next = &book1, .title = "Harry Router i Maska Podsieci" };
-struct book book3 = { .next = &book2, .title = "Alicja na Wydziale Informatyki" };
-```
-
-```c
-for (struct book *book = &book3; book != NULL; book = book->next)
-    printf("tytul: %s\n", book->title);
+	...
 ```
 
 # Protokół HTTP
@@ -368,282 +341,150 @@ Content-Length: 353
 </html>
 ```
 
-# Droga pakietu w sieci
-
-## Droga pakietu - wysłanie pakietu
-
-![](assets/5.anim.svg)
-
-## Droga pakietu - switch
-
-![](assets/6.anim.svg)
-
-## Droga pakietu - router
-
-![](assets/7.anim.svg)
-
-## Droga pakietu - serwer
-
-![](assets/8.anim.svg)
-
-## Droga pakietu - odebranie pakietu
-
-![](assets/9.anim.svg)
-
-# Gniazda sieciowe POSIX
-
-## Komunikacja klienta z serwerem
-
-![](assets/communication.png)
-
-## Funkcje/wywołania systemowe po stronie klienta
-
-Po stronie klienta:
-
-- `getaddrinfo()`
-- `socket()`
-- `connect()`
-- `read()`
-- `write()`
-- `close()`
-
-## Funkcja `getaddrinfo()`
-
-Funkcja `getaddrinfo()` służy do odpytywania usługi DNS.
-
-```c
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-
-/**
- * @node: nazwa docelowa np. "onet.pl"
- * @service: nazwa usługi np "http" lub "80"
- * @hints: podpowiedzi
- * @res: wynik odpytania usługi DNS
- */
-int getaddrinfo(const char *node, const char *service,
-               const struct addrinfo *hints,
-               struct addrinfo **res);
-```
-Otrzymany wynik należy "zwolnić" za pomocą `freeaddrinfo()`
-```c
-void freeaddrinfo(struct addrinfo *res);
-```
-
-## Funkcja `getaddrinfo()` przykład
-
-```c
-struct addrinfo hints = {
-    .ai_family = AF_INET,
-    .ai_socktype = SOCK_STREAM,
-    .ai_protocol = IPPROTO_TCP,
-};
-
-struct addrinfo *result = NULL;
-int ret = getaddrinfo("onet.pl", "80", &hints, &result);
-if (ret) {
-    /* Nie udało się przetłumaczyć nazwy */
-}
-
-/* Iterujemy się po każdyn znalezionym adresie */
-for (struct addrinfo *i = result; i != NULL; i = i->ai_next) {
-    char ip[NI_MAXHOST] = {0};
-    /* i->ai_addr i i->ai_addrlen zawierają adres ip */
-    getnameinfo(i->ai_addr, i->ai_addrlen, ip, sizeof(ip), NULL, 0, NI_NUMERICHOST);
-    printf("IP serwisu onet.pl: %s\n", ip);
-}
-
-freeaddrinfo(result);
-```
-
-## Wywołanie systemowe `socket()`
-
-Wywołanie systemowe `socket()` otwiera gniazdo sieciowe, za pomocą
-którego możemy komunikować się poprzez sieć.
-
-```c
-#include <sys/types.h>
-#include <sys/socket.h>
-
-/**
- * @domain: Rodzina socketu np. AF_INET, AF_INET6
- * @type: Typ socketu np. SOCK_STREAM, SOCK_DGRAM
- * @protocol: Protokół np. IPPROTO_TCP, IPPROTO_UDP
- */
-int socket(int domain, int type, int protocol);
-```
-
-Na przykład możemy utrzowyć gniazdo TCP:
-```c
-int fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-if (fd < 0) {
-    /* Wystąpił błąd */
-}
-```
-
-## Wywołanie systemowe `close()`
-
-Wywołanie systemowe `close()` zamyka gniazdo sieciowe.
-```c
-#include <unistd.h>
-
-int close(int fd);
-```
-
-Przykład:
-```
-close(fd);
-```
-
-## Wywołanie systemowe `connect()`
-
-Wywołanie systemowe `connect()` nawiązuje połączenie
-
-```c
-#include <sys/socket.h>
-
-/**
- * @socket: gniazdo sieciowe, które chcemy połączyć
- * @address: adres, z którym chcemy się połączyć
- * @address_len: długość adresu
- */
-int connect(int socket, const struct sockaddr *address, socklen_t address_len);
-```
-
-Można wykorzystać pola `ai_addr` i `ai_addrlen` ze struktury `struct addrinfo`,
-otrzymanej z `getaddrinfo()`. Przykład:
-
-```c
-int ret = connect(fd, i->ai_addr, i->ai_addrlen);
-if (ret) {
-    /* Nie udało się przypisać adresu */
-}
-```
-
-## Wywołanie systemowe `read()`
-
-Dane z gniazda sieciowego odczytujemy podobnie jak dane z pliku:
-```c
-/**
- * @fd: gniazdo siecowe
- * @buf: miejsce w pamięci gdzie zostaną zapisane odebrane dane z gniazda sieciowego
- * @count: liczba bajtów do odczytania
- */
-ssize_t read(int fd, void *buf, size_t count);
-```
-
-Przykład - odczytanie z gniazda do 32 bajtów:
-```c
-char bytes[32];
-ssize_t count = read(fd, bytes, sizeof(bytes));
-if (count == 0) {
-    /* Zakończenie połączenia */
-}
-if (count < 0) {
-    /* Bląd */
-}
-```
-
-## Wywołanie systemowe `write()`
-
-Wysyłanie danych przez gniazdo sieciowe odbywa się podobnie jak zapisywanie
-danych do pliku.
-
-```c
-/**
- * @fd: gniazdo sieciowe
- * @buf: miejsce w pamięci z którego zostaną wysłane dane przez gniazdo
- * @count: liczba bajtów do wysłania
- */
-ssize_t write(int fd, const void *buf, size_t count);
-```
-
-Przykład - wysłanie ciągu znaków `"Hello world"` przez sieć:
-```c
-char text[] = "Hello world";
-
-ssize_t count = write(fd, text, sizeof(text));
-if (count != sizeof(text)) {
-    /* Nie wszystko się udało wysłać - błąd */
-}
-```
-
 ## Prosty klient HTTP
 
 Zacznijmy od napisania funkcji która zwróci gniazdo połączone z
 serwerem http.
 
 ```c
-int connected_socket(const char *addr, const char *port)
-{
-	struct addrinfo hints = {
-		.ai_family = AF_INET,
-		.ai_socktype = SOCK_STREAM,
-		.ai_protocol = IPPROTO_TCP,
-	};
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
-	struct addrinfo *result;
-	int ret = getaddrinfo(addr, port, &hints, &result);
-	if (ret)
+int connected_socket(const char *ip, unsigned short port)
+{
+	int fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (fd < 0)
 		return -1;
 
-	int fd = -1;
-	for (struct addrinfo *i = result; i != NULL; i = i->ai_next) {
-		fd = socket(i->ai_family, i->ai_socktype, i->ai_protocol);
-		if (fd < 0)
-			continue;
+	struct sockaddr_in addr = {
+		.sin_family = AF_INET,
+		.sin_port = htons(port),
+	};
+	if (!inet_aton(ip, &addr.sin_addr))
+		goto err_close;
 
-		ret = connect(fd, i->ai_addr, i->ai_addrlen);
-		if (ret) {
-			close(fd);
-			fd = -1;
+	if (connect(fd, (const struct sockaddr *)&addr, sizeof(addr)))
+		goto err_close;
+
+	return fd;
+
+err_close:
+	close(fd);
+	return -1;
+}
+```
+
+## Prosty klient HTTP - treść żądania
+
+```c
+...
+
+int connected_socket(const char *addr, const char *port) { ... }
+
+static const char *http_request =
+	"GET / HTTP/1.1\r\n"
+	"Host: example.com\r\n"
+	"Connection: close\r\n"
+	"\r\n";
+
+int main(void) { ... }
+```
+
+## Prosty klient HTTP - wysyłanie żądania
+
+```c
+...
+#include <errno.h>
+#include <unistd.h>
+
+int write_all(int fd, const void *buf, size_t len)
+{
+	unsigned char *bytes = buf;
+	size_t remaining = len;
+
+	/* Jeżeli jest jeszcze coś do wpisania */
+	while (remaining) {
+		/* Wpisz ile się da */
+		ssize_t num_written = write(fd, bytes, remaining);
+		if (num_written <= 0)
+			return errno;
+
+		/* Zauktualizuj ile jeszcze mamy wpisać */
+		remaining -= (size_t)num_written;
+
+		/* Przesuń wskaźnik do jeszcze nie wpisanych danych */
+		bytes += (size_t)num_written;
+	}
+	return 0;
+}
+```
+
+## Prosty klient HTTP - odbieranie odpowiedzi
+
+```c
+...
+int read_all(int fd, void *buf, size_t len)
+{
+	int ret = 0;
+	unsigned char *bytes = buf;
+	size_t remaining = len;
+	while (1) {
+		/* Odczytaj blok danych */
+		char buf[1024];
+		ssize_t num_read = read(fd, buf, sizeof(buf));
+		if (num_read < 0)
+			return errno;
+		if (num_read == 0)
+			break;
+		/* Oceń czy można skopiować cały blok, czy tylko tyle ile sie zmieści */
+		size_t to_copy = remaining < num_read ? remaining : num_read;
+		if (!to_copy) {
+			ret = ENOBUFS;
 			continue;
 		}
 
-		break;
+		/* Skopiuj odczytany kawałek do bufora */
+		memcpy(bytes, buf, to_copy);
+		remaining -= to_copy;
+		bytes += to_copy;
 	}
-	freeaddrinfo(res);
-	return fd;
+	return ret;
 }
 ```
 
 ## Prosty klient HTTP - żądanie i odpowiedź
 
 ```c
+...
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netdb.h>
 #include <unistd.h>
 #include <stdio.h>
 
 int connected_socket(const char *addr, const char *port) { ... }
+int read_all(int fd, void *buf, size_t len) { ... }
+int write_all(int fd, const void *buf, size_t len) { ... }
 
-int main(int argc, char **argv)
+static const char *http_request = ...
+
+int main(void)
 {
-	int fd = connected_socket("example.com", "80");
+	int fd = connected_socket("93.184.216.34", 80);
 	if (fd < 0)
 		return 1;
 
-	char http_request[] =
-		"GET / HTTP/1.1\r\n"
-		"Host: example.com\r\n"
-		"Connection: close\r\n"
-		"\r\n";
-	int count = write(fd, http_request, sizeof(http_request));
-	if (count <= 0) {
-		close(fd);
-		return 1;
-	}
+	if (write_all(fd, http_request, strlen(http_request)))
+		goto err_close_fd;
 
-	while (1) {
-		char buf[9000] = {0};
-		count = read(fd, buf, sizeof(buf) - 1);
-		if (count <= 0)
-			break;
-		printf("%s", buf);
-	}
+	char response[9000] = {0};
+	if (read_all(fd, response, sizeof(response) - 1));
+		goto err_close_fr;
+
+	printf("%s", buf);
+
+err_close_fd:
 	close(fd);
+
 	return 0;
 }
 ```
@@ -674,135 +515,157 @@ Connection: close
     ...
 ```
 
-## Funkcje/wywołania systemowe po stronie serwera
-
-Po stronie serwera, używany jest następujący zestaw funkcji:
-
-- `getaddrinfo()`
-- `socket()`
-- `bind()`
-- `listen()`
-- `accept()`
-- `read()`
-- `write()`
-- `close()`
-
-## Wywołanie systemowe `bind()`
-
-Wywołanie systemowe `bind()` przypisuje adres do gniazda sieciowego.
+## Prosty klient HTTPS - SSL
 
 ```c
-#include <sys/socket.h>
+...
+#include<openssl/ssl.h>
 
-/**
- * @socket: gniazdo sieciowe do którego chcemy przypisać adres
- * @address: adres, który chcemy przypisać
- * @address_len: długość adresu
- */
-int bind(int socket, const struct sockaddr *address, socklen_t address_len);
-```
+int main(void)
+{
+	SSL_CTX* ctx = SSL_CTX_new(SSLv23_client_method());
+	if (!ctx)
+		return 1;
 
-Można wykorzystać pola `ai_addr` i `ai_addrlen` ze struktury `struct addrinfo`,
-otrzymanej z `getaddrinfo()`. Przykład:
+	int fd = connected_socket("93.184.216.34", 80);
+	if (fd < 0)
+		goto err_ssl_ctx_free;
 
-```c
-int ret = bind(fd, i->ai_addr, i->ai_addrlen);
-if (ret) {
-    /* Nie udało się przypisać adresu */
+	...
+
+err_ssl_ctx_free:
+	SSL_CTX_free(ctx);
+	return 0;
 }
 ```
 
-## Funkcja `getaddrinfo()` - adres do nasłuchiwania
-
-Żeby funkcja `getaddrinfo()` zwróciła nam adres na którym możemy
-nasłuchiwać połączeń przychodzących, musimy użyc flagi `AI_PASSIVE`:
+## Prosty klient HTTPS - SSL
 
 ```c
-struct addrinfo hints = {
-    .ai_family = AF_INET,
-    .ai_socktype = SOCK_STREAM,
-    .ai_protocol = IPPROTO_TCP,
-    .ai_flags = AI_PASSIVE,
-};
+...
+int main(void)
+{
+	SSL_CTX* ctx = SSL_CTX_new(SSLv23_client_method());
+	if (!ctx)
+		return 1;
 
-struct addrinfo *result = NULL;
-int ret = getaddrinfo(NULL, "8080", &hints, &result);
-if (ret)
-    return 1;
-```
+	int fd = connected_socket("93.184.216.34", 80);
+	if (fd < 0)
+		goto err_ssl_ctx_free;
 
-## Tworzenie nasłuchującego gniazda
+	SSL* ssl = SSL_new(ctx);
+	if (!ssl)
+		goto err_close;
+	if (SSL_set_fd(ssl, fd) != 1 || SSL_connect(ssl) != 1)
+		goto err_free_ssl;
 
+	...
 
-```c
-int fd;
-for (struct addrinfo *i = result; i != NULL; i = i->ai_next) {
-    fd = socket(i->ai_family, i->ai_socktype, i->ai_protocol);
-    if (fd < 0)
-        continue;
-
-    err = bind(fd, i->ai_addr, i->ai_addrlen);
-    if (err) {
-        close(fd);
-        continue;
-    }
-
-    int err = listen(fd, 16);
-    if (err) {
-        close(fd);
-        continue;
-    }
-
-    break;
-}
-
-freeaddrinfo(result);
-```
-
-## Wywołanie systemowe `listen()`
-
-Wywołanie systemowe `listen()` przełącza socket w tryb nasłuchiwania.
-
-```c
-#include <sys/socket.h>
-
-/**
- * @socket: gniazdo sieciowe
- * @backlog: maksymalny rozmiar kolejki oczekujących połączeń
- */
-int listen(int socket, int backlog);
-```
-
-Przykładowe wywołanie:
-```c
-int error = listen(fd, 16);
-if (error) {
-    /* Wystąpił błąd */
+err_free_ssl
+	SSL_free(ssl);
+err_close_fd:
+	close(fd);
+err_ssl_ctx_free:
+	SSL_CTX_free(ctx);
+	return 0;
 }
 ```
 
-## Wywołanie systemowe `accept()`
-
-Wywołanie systemowe `accept()` blokuje program do momentu połączenia się klienta.
-Po nawiązaniu połączenia z klientem, `accept()` odblokowywuje program i zwraca
-gniazdo sieciowe służące do komunikacji z klientem.
+## Prosty klient HTTPS - wysyłanie żądania
 
 ```c
-#include <sys/socket.h>
-/**
- * @socket: gniazdo sieciowe nasłuchujące na połączenia
- * @address: wskaźnik do struktury w której zostanie zapisany adres klienta, NULL jeśli nas to nie interesuje
- * @address_len: wskaźnik do zmiennej, w której zostanie zapisana długość adresu, NULL jeśli nas to nie intersuje */
-int accept(int socket, struct sockaddr *restrict address, socklen_t *restrict address_len);
-```
+...
 
-Przykład:
-```c
-int client_socket = accept(server_socket, NULL, NULL);
-if (client_socket < 0) {
-    /* Wystąpił błąd */
+int write_all(SSL *ssl, const void *buf, size_t len)
+{
+	unsigned char *bytes = buf;
+	int remaining = (int)len;
+
+	/* Jeżeli jest jeszcze coś do wpisania */
+	while (remaining) {
+		/* Wpisz ile się da */
+		int num_written = SSL_write(ssl, bytes, remaining);
+		if (num_written <= 0)
+			return 1;
+
+		/* Zauktualizuj ile jeszcze mamy wpisać */
+		remaining -= num_written;
+
+		/* Przesuń wskaźnik do jeszcze nie wpisanych danych */
+		bytes += num_written;
+	}
+	return 0;
 }
-write(client_socket, "Czesc!", strlen("Czesc") + 1);
 ```
+
+## Prosty klient HTTPS - odbieranie odpowiedzi
+
+```c
+...
+int read_all(SSL *ssl, void *buf, size_t len)
+{
+	int ret = 0;
+	unsigned char *bytes = buf;
+	int remaining = (int)len;
+	while (1) {
+		/* Odczytaj blok danych */
+		char buf[1024];
+		int num_read = SSL_read(ssl, buf, sizeof(buf));
+		if (num_read < 0)
+			return errno;
+		if (num_read == 0)
+			break;
+		/* Oceń czy można skopiować cały blok, czy tylko tyle ile sie zmieści */
+		int to_copy = remaining < num_read ? remaining : num_read;
+		if (!to_copy) {
+			ret = ENOBUFS;
+			continue;
+		}
+
+		/* Skopiuj odczytany kawałek do bufora */
+		memcpy(bytes, buf, to_copy);
+		remaining -= to_copy;
+		bytes += to_copy;
+	}
+	return ret;
+}
+```
+
+## Prosty klient HTTPS - żądanie i odpowiedź
+
+```c
+int main(void)
+{
+	SSL_CTX* ctx = SSL_CTX_new(SSLv23_client_method());
+	if (!ctx)
+		return 1;
+
+	int fd = connected_socket("93.184.216.34", 80);
+	if (fd < 0)
+		goto err_ssl_ctx_free;
+
+	SSL* ssl = SSL_new(ctx);
+	if (!ssl)
+		goto err_close;
+	if (SSL_set_fd(ssl, fd) != 1 || SSL_connect(ssl) != 1)
+		goto err_free_ssl;
+
+	if (write_all(ssl, http_request, strlen(http_request)))
+		goto err_free_ssl;
+
+	char response[9000] = {0};
+	if (read_all(ssl, response, sizeof(response) - 1));
+		goto err_free_ssl;
+
+err_free_ssl
+	SSL_free(ssl);
+err_close_fd:
+	close(fd);
+err_ssl_ctx_free:
+	SSL_CTX_free(ctx);
+	return 0;
+}
+```
+
 
 # Dziękuję za uwagę

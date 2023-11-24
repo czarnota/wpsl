@@ -57,6 +57,7 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/5/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/5/task1-solved.md))
     - Zadanie 5.2: ([html](https://czarnota.github.io/wpsl/5/task2), [md](https://github.com/czarnota/wpsl/tree/main/5/task2.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/5/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/5/task2-solved.md))
+    - Zadanie 5.3: ([html](https://czarnota.github.io/wpsl/5/task3), [md](https://github.com/czarnota/wpsl/tree/main/5/task3.md))
     - Termin: do następnych zajęć (03.12.2023)
 
 ## Wysyłanie zadań

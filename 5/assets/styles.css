@@ -1,4 +1,6 @@
-#zagadnienie-4-komunikacja-sieciowa h1 {
+pre { font-size: 0.7em; }
+
+#zagadnienie-5-gniazda h1 {
     background-image: url("network-communication.jpg");
     background-size: cover;
     color: #fff;
@@ -50,9 +52,13 @@
 }
 
 #prosty-klient-http pre {
-    font-size: 0.5em;
+    font-size: 0.7em;
 }
 
 #prosty-klient-http---żądanie-i-odpowiedź pre {
-    font-size: 0.5em;
+    font-size: 0.6em;
+}
+
+#prosty-klient-https---żądanie-i-odpowiedź pre {
+    font-size: 0.6em;
 }
