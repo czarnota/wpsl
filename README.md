@@ -57,8 +57,8 @@ Repozytorium zawiera materiały do przedmiotu "Wprowadzenie do programowania sys
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/5/task1-solved), [md](https://github.com/czarnota/wpsl/tree/main/5/task1-solved.md))
     - Zadanie 5.2: ([html](https://czarnota.github.io/wpsl/5/task2), [md](https://github.com/czarnota/wpsl/tree/main/5/task2.md))
         - Rozwiązanie: ([html](https://czarnota.github.io/wpsl/5/task2-solved), [md](https://github.com/czarnota/wpsl/tree/main/5/task2-solved.md))
-    - Zadanie 5.3: ([html](https://czarnota.github.io/wpsl/5/task3), [md](https://github.com/czarnota/wpsl/tree/main/5/task3.md))
-    - Termin: do następnych zajęć (03.12.2023)
+    - **Zadanie 5.3**: ([html](https://czarnota.github.io/wpsl/5/task3), [md](https://github.com/czarnota/wpsl/tree/main/5/task3.md))
+    - Termin: 18.12.2023
 
 ## Wysyłanie zadań
 
@@ -108,7 +108,7 @@ Są 4 zadania:
 | 1.4 Dashboard                         | 04.11.2023 |
 | 2.4 Lista przypomnień                 | 18.11.2023 |
 | 3.4 Lista przypomnień zapisująca stan | 25.11.2023 |
-|                                       | 03.12.2023 |
+| 5.3 Tablica odjazdów autobusów        | 18.12.2023 |
 
 Zadania należy przysłać, przed momentem prezentacji rozwiązania.
 
