@@ -163,4 +163,6 @@ którego oddanie do końca semestru skutkuje oceną 3 z laboratoriów i wykładu
 
 ## Zadania ratunkowe
 
+- Zadanie 3.2: ([html](https://czarnota.github.io/wpsl/3/task2), [md](https://github.com/czarnota/wpsl/tree/main/3/task2.md))
+
 Bezpieczny termin wysłania zadania ratunkowego 16.01.2024
